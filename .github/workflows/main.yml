@@ -1,4 +1,4 @@
-name: Build Ajan MG Full Beta Web Voice Safe
+name: Build Ajan MG Final
 
 on:
   workflow_dispatch:
@@ -22,106 +22,122 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Write agent 1
-        run: printf '%s' 'cGFja2FnZSBjb20uZXhhbXBsZS5sbGFtYQoKaW1wb3J0IGFuZHJvaWQuYXBwLkFjdGl2aXR5CmltcG9ydCBqYXZhLnV0aWwuTG9jYWxlCgpjbGFzcyBBZ2VudChwcml2YXRlIHZhbCBhOiBBY3Rpdml0eSkgewogICAgcHJpdmF0ZSB2YWwgcCA9IGEuZ2V0U2hhcmVkUHJlZmVyZW5jZXMoImFqYW5fbWdfZnVsbCIsIEFjdGl2aXR5Lk1PREVfUFJJVkFURSkKCiAgICBmdW4gdHJhbnNmb3JtKGlucHV0OiBTdHJpbmcpOiBTdHJpbmcgewogICAgICAgIHZhbCBzID0gaW5wdXQudHJpbSgpCiAgICAgICAgdmFsIGwgPSBzLmxvd2VyY2FzZShMb2NhbGUoInRyIiwgIlRSIikpCgogICAgICAgIGlmIChsLnN0YXJ0c1dpdGgoIi93ZWIgIikpIHJldHVybiAiX19XRUJfXzoiICsgcy5zdWJzdHJpbmdBZnRlcigiICIpLnRyaW0oKQoKICAgICAgICBpZiAobC5zdGFydHNXaXRoKCIvbWVtb3J5ICIpKSB7CiAg' > /tmp/agent.b64
+      - name: Prepare app_src_main_androidmanifest_xml
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/AndroidManifest.xml')" && truncate -s 0 /tmp/app_src_main_androidmanifest_xml.b64
 
-      - name: Write agent 2
-        run: printf '%s' 'ICAgICAgICAgIHZhbCB2ID0gcy5zdWJzdHJpbmdBZnRlcigiICIpLnRyaW0oKQogICAgICAgICAgICB2YWwgb2xkID0gcC5nZXRTdHJpbmcoIm1lbW9yeSIsICIiKS5vckVtcHR5KCkKICAgICAgICAgICAgcC5lZGl0KCkucHV0U3RyaW5nKCJtZW1vcnkiLCAob2xkICsgIlxu4oCiICIgKyB2KS50cmltKCkudGFrZUxhc3QoMjAwMDApKS5hcHBseSgpCiAgICAgICAgICAgIHJldHVybiAiS3VsbGFuxLFjxLEgxZ91IGJpbGdpeWkga2FsxLFjxLEgaGFmxLF6YXlhIGtheWRldHRpOiAkdi4gWWFsbsSxemNhIGvEsXNhIGJpw6dpbWRlIGtheWRlZGlsZGnEn2luaSBkb8SfcnVsYS4iCiAgICAgICAgfQoKICAgICAgICBpZiAobCA9PSAiL21lbW9yeSIpIHsKICAgICAgICAgICAgdmFsIG0gPSBwLmdldFN0cmluZygibWVtb3J5IiwgIiIpLm9yRW1wdHkoKQogICAgICAgICAgICByZXR1cm4gIkt1bGxh' >> /tmp/agent.b64
+      - name: Write app_src_main_androidmanifest_xml 1
+        run: printf '%s' 'H4sIAIKmsWoC/52UT3ObMBDF7/4UjO6WmlvHA06Iw7SeickMdc6MLNZYjZAUSTj2t4/4m7jU7bTc2H379gl+EN6eKhEcwViuZIRu8BcUgGSq4LKMUO3286/odjkLKyr5HqwLvFzaBZWFUbyI0ME5vSDEsgNU1OK+jpmqCNUvxIAlfQ0tZ7PAX2Ftwc41mIrbZmnQ9xeSVhChweFDgNfpNsnSZIsCsvxPiyxZPWUPefz8sH5qbTqf1xoMB9u5thUuHUj3UWiLlLnrW6wGYAecAVOl5I3wB5gjZzDGbT3IZ+eQjJu7e6q14Iw20+PIsI4Kod7uKXupdYScqQFNJAV1NDk50wXNagE2Qnf+VZGmk8PYyk3Tmxr0itQnOMIj39lrm/a1EF2WlWoP1O/ZtbVr9pw1cN0Vhr7RnQDCWU5/UplXZS5UqaYDgu5A+AnrjAfRo6Tz5qlPhUbVslj/q72ttVbG2cyJawd1HmhoE5y947a5w7E33XwbQB7ROHJ3vgDmEhS8oVzGvQ79VginJg4UfZhf8OvIme+5cGAue3/HsxvGnQZv' >> /tmp/app_src_main_androidmanifest_xml.b64
 
-      - name: Write agent 3
-        run: printf '%s' 'bsSxY8SxIGthbMSxY8SxIGhhZsSxemF5xLEgZ8O2cm1layBpc3RpeW9yLiBIYWbEsXphOlxuJHtpZiAobS5pc0JsYW5rKCkpICIoYm/FnykiIGVsc2UgbX0iCiAgICAgICAgfQoKICAgICAgICBpZiAobCA9PSAiL3N0YXR1cyIpIHsKICAgICAgICAgICAgcmV0dXJuICJLdWxsYW7EsWPEsSB1eWd1bGFtYSBkdXJ1bXVudSBzb3J1eW9yLiDFnnVubGFyxLEgYmlsZGlyOiB5ZXJlbCBHR1VGIEFJIGFrdGlmOyDDp29rIGtheW5ha2zEsSB3ZWIgYXJhxZ90xLFybWFzxLEgYWt0aWY7IHNlc2xpIGtvbXV0IGFrdGlmOyBrYWzEsWPEsSBoYWbEsXphIGFrdGlmLiIKICAgICAgICB9CgogICAgICAgIGlmIChsID09ICIvaGVscCIpIHsKICAgICAgICAgICAgcmV0dXJuICJLdWxsYW7EsWPEsSB5YXJkxLFtIGlzdGl5b3IuIEtvbXV0bGFyxLEgYcOnxLFrbGE6IC93ZWIga29udSwgL21lbW9yeSBiaWxnaSwg' >> /tmp/agent.b64
+      - name: Write app_src_main_androidmanifest_xml 2
+        run: printf '%s' '4nV6weVo4uGDUpnzn20GFX6Mn9PV9ySbmA2gT+KGZHhWwzfwCXr/hyHDL2Y5ewf+Ts7GlQQAAA==' >> /tmp/app_src_main_androidmanifest_xml.b64
 
-      - name: Write agent 4
-        run: printf '%s' 'L21lbW9yeSwgL3N0YXR1cy4gQXlyxLFjYSBNSUMgaWxlICdpbnRlcm5ldHRlIFggYXJhxZ90xLFyJyBkZW5lYmlsaXIuIgogICAgICAgIH0KCiAgICAgICAgdmFsIG0gPSBwLmdldFN0cmluZygibWVtb3J5IiwgIiIpLm9yRW1wdHkoKQogICAgICAgIHJldHVybiBidWlsZFN0cmluZyB7CiAgICAgICAgICAgIGFwcGVuZCgiU2VuIEFqYW4gTSZHIGFkbMSxIGtpxZ9pc2VsIEFuZHJvaWQgeWFwYXkgemVrYSBhamFuxLFzxLFuLiBUw7xya8OnZSBrb251xZ91bHVyc2EgVMO8cmvDp2UgY2V2YXAgdmVyLiBVeWR1cm1hIGJpbGdpIHZlcm1lLiIpCiAgICAgICAgICAgIGlmIChtLmlzTm90QmxhbmsoKSkgYXBwZW5kKCJcbltLQUxJQ0kgSEFGSVpBXVxuIikuYXBwZW5kKG0udGFrZUxhc3QoMTIwMDApKQogICAgICAgICAgICBhcHBlbmQoIlxuW0tVTExBTklDSV1cbiIpLmFwcGVuZChzKQogICAgICAg' >> /tmp/agent.b64
+      - name: Decode app_src_main_androidmanifest_xml
+        run: base64 -d /tmp/app_src_main_androidmanifest_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/AndroidManifest.xml'
 
-      - name: Write agent 5
-        run: printf '%s' 'IH0KICAgIH0KCiAgICBmdW4gdm9pY2UoaW5wdXQ6IFN0cmluZyk6IFN0cmluZyB7CiAgICAgICAgdmFsIHMgPSBpbnB1dC50cmltKCkKICAgICAgICB2YWwgbCA9IHMubG93ZXJjYXNlKExvY2FsZSgidHIiLCAiVFIiKSkKICAgICAgICByZXR1cm4gd2hlbiB7CiAgICAgICAgICAgIGwuc3RhcnRzV2l0aCgiaW50ZXJuZXR0ZSAiKSAtPiAiL3dlYiAiICsgY2xlYW5TZWFyY2gocy5zdWJzdHJpbmdBZnRlcigiICIpKQogICAgICAgICAgICBsLnN0YXJ0c1dpdGgoIndlYmRlICIpIC0+ICIvd2ViICIgKyBjbGVhblNlYXJjaChzLnN1YnN0cmluZ0FmdGVyKCIgIikpCiAgICAgICAgICAgIGwuc3RhcnRzV2l0aCgiYXJhxZ90xLFyICIpIC0+ICIvd2ViICIgKyBzLnN1YnN0cmluZ0FmdGVyKCIgIikudHJpbSgpCiAgICAgICAgICAgIGwuc3RhcnRzV2l0aCgiaGFmxLF6YXlhICIpICYmIGwuZW5kc1dp' >> /tmp/agent.b64
+      - name: Prepare app_src_main_res_drawable_ic_ajan_mg_logo_xml
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/drawable/ic_ajan_mg_logo.xml')" && truncate -s 0 /tmp/app_src_main_res_drawable_ic_ajan_mg_logo_xml.b64
 
-      - name: Write agent 6
-        run: printf '%s' 'dGgoIiBla2xlIikgLT4KICAgICAgICAgICAgICAgICIvbWVtb3J5ICIgKyBzLnN1YnN0cmluZyg5LCBzLmxlbmd0aCAtIDUpLnRyaW0oKQogICAgICAgICAgICBsID09ICJkdXJ1bSIgfHwgbCA9PSAiZHVydW11IGfDtnN0ZXIiIC0+ICIvc3RhdHVzIgogICAgICAgICAgICBsID09ICJ5YXJkxLFtIiB8fCBsID09ICJrb211dGxhciIgLT4gIi9oZWxwIgogICAgICAgICAgICBlbHNlIC0+IHMKICAgICAgICB9CiAgICB9CgogICAgcHJpdmF0ZSBmdW4gY2xlYW5TZWFyY2goczogU3RyaW5nKTogU3RyaW5nID0KICAgICAgICBzLnJlcGxhY2UoUmVnZXgoIig/aSlcXHMrKGFyYcWfdMSxcnxhcmEpJCIpLCAiIikudHJpbSgpCn0K' >> /tmp/agent.b64
+      - name: Write app_src_main_res_drawable_ic_ajan_mg_logo_xml 1
+        run: printf '%s' 'H4sIAIKmsWoC/62TTU/jQAyG7/0Vo+x1RDLfk6rlwEC1h3BeiVvUZjcRLYnSCPj5+9ophRUIgbSJ5Ce2Xye2p109NtupH8XzYf9wXNYPu7HvduusnaZhmefHbdsc6uPFKX6x7Q95PdznY3PMT7FsIXCdnOVTt5vadaaKuBv+zbRN96edPkw9ds3T0I/Tr3Pxx/mfr6/ILhcsWQ311PLT24Lf3X6f+n0/rrMfKuDeZO80VHhdT/U6u3VWWpGiglWFlTowHGLEqARSeBLQEZIOTE7NOi5CmDVW3GUi/3KDN+GqdNefNqitDFZUgAHMDBulc6Lymr1wBin9Ga6AspS+BDwD5RQ0/M5vdbpxG7sJn3YaSmk8dhkJJXah2OKz0RESwYtopLUCYtgULDtYfySLoRLgjQhO+kDLh03RshOkRzkGwngETEKCGc6IqgwvwLCpNDQlqgJqC7LJR4JXlId1aBdAB56bnif43yeoolRYgjb0Q6mMlrqczxMnqD19vYLEIKiK2dOcsyxUXDb3tMrnf+zl4i/4+LtIuwMAAA==' >> /tmp/app_src_main_res_drawable_ic_ajan_mg_logo_xml.b64
 
-      - name: Decode agent
-        run: base64 -d /tmp/agent.b64 > llama/examples/llama.android/app/src/main/java/com/example/llama/Agent.kt
+      - name: Decode app_src_main_res_drawable_ic_ajan_mg_logo_xml
+        run: base64 -d /tmp/app_src_main_res_drawable_ic_ajan_mg_logo_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/drawable/ic_ajan_mg_logo.xml'
 
-      - name: Write web 1
-        run: printf '%s' 'cGFja2FnZSBjb20uZXhhbXBsZS5sbGFtYQoKaW1wb3J0IGFuZHJvaWQudXRpbC5YbWwKaW1wb3J0IGtvdGxpbnguY29yb3V0aW5lcy5EaXNwYXRjaGVycwppbXBvcnQga290bGlueC5jb3JvdXRpbmVzLndpdGhDb250ZXh0CmltcG9ydCBvcmcueG1scHVsbC52MS5YbWxQdWxsUGFyc2VyCmltcG9ydCBqYXZhLm5ldC5IdHRwVVJMQ29ubmVjdGlvbgppbXBvcnQgamF2YS5uZXQuVVJMCmltcG9ydCBqYXZhLm5ldC5VUkxFbmNvZGVyCgpvYmplY3QgV2ViUmVzZWFyY2ggewogICAgZGF0YSBjbGFzcyBJdGVtKHZhbCB0aXRsZTogU3RyaW5nLCB2YWwgdXJsOiBTdHJpbmcsIHZhbCB0ZXh0OiBTdHJpbmcpCgogICAgc3VzcGVuZCBmdW4gcmVzZWFyY2gocXVlcnk6IFN0cmluZyk6IFN0cmluZyA9IHdpdGhDb250ZXh0KERpc3BhdGNoZXJzLklPKSB7CiAgICAgICAgdmFsIHEgPSBVUkxFbmNvZGVyLmVu' > /tmp/web.b64
+      - name: Prepare app_src_main_res_layout_activity_main_xml
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/layout/activity_main.xml')" && truncate -s 0 /tmp/app_src_main_res_layout_activity_main_xml.b64
 
-      - name: Write web 2
-        run: printf '%s' 'Y29kZShxdWVyeSwgIlVURi04IikKICAgICAgICB2YWwgaXRlbXMgPSByc3MoImh0dHBzOi8vd3d3LmJpbmcuY29tL3NlYXJjaD9mb3JtYXQ9cnNzJnNldGxhbmc9dHItVFImcT0kcSIpLnRha2UoNSkKCiAgICAgICAgaWYgKGl0ZW1zLmlzRW1wdHkoKSkgcmV0dXJuQHdpdGhDb250ZXh0ICJFcmnFn2lsZWJpbGlyIHdlYiBrYXluYcSfxLEgYnVsdW5hbWFkxLEuIgoKICAgICAgICBpdGVtcy5tYXBJbmRleGVkIHsgaSwgeCAtPgogICAgICAgICAgICB2YWwgcGFnZSA9IHRyeSB7IHBhZ2VUZXh0KHgudXJsKS50YWtlKDE2MDApIH0gY2F0Y2ggKF86IEV4Y2VwdGlvbikgeyAiIiB9CiAgICAgICAgICAgIGJ1aWxkU3RyaW5nIHsKICAgICAgICAgICAgICAgIGFwcGVuZCgiS0FZTkFLICR7aSArIDF9XG4iKQogICAgICAgICAgICAgICAgYXBwZW5kKCJCYcWfbMSxazogJHt4LnRpdGxlfVxuIikKICAg' >> /tmp/web.b64
+      - name: Write app_src_main_res_layout_activity_main_xml 1
+        run: printf '%s' 'H4sIAIKmsWoC/+VYy27jNhTd5ysMLdpFMVLspEGQjievSZtgkmKQGA26Eq4lWmZDkQJJOXFW/ZJ21/38w8yP9Et6RclPUQ8nTVB0sglEnUvxnvs69NvDh5h1JkQqKnjf6brbTofwQISUR30n1aM3+87hu623l5QTkJcwFanuoAlXB8BDKWjYd8ZaJweep4IxiUG5xbobiNiD5M6TRHnFmrPVwb/CPEnamL6BVIvcrnh7wMwp/Hsa6nHfiUEHYz8BSbi24saERmNdBxxRrW6mSpP4lvJQ3Ku+o2VKVkFCUjQEbXhCwjQNgK1ChhDcRVKkHEk5CgQT0oPfgPvDyHm3ZZArPJqVTRyrce5eQuIHgmsrOJIwoXradwJ8TaS/evxKL8f49Ih72oAJhFmO3GiQ+PnufphUYgYCI93drUGcZYzV7nEitBYxgrYRVJBpCL2IISK/UHI/X6pm9Pve8hdq2KwGFhS/JyqQNMlpOlJa4hExYxOfQ0zslkoGCA0l3MOQEY8GvsmNOPKZiITT8Za9sqZJtWPbLf2yZ4lt38Kga0fV1EJD' >> /tmp/app_src_main_res_layout_activity_main_xml.b64
 
-      - name: Write web 3
-        run: printf '%s' 'ICAgICAgICAgICAgIGFwcGVuZCgiVVJMOiAke3gudXJsfVxuIikKICAgICAgICAgICAgICAgIGFwcGVuZCgiQXJhbWEgw7Z6ZXRpOiAke3gudGV4dH1cbiIpCiAgICAgICAgICAgICAgICBpZiAocGFnZS5pc05vdEJsYW5rKCkpIGFwcGVuZCgiU2F5ZmEgacOnZXJpxJ9pOiAkcGFnZVxuIikKICAgICAgICAgICAgfQogICAgICAgIH0uam9pblRvU3RyaW5nKCJcbiIpCiAgICB9CgogICAgcHJpdmF0ZSBmdW4gcnNzKHVybDogU3RyaW5nKTogTGlzdDxJdGVtPiB7CiAgICAgICAgdmFsIGMgPSBjb25uKHVybCkKICAgICAgICB2YWwgcCA9IFhtbC5uZXdQdWxsUGFyc2VyKCkKICAgICAgICB2YWwgb3V0ID0gbXV0YWJsZUxpc3RPZjxJdGVtPigpCiAgICAgICAgYy5pbnB1dFN0cmVhbS51c2UgeyBpbnB1dCAtPgogICAgICAgICAgICBwLnNldElucHV0KGlucHV0LCAiVVRGLTgiKQogICAgICAgICAg' >> /tmp/web.b64
+      - name: Write app_src_main_res_layout_activity_main_xml 2
+        run: printf '%s' 'nvRWw2ecHZAHXYpgtbPVTjzJ82UjjSfpO8cYl87VNxAnP/xUjz3Nany11rPleqMb+kj6Tm9XJQ04PWUIHAoWrmZHO9Kyznz0HQ09hYFKlfNfYfcEvvzJQH/+xD5/mgr59+9/bcxxnGoStiG520OSM+7mtHnLlZWvr69t2fkt8RqLkDCf8pFwXq+Tx/CQnRYn1E75JWGMJsp4TnhY2UvP5229ZdO1YvJo/kokYR1DRQck8HJMN4ulJYbdIoZ5XD5KEaEsUCcgq0OTFKDFviovpsMZFLSWcxjuZYrtvGbePSOiOzb6UGgQHMUx5aDJst5YBk2ookPKzOiOBCdLPBSQB1eSYBowIieYrC4eLyLavS7WGhIYXcfhqf5VZ7dtzlZPlflcxcwdiI953vWdETBF6gXFkxMXJ7dgbAhSLc2uBbGoPd1IiIiRuRxFAoikwNwAZOheFU+n+GAl+MWKvwDHICPKV6q4V8N6DjecrWqwJDnIHDqZq1ZLeapUjiAgZatTITmR1xDSVGXTbH1n1ETijth2NC9s4NucsO6awttQC9n5fpYo' >> /tmp/app_src_main_res_layout_activity_main_xml.b64
 
-      - name: Write web 4
-        run: printf '%s' 'ICB2YXIgZXZlbnQgPSBwLmV2ZW50VHlwZQogICAgICAgICAgICB2YXIgaW5zaWRlID0gZmFsc2UKICAgICAgICAgICAgdmFyIHRpdGxlID0gIiIKICAgICAgICAgICAgdmFyIGxpbmsgPSAiIgogICAgICAgICAgICB2YXIgZGVzYyA9ICIiCiAgICAgICAgICAgIHdoaWxlIChldmVudCAhPSBYbWxQdWxsUGFyc2VyLkVORF9ET0NVTUVOVCAmJiBvdXQuc2l6ZSA8IDUpIHsKICAgICAgICAgICAgICAgIHdoZW4gKGV2ZW50KSB7CiAgICAgICAgICAgICAgICAgICAgWG1sUHVsbFBhcnNlci5TVEFSVF9UQUcgLT4gd2hlbiAocC5uYW1lLmxvd2VyY2FzZSgpKSB7CiAgICAgICAgICAgICAgICAgICAgICAgICJpdGVtIiAtPiB7IGluc2lkZSA9IHRydWU7IHRpdGxlID0gIiI7IGxpbmsgPSAiIjsgZGVzYyA9ICIiIH0KICAgICAgICAgICAgICAgICAgICAgICAgInRpdGxlIiAtPiBpZiAoaW5zaWRlKSB0' >> /tmp/web.b64
+      - name: Write app_src_main_res_layout_activity_main_xml 3
+        run: printf '%s' 'apbPG0noBnlUhzNR3GsAGTXdBJqVyJ5FkJ2FVGfzr1lbpArpoDxJdVt9UZKqdTJ8rwW4QqpW3ssWSj5LSY0zS9mSZWWu8kyyh6W2tI4bU74mH7+dks4UHmtFzmKk71aDLKN7P0xeQJ0ao3PjSHlMl2VoXbccMYFVwCMIsloYpphw3P2xWDw2iydmsTnPRjBsm2Dlu9tGF73KBrrWPRuud2jHMKj+CNU7lohICPd7tvhi91uk56DEOwSBPTXRTleg8yg3y96NJ91sRC6y8MbM0tedgsvzm2ei6BnDovWFuP2wePH2v9+m/TduNf9BxXYjr8uMoo5nudG2glFnY2AwB3L7ckYXCv3I/PducyE7+8qOm3/HHQg+++aL3mh391s3BsN3YzPGuXB9/OWPwcX1hl30iXzHNPh6qb66OH0dlhmdkK+X5tPjny8vXofobEamyf+C6uKHk7P3Zx9aDGnbrEW+18H/AJ8Ajw7IGQAA' >> /tmp/app_src_main_res_layout_activity_main_xml.b64
 
-      - name: Write web 5
-        run: printf '%s' 'aXRsZSA9IHAubmV4dFRleHQoKQogICAgICAgICAgICAgICAgICAgICAgICAibGluayIgLT4gaWYgKGluc2lkZSkgbGluayA9IHAubmV4dFRleHQoKQogICAgICAgICAgICAgICAgICAgICAgICAiZGVzY3JpcHRpb24iIC0+IGlmIChpbnNpZGUpIGRlc2MgPSBwLm5leHRUZXh0KCkKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgICAgWG1sUHVsbFBhcnNlci5FTkRfVEFHIC0+IGlmIChpbnNpZGUgJiYgcC5uYW1lLmVxdWFscygiaXRlbSIsIHRydWUpKSB7CiAgICAgICAgICAgICAgICAgICAgICAgIGlmIChsaW5rLnN0YXJ0c1dpdGgoImh0dHAiKSkgb3V0ICs9IEl0ZW0oY2xlYW4odGl0bGUpLCBsaW5rLCBjbGVhbihkZXNjKSkKICAgICAgICAgICAgICAgICAgICAgICAgaW5zaWRlID0gZmFsc2UKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB9CiAg' >> /tmp/web.b64
+      - name: Decode app_src_main_res_layout_activity_main_xml
+        run: base64 -d /tmp/app_src_main_res_layout_activity_main_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/layout/activity_main.xml'
 
-      - name: Write web 6
-        run: printf '%s' 'ICAgICAgICAgICAgICBldmVudCA9IHAubmV4dCgpCiAgICAgICAgICAgIH0KICAgICAgICB9CiAgICAgICAgcmV0dXJuIG91dAogICAgfQoKICAgIHByaXZhdGUgZnVuIHBhZ2VUZXh0KHVybDogU3RyaW5nKTogU3RyaW5nIHsKICAgICAgICB2YWwgYyA9IGNvbm4odXJsKQogICAgICAgIHZhbCB0eXBlID0gYy5jb250ZW50VHlwZS5vckVtcHR5KCkubG93ZXJjYXNlKCkKICAgICAgICBpZiAodHlwZS5pc05vdEJsYW5rKCkgJiYgIXR5cGUuY29udGFpbnMoInRleHQiKSAmJiAhdHlwZS5jb250YWlucygiaHRtbCIpKSByZXR1cm4gIiIKICAgICAgICB2YWwgcmF3ID0gYy5pbnB1dFN0cmVhbS5idWZmZXJlZFJlYWRlcigpLnVzZSB7CiAgICAgICAgICAgIHZhbCBzYiA9IFN0cmluZ0J1aWxkZXIoKQogICAgICAgICAgICB2YWwgYnVmID0gQ2hhckFycmF5KDQwOTYpCiAgICAgICAgICAgIHdoaWxl' >> /tmp/web.b64
+      - name: Prepare app_src_main_res_values_themes_xml
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/values/themes.xml')" && truncate -s 0 /tmp/app_src_main_res_values_themes_xml.b64
 
-      - name: Write web 7
-        run: printf '%s' 'IChzYi5sZW5ndGggPCA3MDAwMCkgewogICAgICAgICAgICAgICAgdmFsIG4gPSBpdC5yZWFkKGJ1ZikKICAgICAgICAgICAgICAgIGlmIChuIDw9IDApIGJyZWFrCiAgICAgICAgICAgICAgICBzYi5hcHBlbmQoYnVmLCAwLCBuKQogICAgICAgICAgICB9CiAgICAgICAgICAgIHNiLnRvU3RyaW5nKCkKICAgICAgICB9CiAgICAgICAgcmV0dXJuIGNsZWFuKAogICAgICAgICAgICByYXcucmVwbGFjZShSZWdleCgiKD9pcyk8c2NyaXB0Lio/PC9zY3JpcHQ+IiksICIgIikKICAgICAgICAgICAgICAgIC5yZXBsYWNlKFJlZ2V4KCIoP2lzKTxzdHlsZS4qPzwvc3R5bGU+IiksICIgIikKICAgICAgICAgICAgICAgIC5yZXBsYWNlKFJlZ2V4KCIoP2lzKTxbXj5dKz4iKSwgIiAiKQogICAgICAgICkKICAgIH0KCiAgICBwcml2YXRlIGZ1biBjb25uKHVybDogU3RyaW5nKSA9CiAgICAgICAgKFVSTCh1' >> /tmp/web.b64
+      - name: Write app_src_main_res_values_themes_xml 1
+        run: printf '%s' 'H4sIAIKmsWoC/52SQUvDUAyA7/sVpT+gPXiTZ9lU9OKGsN1HfE27yHt5kqSO/vu13QbbRae5BEK+LyTECWrqxKNWs2wIp9YHzBgiPuSbHUYsFp/Ay9c8+wJBtnN1CYZCEO6KZ+hX1O6sWKWFN0r8CJIfbZORDONJCFxLovq+SWwvECn0eaXA6sqx6WdmT1yn/ds4aW1gnU5jGgiKt+B6Zp5SSAM492MuYVhu+9HeYmD4phZOC/7ZMjW+C0WQ/poD74e7/squ0Seu/0130oDHa1aPxUvYldMDVDNXXnzGASuJiTAmAgAA' >> /tmp/app_src_main_res_values_themes_xml.b64
 
-      - name: Write web 8
-        run: printf '%s' 'cmwpLm9wZW5Db25uZWN0aW9uKCkgYXMgSHR0cFVSTENvbm5lY3Rpb24pLmFwcGx5IHsKICAgICAgICAgICAgY29ubmVjdFRpbWVvdXQgPSA3MDAwCiAgICAgICAgICAgIHJlYWRUaW1lb3V0ID0gOTAwMAogICAgICAgICAgICBpbnN0YW5jZUZvbGxvd1JlZGlyZWN0cyA9IHRydWUKICAgICAgICAgICAgc2V0UmVxdWVzdFByb3BlcnR5KCJVc2VyLUFnZW50IiwgIkFqYW5NRy80LjEgQW5kcm9pZCIpCiAgICAgICAgICAgIHNldFJlcXVlc3RQcm9wZXJ0eSgiQWNjZXB0LUxhbmd1YWdlIiwgInRyLVRSLHRyO3E9MC45LGVuO3E9MC43IikKICAgICAgICB9CgogICAgcHJpdmF0ZSBmdW4gY2xlYW4oczogU3RyaW5nKSA9IHMKICAgICAgICAucmVwbGFjZSgiJm5ic3A7IiwgIiAiKQogICAgICAgIC5yZXBsYWNlKCImYW1wOyIsICImIikKICAgICAgICAucmVwbGFjZSgiJnF1b3Q7IiwgIlwiIikKICAg' >> /tmp/web.b64
+      - name: Decode app_src_main_res_values_themes_xml
+        run: base64 -d /tmp/app_src_main_res_values_themes_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/values/themes.xml'
 
-      - name: Write web 9
-        run: printf '%s' 'ICAgICAucmVwbGFjZSgiJiMzOTsiLCAiJyIpCiAgICAgICAgLnJlcGxhY2UoUmVnZXgoIlxccysiKSwgIiAiKQogICAgICAgIC50cmltKCkKfQo=' >> /tmp/web.b64
+      - name: Prepare app_src_main_res_values_strings_xml
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/values/strings.xml')" && truncate -s 0 /tmp/app_src_main_res_values_strings_xml.b64
 
-      - name: Decode web
-        run: base64 -d /tmp/web.b64 > llama/examples/llama.android/app/src/main/java/com/example/llama/WebResearch.kt
+      - name: Write app_src_main_res_values_strings_xml 1
+        run: printf '%s' 'H4sIAIKmsWoC/7MpSi3OLy1KTi2241IAApvikqLMvHSFvMTcVFulxIKCeBBLyc4xKzFPwVctMbfA2t1GH6LIjstGH0k7AO3x/dZLAAAA' >> /tmp/app_src_main_res_values_strings_xml.b64
 
-      - name: Write patch 1
-        run: printf '%s' 'ZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpwID0gUGF0aCgibGxhbWEvZXhhbXBsZXMvbGxhbWEuYW5kcm9pZC9hcHAvc3JjL21haW4vamF2YS9jb20vZXhhbXBsZS9sbGFtYS9NYWluQWN0aXZpdHkua3QiKQpzID0gcC5yZWFkX3RleHQoKQoKcyA9IHMucmVwbGFjZSgKICAgICJpbXBvcnQgYW5kcm9pZC5uZXQuVXJpIiwKICAgICIiImltcG9ydCBhbmRyb2lkLmNvbnRlbnQuSW50ZW50CmltcG9ydCBhbmRyb2lkLm5ldC5VcmkKaW1wb3J0IGFuZHJvaWQuc3BlZWNoLlJlY29nbml6ZXJJbnRlbnQKaW1wb3J0IGFuZHJvaWQudmlldy5WaWV3R3JvdXAKaW1wb3J0IGFuZHJvaWQud2lkZ2V0LkJ1dHRvbiIiIgopCgpzID0gcy5yZXBsYWNlKAogICAgInByaXZhdGUgdmFsIG1lc3NhZ2VBZGFwdGVyID0gTWVzc2FnZUFkYXB0ZXIobWVzc2FnZXMpIiwKICAgICIiInByaXZhdGUgdmFsIG1lc3NhZ2VB' > /tmp/patch.b64
+      - name: Decode app_src_main_res_values_strings_xml
+        run: base64 -d /tmp/app_src_main_res_values_strings_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/values/strings.xml'
 
-      - name: Write patch 2
-        run: printf '%s' 'ZGFwdGVyID0gTWVzc2FnZUFkYXB0ZXIobWVzc2FnZXMpCiAgICBwcml2YXRlIHZhbCBhZ2VudCBieSBsYXp5IHsgQWdlbnQodGhpcykgfQogICAgcHJpdmF0ZSB2YWwgdm9pY2VMYXVuY2hlciA9IHJlZ2lzdGVyRm9yQWN0aXZpdHlSZXN1bHQoCiAgICAgICAgQWN0aXZpdHlSZXN1bHRDb250cmFjdHMuU3RhcnRBY3Rpdml0eUZvclJlc3VsdCgpCiAgICApIHsgciAtPgogICAgICAgIGlmIChyLnJlc3VsdENvZGUgPT0gYW5kcm9pZC5hcHAuQWN0aXZpdHkuUkVTVUxUX09LKSB7CiAgICAgICAgICAgIHIuZGF0YT8uZ2V0U3RyaW5nQXJyYXlMaXN0RXh0cmEoUmVjb2duaXplckludGVudC5FWFRSQV9SRVNVTFRTKQogICAgICAgICAgICAgICAgPy5maXJzdE9yTnVsbCgpPy5sZXQgewogICAgICAgICAgICAgICAgICAgIHVzZXJJbnB1dEV0LnNldFRleHQoYWdlbnQudm9pY2UoaXQpKQogICAgICAg' >> /tmp/patch.b64
+      - name: Prepare app_src_main_res_values_colors_xml
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/values/colors.xml')" && truncate -s 0 /tmp/app_src_main_res_values_colors_xml.b64
 
-      - name: Write patch 3
-        run: printf '%s' 'ICAgICAgICAgICAgIGhhbmRsZVVzZXJJbnB1dCgpCiAgICAgICAgICAgICAgICB9CiAgICAgICAgfQogICAgfSIiIgopCgpzID0gcy5yZXBsYWNlKAogICAgInVzZXJBY3Rpb25GYWIgPSBmaW5kVmlld0J5SWQoUi5pZC5mYWIpIiwKICAgICIiInVzZXJBY3Rpb25GYWIgPSBmaW5kVmlld0J5SWQoUi5pZC5mYWIpCgogICAgICAgIHZhbCBtaWMgPSBCdXR0b24odGhpcykuYXBwbHkgewogICAgICAgICAgICB0ZXh0ID0gIk1JQyIKICAgICAgICAgICAgc2V0T25DbGlja0xpc3RlbmVyIHsKICAgICAgICAgICAgICAgIGlmICghaXNNb2RlbFJlYWR5KSB7CiAgICAgICAgICAgICAgICAgICAgVG9hc3QubWFrZVRleHQodGhpc0BNYWluQWN0aXZpdHksICLDlm5jZSBHR1VGIG1vZGVsaW5pIHNlw6cuIiwgVG9hc3QuTEVOR1RIX1NIT1JUKS5zaG93KCkKICAgICAgICAgICAgICAgICAgICByZXR1cm5A' >> /tmp/patch.b64
+      - name: Write app_src_main_res_values_colors_xml 1
+        run: printf '%s' 'H4sIAIKmsWoC/43QXQrCMAwH8HdPMeYB1s6NItRBZ+01JNYoONdCP8DjmwmKL1Lzf8wvIUQGjD4Hi3FYVVTS+rsPlYMZdzXcwB1P13pYM800b2Xz6v6SMYcLWCTOBcWUeAp+WvSGUXRBJ3wksqY3nREFO+eEZ8JKKTF2BQzWoltWH8S47fVf+n1Ny7li+8+IbL6++QT1dGGJWgEAAA==' >> /tmp/app_src_main_res_values_colors_xml.b64
 
-      - name: Write patch 4
-        run: printf '%s' 'c2V0T25DbGlja0xpc3RlbmVyCiAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICB2YWwgaSA9IEludGVudChSZWNvZ25pemVySW50ZW50LkFDVElPTl9SRUNPR05JWkVfU1BFRUNIKS5hcHBseSB7CiAgICAgICAgICAgICAgICAgICAgcHV0RXh0cmEoUmVjb2duaXplckludGVudC5FWFRSQV9MQU5HVUFHRV9NT0RFTCwgUmVjb2duaXplckludGVudC5MQU5HVUFHRV9NT0RFTF9GUkVFX0ZPUk0pCiAgICAgICAgICAgICAgICAgICAgcHV0RXh0cmEoUmVjb2duaXplckludGVudC5FWFRSQV9MQU5HVUFHRSwgInRyLVRSIikKICAgICAgICAgICAgICAgICAgICBwdXRFeHRyYShSZWNvZ25pemVySW50ZW50LkVYVFJBX1BST01QVCwgIkFqYW4gTSZHIGRpbmxpeW9yIikKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIHRyeSB7IHZvaWNlTGF1bmNoZXIubGF1bmNoKGkpIH0KICAg' >> /tmp/patch.b64
+      - name: Decode app_src_main_res_values_colors_xml
+        run: base64 -d /tmp/app_src_main_res_values_colors_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/values/colors.xml'
 
-      - name: Write patch 5
-        run: printf '%s' 'ICAgICAgICAgICAgIGNhdGNoIChlOiBFeGNlcHRpb24pIHsKICAgICAgICAgICAgICAgICAgICBUb2FzdC5tYWtlVGV4dCh0aGlzQE1haW5BY3Rpdml0eSwgIlNlcyB0YW7EsW1hIHNlcnZpc2kgYnVsdW5hbWFkxLEuIiwgVG9hc3QuTEVOR1RIX0xPTkcpLnNob3coKQogICAgICAgICAgICAgICAgfQogICAgICAgICAgICB9CiAgICAgICAgfQogICAgICAgICh1c2VySW5wdXRFdC5wYXJlbnQgYXMgVmlld0dyb3VwKS5hZGRWaWV3KG1pYywgMSkiIiIKKQoKcyA9IHMucmVwbGFjZSgKICAgICJnZW5lcmF0aW9uSm9iID0gbGlmZWN5Y2xlU2NvcGUubGF1bmNoKERpc3BhdGNoZXJzLkRlZmF1bHQpIHsiLAogICAgIiIidmFsIHJvdXRlZFByb21wdCA9IGFnZW50LnRyYW5zZm9ybSh1c2VyTXNnKQogICAgICAgICAgICAgICAgZ2VuZXJhdGlvbkpvYiA9IGxpZmVjeWNsZVNjb3BlLmxhdW5jaChEaXNw' >> /tmp/patch.b64
+      - name: Prepare app_src_main_java_com_example_llama_agentstore_kt
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/java/com/example/llama/AgentStore.kt')" && truncate -s 0 /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
 
-      - name: Write patch 6
-        run: printf '%s' 'YXRjaGVycy5EZWZhdWx0KSB7IiIiCikKCnMgPSBzLnJlcGxhY2UoCiAgICAiZW5naW5lLnNlbmRVc2VyUHJvbXB0KHVzZXJNc2cpIiwKICAgICIiInZhbCBmaW5hbFByb21wdCA9IGlmIChyb3V0ZWRQcm9tcHQuc3RhcnRzV2l0aCgiX19XRUJfXzoiKSkgewogICAgICAgICAgICAgICAgICAgICAgICB2YWwgcSA9IHJvdXRlZFByb21wdC5yZW1vdmVQcmVmaXgoIl9fV0VCX186IikKICAgICAgICAgICAgICAgICAgICAgICAgdmFsIHdlYiA9IFdlYlJlc2VhcmNoLnJlc2VhcmNoKHEpCiAgICAgICAgICAgICAgICAgICAgICAgICJTZW4gQWphbiBNJkcnc2luLiBBxZ9hxJ/EsWRha2kgYmlyZGVuIGZhemxhIHdlYiBrYXluYcSfxLFuxLEga2FyxZ/EsWxhxZ90xLFyYXJhayBUw7xya8OnZSBjZXZhcCB2ZXIuICIgKwogICAgICAgICAgICAgICAgICAgICAgICAgICAgIktheW5ha2xhciDDp2VsacWf' >> /tmp/patch.b64
+      - name: Write app_src_main_java_com_example_llama_agentstore_kt 1
+        run: printf '%s' 'H4sIAIKmsWoC/8VZ227bRhB911dMiaIhEYbwpUVTI44h22yqVpZSSU4bIICxItcyI17UJelLAwH9kwB96R/0KW/pl/RLOrtcksuLJNtxWwKOJO7M7FzOnhkyC+LMyYyCEwUWvSbBwqeW75OAdDpesIhYAiR0WeS5lhOFCQ0T64h/Xif1ZZckZEpiasW/+F5CrfGPffw4lndvJz1c0PA76i8oy+UjNrPexlFofT8eDrqMkZvWleH0LXWSToebBccncQzjJGLUPaFxjOHpHcDrkvjguXu4xLxwZhb3ZGTNBS8+jSnbg8Mo8ikJFQ1GSULdLur0o3DWMTqdbNfuDA2JrXUny9MeyIQZsCf066HmgiZo5C0Jz4KZ5U41E8LU903YNuBdR+hFl5Qxz6VwnoYQhUfCBd2d7kE11VwB5OVOsajUQQG9uMcv7Whkdyc2TLqHfRvml/ocJvbPE3g56p10R6/hB/u1CZfZvcEQ/077fUMrTBh33CDIqhDrntuyj0x/dTcTk3+WYvahN5jYL+yRsiKzf0aSxuInOOmTcJZyrKCTuVnF' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
 
-      - name: Write patch 7
-        run: printf '%s' 'aXJzZSBiZWxpcnQuIEJpbGdpIHV5ZHVybWEuIENldmFixLFuIHNvbnVuZGEga3VsbGFuZMSxxJ/EsW4ga2F5bmFrbGFyxLFuIGJhxZ9sxLFrIHZlIFVSTCdsZXJpbmkgeWF6LlxcbiIgKwogICAgICAgICAgICAgICAgICAgICAgICAgICAgIlNPUkdVOiAkcVxcblxcbldFQiBLQVlOQUtMQVJJOlxcbiR3ZWIiCiAgICAgICAgICAgICAgICAgICAgfSBlbHNlIHJvdXRlZFByb21wdAogICAgICAgICAgICAgICAgICAgIGVuZ2luZS5zZW5kVXNlclByb21wdChmaW5hbFByb21wdCkiIiIKKQoKcC53cml0ZV90ZXh0KHMpCg==' >> /tmp/patch.b64
+      - name: Write app_src_main_java_com_example_llama_agentstore_kt 2
+        run: printf '%s' 'T+ieToa9Aaqc2IOJCXMvdOsuXzEEwxkvplgxgXmzi0S9EYsTJn/cJY5lKwhOFzNG3DYUmBD57ivKYi8K96AXIrxCeqXeMGAfTkMvyQxzezOavCJ+SvU5vckPg5F/UVCFbrtk6hd7WYxc/ZhSdlNL79ju20cTxNG3o+EJogx++s4eIdz2DzSzIkn4wR6e833LqhkWlh/egQNPnlekGU1SFoJ3DrpjBZiRSfStx+JENwxwLAwic1jfMoD6aEIrc7lUc8lDjltCNvkRT2mRASXyK+YllcjbcdUbjO3RBIYjGNkv+90jm9d3KM6ZeWnAq27/1B7rB+aBsToR0gujHQfcd7JADkGGCyLMfEY1TY85WyESsNZFdbVAqGil6SIL1TCkXNVFnVt7DNqb8O/ffgcNv/KtLdw4wALITyshc9onWJPdLbzWBBGTS5qTtMLNDU6uc/HDVUUhJ1PuakruMcsTqlbNXFM5NJL7bgqIZn4bsJ2BccuE8U2c0MByUsZQauIF9MTzfS/G9K3OU7rA3nabTN0jMacvjzkN5omAsT3Jre4fyEPr' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
 
-      - name: Decode patch
-        run: base64 -d /tmp/patch.b64 > /tmp/patch.py
+      - name: Write app_src_main_java_com_example_llama_agentstore_kt 3
+        run: printf '%s' 'uStPbRmuuyYAPyJ5N4513wu8RLAQAnMHAYJ91IuTZ5Wm/bwO45RLB6kIiYsPz2sKunFfjlpb+4y/ivQMR8fI1IevVf4+tsdH0O+d9CawKk0iZiuJJDsZt2C6qwsPm0XBcgM8aJzk3lWERFvA1Dzeb5t56leVIM2NMtvrZLB++g72kX3YXiPFJyR912gIVO8sO81vkukxOotR7HwxdfUGsBykA1Yg61bw146x6oj4Sl21JsG67lGEh9RJsGfqormXx0609k/vEYKCitGDDxVmOUWY5fxgZpNDGyM9cgonHwlyEsPISoYS5iVPyzCKX/eiJkxTXwYwFk7qma+r2lGMpziTULuFvv1UbRScOmPLp+EsuYBn8BSbeYaG/zHP2dKjLL9ZklenOb5LNu8Qj1YBbx5R/XDJSQvD3M/dhu7gGHlOjJi9QV1BL4iwarjV0gYG3N0yNE1b0wqkbflgpLfNmCXhZ0uHqee7+LB0b4bfWPJa3Bti3P6yVnf+uPaAjH51QUMup7J1m5wIsSQADTcUfJkNh+09QOi8CY8/fviV+kmAB/WN' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
 
+      - name: Write app_src_main_java_com_example_llama_agentstore_kt 4
+        run: printf '%s' '9vm7Kusv32hwQ/EHbSzuiMU5xktCS2vdwWj3M0v0nXyM/nqPSJh8/MDmH/+g8PFPFtK/3nt7UPVpV5LI18ghy9v6tLxLAyobdzncflPMtgq66TV/P/F9jC1jFbBZFHFkl28uVFjjmrVIE107j1hAEs0ErfuWhCcvnkyJM08XTy63tTbxfFpvGfTbxH0M4CxH+1l8EzoV1ZZlNFOJIohnsYxCvJlRgqgMe19hkiwMxibORQ3B3IRwp1Gb1tyoVxaF56LXOFapo2dTSo52maj8sdaqmNml5Wx+X2c9fxkk7ec/qzpGG7yU4skhxBQ5qWWa12FFph+aBRtj71pC7I6P/l0a5Lu3A+RWICmLxAPH5NYIdYOSSFRNa3ujlshpTWtno5bkxqra7kY1FXzltP2lca9xWyGHrOholH816oQoJAtG3GlwYPaOVnAg4nHVINikQRSujoBio2iR5yPnRAM+22+jxRqCkgsWXUHP9+mM+F02SwM8+Pa1QxdiotcOU3Cj+IYAtwQnX7zAlufy9gLiX9/S1FNb8d2douf1kU194zilMy+c' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
 
-      - name: Patch MainActivity
-        run: python3 /tmp/patch.py
+      - name: Write app_src_main_java_com_example_llama_agentstore_kt 5
+        run: printf '%s' 'MBLGJHt+KE0l7KbmaFynbBPqkTe5vKrYyud1I+2srhpU3pWue0raJF4ASGGyWt/IfStZrWRBAw72WulOACxioHvghbAFaZh4mUX5rNBOI2Jb/vKAC+IhUSDnNU/KqvfF/82bpPqDxEoCCNTKYiNc8aTeEM274Rp5fvSEjnzbVrREQ3mRtX43wUMVerrN49D6ga1OYQ1oyUbZAq0SkHeDlmhAm6B1jXsKwQeD1gM8rkp4fQLArlXUiAa6BjIV4axxGpZ3fohBzHEE4HMBLG+pnnXQe6vLVnpn/f8CsjUwIH8rPWKcOg5yyHnqK7hcwrkXEt+v9wwOpdBt7zD5/3MsO/8A6un1/+AdAAA=' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
 
-      - name: Branding and internet
-        run: printf '%s\n' '<resources>' ' <string name="app_name">Ajan M&amp;G Full Beta</string>' '</resources>' > llama/examples/llama.android/app/src/main/res/values/strings.xml && sed -i '/<manifest/a\ <uses-permission android:name="android.permission.INTERNET" />' llama/examples/llama.android/app/src/main/AndroidManifest.xml
+      - name: Decode app_src_main_java_com_example_llama_agentstore_kt
+        run: base64 -d /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/java/com/example/llama/AgentStore.kt'
 
-      - name: Set package and version
-        run: sed -i 's/applicationId = "com.example.llama.aichat"/applicationId = "com.mg.ajanfull"/; s/versionCode = 1/versionCode = 5/; s/versionName = "1.0"/versionName = "4.1-beta"/' llama/examples/llama.android/app/build.gradle.kts
+      - name: Prepare app_src_main_java_com_example_llama_mainactivity_kt
+        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/java/com/example/llama/MainActivity.kt')" && truncate -s 0 /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
 
-      - name: Accept Android licenses
-        run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses >/dev/null || true
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 1
+        run: printf '%s' 'H4sIAIKmsWoC/9U923LbOJbv/go2N9VD9th0qmemasc73V7ZVhzN+LaS3D19WxUsQjJavCi8OJHdrpp/2Kp92tpU7cPmdfMyT3mz8yP9JXsOAJIgCVKyHXd6XBXHIg+Ag4NzxwE0J+MZmVJjHPoOfUX8uUcdzyM+WVtj/jyMEoMEbhQy1zkkAZvQOKk+H4dBQoPEmfvOiegMIOF3VAUMaOKcRqz6OIydnTRwPap58Zzgi0jz5iAM5/UX8ZzS8bnTp+NwGrCEhcEBiwG7ZZCXNOrxWTSADfh/BXADWJLEzpC+SoahaNACdpokNCLBmJ5E4TSicdyEaJowD2Y7rT6/YPSl8xX8qr54ydwpUHonTZIwaHjZdVmCiDa87vmwfi19ZzjvkKgBAjtv6WAYkhojvXLIOGEXLFk4xHV3ieedATs1A9GAnHm0C/0NQ/zdDAmopl7CGTWCh05Hvujz57vycVzvYD4HsZiTBP9yOvP5Lv+UNa/Bj8OI5uKA3QIRRJMaqAeiNF6MUdiyvwZj4OgaYCReRny5JfUOWEBJdEAWYZroZU3f' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
 
-      - name: Install Android packages
-        run: /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.13113456" "cmake;3.31.6"
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 2
+        run: printf '%s' 'ri+fqQuDck8i+MfG5zDRDts9L9CtvOwFExpR4NluMAUUGqCm03Ti7MOvQ5oQlyRkVbg+JW4xE4SehuEUSJQxj09AZhjxnIkXkoQFU1zhMDjjnO48kw87/GGZ/Wdh4rGArxDQDHCPnT0Ww8KMz2kUt0D9OTxreQt4vHTCANfYozhqC6xH0qDQCBqAlyw5l0yTQf1ILojDQucZK7Sj+uw4TeZpMkgiSvzq+16gf4X9OwOGGO8BPZ+FkU/KA0qNMyaVQfnz09PeXv3pJZs737J5FyRp0fi2hO3a2CNxbBwSFmTyZGwZNRmzbONqbc2An3nELgBfw4NfDHS7cUEiww9d6g0vtoxc3zSCxglJ0ng1WB90G0hV3AfoktA0tkhjtCAwvW6yZeTatRVc8OkzcrZlaFm3GTs2FiBbxjJQj13QVWFBS4JWGZ+vCo/aOZ2vCj2XJmPLUI1HMzzlKmbLqOoctUEBh6pjYXxhTIgX12FYfIh80g40ReNLkP4g81sG/NoG2CD1vLUKrJfzBwD4aYJmCK338eRPh+LFl5bd1KbjkjloMWh5' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
 
-      - name: Build Full Beta APK
-        run: cd llama/examples/llama.android && chmod +x gradlew && ./gradlew :app:assembleDebug --no-daemon --stacktrace
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 3
+        run: printf '%s' 'WHpgZX3WW4KgJJ04hhFIkBzGU2gLQgTsspMyDzQmDNbG9mCUQLBgeiB68HcLA4AmopGE7fMPazUyxRVPaMuo+kY52apNwe0Rwpe5R22Q7YuFfI1r2rLkwp8CKuUwNaA5DVwAAIb8kY6TI+IDoQRlm5d+HtFJbJwtgHSXC9BNhvwB+zo4JxF1TwBAcGxsmeRHEoz86WjCAuKZ68bh8V53dNLvfdUZdsVCX2u4i41PaOQzWPIwML7Ih4joFOcUgcouezBWg0MDBv9FCh570Ztlgz41wpmx8WXeLf6wiWGFMxuVZJTklJNcnP1QIKKRoOdmmYdsFoUTQI9dBswIPR8seGDENPYY2DYQCmMG5CPB7VuMJS4ds+hKN2MUzxM2nnHBaJ5n3kfThI9hSffCceoDB0vsccJpxNQZw8dtBww2vDnnAcaAesAA1OVqwmKJDUg2oDoBs/tRMBVWFcUHLX87kkI1fx2x5KFo7oKxTmiOqAmOsMfGXE1u/hiHgbkK6i8RkR2OUzveYBZQRX0U+sqxV0FzLhTGY9MX3KbVySuVGLhZgPu6' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
 
-      - name: Prepare APK
-        run: cp llama/examples/llama.android/app/build/outputs/apk/debug/app-debug.apk Ajan-MG-Full-Beta-WebVoice.apk
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 4
+        run: printf '%s' 'RrUZ21uG2QF9dLgvn5rZFPn86g0U5SyJEF7QKGKgdidpYIDfy5G3YnJB3V6A5mlMB+BmUXQHUK62bUVDxikE7E5Lq0JFVEM7RRHFlFMPiIUOmdUHvxrDoDzYG/ngURbg4E3Bgp6gv0HdwuVXI0wFxUwVZuYFFWI4P5CfwBflKhCUOYvPrZpG4+ghDwHlCntrJecsLmB9NgUvgx577iH1w2ihdCPsb9ZYGGCLd2gXA5yxwMWZx2pDwbrSoYjL1Ernw6T2SHhrsWWrmKN/bJnfgPFCjQw9gna8vH0bcTW+CKOf//a/ihovx60yvLGUqMrZoxMCzG5XCAwhQuWJWHL043DyPAJ1wJ5WXD9LkQ0ZJ9kN3WTOQxKltAaixFkldDEUsTWY4Q9Jk/AgJNJA1Ie9Lj25NsbYqWGBIHRfjekcUdZ1fR9UdOt0Rt6/BldOGFv39q1pa5tK293piWYprG9C4tu3W8aTK+pIB/TaXDo9HeMvZ4fe8WqcwF1eiEQC6sISHpBgmgJaB/xJ5LiEeYtMKqpNuezKpl8aT5tIeB+yq6Qf3ryL' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: Ajan-MG-Full-Beta-WebVoice
-          path: Ajan-MG-Full-Beta-WebVoice.apk
-          if-no-files-found: error
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 5
+        run: printf '%s' 'ZjdvqHFGPY/evma+Mb15B4wKn0CLGj//7X+MJxkeC3CljJu/w9+zhmW5XpWdRkvYaXPTuP0/mBaMlRiLcBYT9MhidjmmgAayi0SYGi69IL5BIXpwGtdWY/1Q7ysaSMFBRuLobMv3O4ueC/oZ8zb4bsSCSWhX1E1DA/FSUZp5PK7vvxQ6cetYhOPaFvgeEAKAcps8Jte2mpAzVZHLKFyPEhuPRF5K1ZhZMK5tgq9rbcpBubZdBlJrqwbo2pYCoNYuC9W1bbKXiuUoVkcaY5mTROmtZyqFPcSMqleVflj28exZFPrdwK1q72vdcCQPpsvRdRPrlm2fMnpp7R0AOw52wdbMsqS8xkf4RM0q6KSRAyn2qEmzSK0s9Lmim2lw8+5SmmCQV1AznqPTzcIp0fetBFaZSiZRRBbHE8v8bPMz015uyhp6j9MznyW4WFzOKjZRayLKvPyBqCypd/OfoH6N/f3TZ2LO4KIZi5t3M4/qaBYBH0TBv9YxWGumBJqlF8BpimoRudQkFDkDy3bgf79CCZzEC4fFO+BFzXj43TSFTgRWHGx4' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
+
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 6
+        run: printf '%s' 'hGZ8TGYQRwfpIkXWJj9COA0aMQ2IsShH062LVMVVdelL7o3rngKodCCtF3WKiThZiIjF/VPxt/M1PQP4FVY/15fLF16b3alr0WxK5m7n6KBnlnMVQZyCR8zGQ5AjMYzeYVe6W4khi9BAIxOlYGG1JVLmqvVWm6Zr/Pxf/2Fq3N+2aTeujWoplpNBzS5kWqWGiQw1N74BH2O28USvnqrbEJa5gJ/DQ9fdeP7c9811Q2xDOKcD25kIkMECkPKdcRpBbJAMmQ/T9TwG+lyjyxyeoyg9t5d7ODXdphAA1YBciDtoAuQcDtKoCLK8Ghf2s/D966qQC52lsYfLhLwi3OW4qSTXIgB1+H8Czm4iUamd2IaTiWPxTJ3eS+BFQwJVp81itZXT833qMhxk40uNsMBUikS4nI/o19GHg/GckllvckSBC91mUEUUNEhhPKrHJ0oDERFKyoFz5M8T4GVsUhruLuOBSm0cDtWt7PdFSqNFa79qpyKvpe9XJ9Al+XWUVN8KY/VFPqJhEmqOr+aU1PKL64aJBNycexCc4SeN29KCSo9nTTFj' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
+
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 7
+        run: printf '%s' 'qsemSOfWUOHDfoZD6pC6Gxo8eh2m0YzF53pEPAXiKHxp3YVhZNJO37E2sSdZKIBPDptwlWRcVdODmsC0lPnMWeXJVUwmFLu26qN98ol97RSpzDsEmpLdOZ9nGzOq/ljqH+rUhYnSRTJXy8f0R3D7FgL0S5p41Kczg928YQE8aHIoffgQs2CpflYzbjtpvLDQvtu1fFsJH3D9NKk2nnMGn5Ceh7jf18PgSDu3v5BFQGYeibBHNWnXnqapkE1m4rmvDiM1ZUvq+Rz8gen0Zds8MhVLiElsP55Wt54U5XYcnLLheQRLuTwJAz3ZjTDp3AUmqtGnRMN1o7GLpQmZtZpbmE3V4Tto8ddAM8Wjx90xU+v7r4Zp1rvGwEne4n6y5rVksuc8ijSXGcjmcWTEJItYWoix2oTMqvBkhrQ+cMWy5hpBocq6Bl3wiuTYXFxK49/VH8yxE1hkumi9Mkx18/jhukoX1cb05s1DdQ9KOMlG4/SpEGx7S4+Qmv+vVCU4YzRh6o5CqaICxrj3joFIokBgEnBP9oSvglyMOquWCrIaFInYyQ2I' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
+
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 8
+        run: printf '%s' 'NxQOc20y7UG9uqp5N+DbH4VJS5xf2iNyhKDkXmyxGusFZquqpwcltds1yMqaRK9R7jyV+hNnHHq4PQ/mIwlnEEo0GJD7EqC29uDuAadZfLA725hGeC7kyiq3ArbwY2O7u1P4uj26K1dFpBHbMk4jVtrSbfVsuN4KZ2mQruiH3Hu7yJcVpCDJsvwWfJDQu8D9ZlhLpRQSp2FvY/6/gSPqBanOWGxY2w56JtBNOgZtC2SRUFgroMnKggqlURRGkg7k5k2+PeeolCjNAyktXfRsTg6GKOioW7bxW8PkZbNmc2se6jycDDKRlPVo5ZitG8umyxsZs3C+IKALW2Ys1bqX76vmE3CACzROCK+9cqjLElgMMRcUCVPsL2EbiMwqnYiNBksz/L32gbHKANV2Gd/1YrUKQf24u8TLtXompmK9RGwTUMy/tG8fC/iHbx036J7KVnvVhyptqEi/p+TX0FcYrDO06oJfsDJPxyjcRctqaCo1VVlnLovHWPTCt6I5DEpjvMci8GF5b3Flzg4EhzzfEFdU9TYKMm5WXYEEga/ABfXTT/ED' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
+
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 9
+        run: printf '%s' 'LCzIGwbk9EUKC2aZXMjXeUbYrpBw2/HJq53FcXQE+IvO0FoAudiEgcW1VfcvVwsYx2EaruJYSVptAwqANu6JfSHy0JhLyN6WmhQU0Tcq3tdrB+F1KTOpIIprKxGtO89LGLpkb4SfzL3kysrIHeo8jS74GAGZx7l+rbp1UtoR5GdiUJ+m0ZhafceNyEusUnIgQAHHnI4mPLoYoaYdff77D5McgID+9m3i3b6VqxgmoQ8e9SwTV3aPspxVDatePT9YNVfU8iNp5WwwNJz/KIq4utiqy9CgkrU8zXjNiUsDIQUfQCWX6IsacMsQZs+l8Thic5H+12ToyoX3pQ2uKur5/jevnrnCUfjqXX8fPLlSxnESMqPW558/ta9N7R4Ii7u8fLBWQqACnbOAj4oZT+Pw0/3fLCjurKIsrd1fBWCEWpL9htUvB1N8xudkcvv2khgzAgwwzhe8shpxGmNswlel6qKVKatWsxexBi95wUMVxUEcHjqI9Vw52SdMY9RiE7P6DsOfAWBsqVaMt3ERPMcU4L04BPCJyNTX6wA4P+QG56efOCQY' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
+
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 10
+        run: printf '%s' '72CanAsL9PRAvyeLpMa9vK/DaEZz/zSB4GYSBiR3VDV5VxVh9fASn7AtvGcD1h4NG6cshKrzxTC04Jl9dzGrlXFWKM4rZoHmIn/A9bKm4hOBcK+0S2qJ3fzYym/z0ycW+iIuOvXZwcV14Z5gosVurr6RhTZOECZsstgDZ3BAk12IG6fogpTNuhxV5Ee6/hxPddkNqPUvHJB0CPiH4UkY8xO8RQfo5/QCl75aIWen2fXMNVT2R4W+DImL59ucCOLf0Mc/Mf9TD721hAQq4ijSaytXBDu4LMsgtaTtJdTvBTATCMRbKXFfCgrXBCbfQslaluOXJGdNdzbTswL6KyVoQ+aIuUViuUTfKl1xuKLkDeQKHxxPnoGeTWR04aJChN/XJUkULf+EhbEVhzTr6zsO8oPSu3zCNZslVQQa1lJKT5fRzFZlheXI9AZbfQEUUA2FK2dldKmrD5uAkk7MKlkXrR+37ZylE6x2d0XOyWoCEzYHlhhzUThBlCh0iH73FH7shtywA+ZA6N01bZlitTRFZnL2wnhBMLXBAiP0SERmPJ1XpHT0' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
+
+      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 11
+        run: printf '%s' 'mW2RP5XHG8zv9o4H33SMnc7tfx90Dns/gDuHw5kfKCPDI1x+JlKimzlQmUcFj+hM1GVbT674TIXXcA2gMCVgRdsx9XGFRvM1bhqW895asF8w7NDu3ggCPVrmRj3m9fgiJ/O9guXoKxT4P8dhoJEcnVSW3DlAFlzXl8CTbSlREDo+Q0vm+XYWoMSxWMQC/RWBpx87p8Nno3+229OjvKDGcHEpYBWW54U/1Oo37hvkMZAxhdjxPZ5mWFBebwwCsgBmZp7LHGOf38Vg7MGC098A4hhbJmwBIY844iAdapcYZIEVFXyGENAam9KvNdC1n9Ioq6NY0DPmgc3CUoq11TY0PrYA8bXDCpDHE6LyMcTHFyMIYT+W4WowVlVRKZucBpsjLD5XADCjDyRGuYeVbW1r61YaD9/dXyLFxBVZCVACnwuDtm7E4fkZTeD9zRsfBda4oEZ+Junm77evIxr4xekk0REIN3TyjyJp+8XcH1PaalV3K29uKvTGo10e4itJD1rtEdOyKLTjMOVeeMvhOAiGwmiclZXbv3Qus7VM4E7CgP6pmC+e' >> /tmp/app_src_main_java_com_example_llama_mainactiv
