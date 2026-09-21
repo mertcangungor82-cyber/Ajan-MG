@@ -1,4 +1,5 @@
-name: Build Ajan M&G APK
+name: Build Ajan M&G V2 Local AI
+
 on:
   workflow_dispatch:
   push:
@@ -6,71 +7,39 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-java@v5
+      - name: Get llama.cpp Android source
+        uses: actions/checkout@v6
+        with:
+          repository: ggml-org/llama.cpp
+          ref: b29c606
+          path: llama
+          fetch-depth: 1
+
+      - name: Java 17
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
-      - uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '8.7'
-      - name: Create project
+
+      - name: Android SDK
+        uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd
+
+      - name: Install Android build tools
         shell: bash
-        run: |
-          mkdir -p app/src/main/java/com/mg/ajan
-          cat > settings.gradle <<'EOF'
-          pluginManagement { repositories { google(); mavenCentral(); gradlePluginPortal() } }
-          dependencyResolutionManagement { repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS); repositories { google(); mavenCentral() } }
-          rootProject.name='AjanMG'
-          include ':app'
-          EOF
-          cat > build.gradle <<'EOF'
-          plugins { id 'com.android.application' version '8.5.2' apply false }
-          EOF
-          cat > gradle.properties <<'EOF'
-          org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
-          android.useAndroidX=false
-          EOF
-          cat > app/build.gradle <<'EOF'
-          plugins { id 'com.android.application' }
-          android {
-            namespace 'com.mg.ajan'
-            compileSdk 35
-            defaultConfig { applicationId 'com.mg.ajan'; minSdk 26; targetSdk 35; versionCode 1; versionName '0.1.0' }
-            compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
-          }
-          EOF
-          cat > app/src/main/AndroidManifest.xml <<'EOF'
-          <?xml version="1.0" encoding="utf-8"?>
-          <manifest xmlns:android="http://schemas.android.com/apk/res/android"> <uses-permission android:name="android.permission.INTERNET"/> <application android:theme="@android:style/Theme.Material.NoActionBar" android:label="Ajan M&amp;G" android:allowBackup="true"> <activity android:name=".MainActivity" android:exported="true"> <intent-filter> <action android:name="android.intent.action.MAIN"/> <category android:name="android.intent.category.LAUNCHER"/> </intent-filter> </activity> </application> </manifest>
-          EOF
-          cat > app/src/main/java/com/mg/ajan/MainActivity.java <<'EOF'
-          package com.mg.ajan;
-          import android.app.*; import android.os.*; import android.content.*; import android.graphics.Color; import android.view.*; import android.widget.*;
-          public class MainActivity extends Activity {
-            LinearLayout root; EditText prompt; TextView out,status; android.content.SharedPreferences mem;
-            int violet=Color.rgb(176,140,255), card=Color.rgb(28,31,42);
-            @Override public void onCreate(Bundle b){super.onCreate(b); mem=getSharedPreferences("mg",0); home();}
-            TextView t(String s,int z){TextView v=new TextView(this);v.setText(s);v.setTextSize(z);v.setTextColor(Color.WHITE);v.setPadding(8,10,8,10);return v;}
-            Button btn(String s){Button b=new Button(this);b.setText(s);b.setAllCaps(false);return b;}
-            void home(){ScrollView sc=new ScrollView(this);root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setPadding(28,32,28,40);root.setBackgroundColor(Color.rgb(11,13,18));sc.addView(root);
-              TextView title=t("Ajan M&G",32);root.addView(title);root.addView(t("Yerel ajan • Hafıza • Drive • APK/Görsel/Video altyapısı",14));
-              status=t("Görev hafızası: "+mem.getInt("count",0),14);status.setTextColor(violet);root.addView(status);
-              prompt=new EditText(this);prompt.setHint("Ne yapmamı istiyorsun?");prompt.setHintTextColor(Color.GRAY);prompt.setTextColor(Color.WHITE);prompt.setMinHeight(150);prompt.setBackgroundColor(card);root.addView(prompt);
-              Button run=btn("Ajanı Çalıştır");run.setOnClickListener(v->runAgent());root.addView(run);
-              LinearLayout row=new LinearLayout(this);String[] names={"Görsel","Video","APK Yap","Drive"};for(String n:names){Button x=btn(n);x.setOnClickListener(v->module(((Button)v).getText().toString()));row.addView(x,new LinearLayout.LayoutParams(0,-2,1));}root.addView(row);
-              out=t("Hazır. Bir görev yaz.",15);out.setBackgroundColor(card);out.setPadding(20,20,20,20);root.addView(out);setContentView(sc);}
-            void runAgent(){String q=prompt.getText().toString().trim();if(q.isEmpty()){Toast.makeText(this,"Bir görev yaz.",0).show();return;}String l=q.toLowerCase();String type=l.contains("apk")?"APK":l.contains("video")?"VİDEO":(l.contains("görsel")||l.contains("resim"))?"GÖRSEL":"AJAN";int c=mem.getInt("count",0)+1;mem.edit().putInt("count",c).putString("last",q).apply();status.setText("Görev hafızası: "+c);out.setText("Tür: "+type+"\n\n1. İsteği analiz et\n2. Alt adımları oluştur\n3. Uygun aracı seç\n4. Sonucu kontrol et\n5. Deneyimi hafızaya ekle\n\nV1 çevrimdışı planlayıcı aktif. Yerel LLM motoru sonraki pakette bağlanacak.");}
-            void module(String n){if(n.equals("Drive")){Intent i=new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);startActivityForResult(i,7);return;}new AlertDialog.Builder(this).setTitle(n).setMessage(n+" modülü V1 arayüzünde hazır. Üretim motoru sonraki sürümde yerel modele bağlanacak.").setPositiveButton("Tamam",null).show();}
-            @Override protected void onActivityResult(int r,int c,Intent d){super.onActivityResult(r,c,d);if(r==7&&c==RESULT_OK&&d!=null){getContentResolver().takePersistableUriPermission(d.getData(),d.getFlags()&(Intent.FLAG_GRANT_READ_URI_PERMISSION|Intent.FLAG_GRANT_WRITE_URI_PERMISSION));mem.edit().putString("drive",d.getData().toString()).apply();Toast.makeText(this,"Drive/klasör bağlandı.",0).show();}}
-          }
-          EOF
-      - name: Build APK
-        run: gradle :app:assembleDebug --stacktrace
+        run: | yes | sdkmanager --licenses >/dev/null || true sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.13113456" "cmake;3.31.6" 
+      - name: Brand as Ajan M&G Local AI
+        shell: bash
+        run: | cd llama/examples/llama.android sed -i 's#<string name="app_name">.*</string>#<string name="app_name">Ajan M\&amp;G Local AI</string>#' app/src/main/res/values/strings.xml sed -i 's/applicationId = "com.example.llama.aichat"/applicationId = "com.mg.ajan.localai"/' app/build.gradle.kts 
+      - name: Build Local AI APK
+        shell: bash
+        run: | cd llama/examples/llama.android chmod +x gradlew ./gradlew :app:assembleDebug --no-daemon --stacktrace 
       - name: Prepare APK
-        run: cp app/build/outputs/apk/debug/app-debug.apk Ajan-MG-V1.apk
-      - uses: actions/upload-artifact@v4
+        shell: bash
+        run: | cp llama/examples/llama.android/app/build/outputs/apk/debug/app-debug.apk Ajan-MG-V2-LocalAI.apk 
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          name: Ajan-MG-V1
-          path: Ajan-MG-V1.apk
+          name: Ajan-MG-V2-LocalAI
+          path: Ajan-MG-V2-LocalAI.apk
