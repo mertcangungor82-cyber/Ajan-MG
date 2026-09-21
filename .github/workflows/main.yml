@@ -1,4 +1,4 @@
-name: Build Ajan MG Final
+name: Ajan MG Final Source Part 1
 
 on:
   workflow_dispatch:
@@ -6,138 +6,63 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  stash:
     runs-on: ubuntu-24.04
     steps:
-      - name: Get llama.cpp Android source
-        uses: actions/checkout@v6
+      - name: Write payload 1
+        run: printf '%s' '/Td6WFoAAATm1rRGBMDVaoCABSEBHAAAAAAAAIGL0KDhP/81TV0AMJwsXgDdNGGgMIyJCUpSKlhne584KlJqysnuBjuXfgnRlW2ooXIVB85dNRgNxpgQhJ9YwWUlo2qI1q1jFz5cHuYuq1Ab7oUdpTMHAjn3Vd2OvgZfdEeHDJlHbhyo/zlnu9jOIsVC04Nr2tQPBSLKpHnbq/mlcI8cqvaleYIBt88cnC6MwGOPxSFMLum+dF+Hul8wyVGccLvZkRPDsqIFXK+cbjOcYgjf9ea68993nKWR1Ts8Y7UyYhhy6Zku6q695RCeSKETEz210BjXib6cAAKETOEnp4pMJ3RDlBfEKd8DLOiNy31kIGU/uSt0V2qZ4hF7kvkWOhwR8dy2X2qHxs+6iM32iBabPxNPpGONPJtAI+joyK6P2x+6aLX7dM59r/Uj7Mub2VQIVL+wisMWBn0jYl57a6H+OVwS4HLaNaToInbNdJzUS3WQE66PiAu0czzNzhj+2rGty30z207+4qei6xm/9G39jjcrA8PeZPIDUJMSZ7RmT2sRFulE' > AjanMG.part1.b64
+
+      - name: Write payload 2
+        run: printf '%s' 'suO96a5hujj6BWgTZvgdQpa75stxZYUMrHqtR0/JwuMy7g9CSdN8CpMzOpJ4Kw1TWScT+beK48u4LRrN4jIQ7x28SCuIyzPxFhr7p02w/BmB/TtAQXG1ab4/75rrgG2EPgi5t+C4BN0ptlXsY3rS78Mwn8xCpj6Kenjszbycu7CXVTJg3BAVoF1OA2naBrUkeYnTV7luHDMRKTFUm+qW4ugsSNT0ZoaEr6k6hzmkCsr/Y3vntAryIx30mODdB6PXxPtS699ZdB6kAG8y4hFwi7mCtwJzwR/NZD61D7NS7UgyvikJyx5/KhMBQrkgJ1T4pq5zaSKHiuUb0Z9NDrkNkGigZtD5kXRkPXe0v+3qYxL4tO7t8VnwylP9wGKC8ubmmeTFWITOggoNRqnm8qkNL2PNuDt4LGCyLKsT0FtSCBadDCZP1udZRM2v+sMV59sdATd8HUjs9fEMuJdGCiCcgKXiB/ewfN2uqF1RsHfD/6StueNV1qWiaMluUWneN37ud9TrzkCfkocHkXE8CKFVbqG5MNnDir/5OkrDwcJtr5h39b6C' >> AjanMG.part1.b64
+
+      - name: Write payload 3
+        run: printf '%s' 'x0qvyDkYEgYxu/FJL4zxdzOkhFsPIY1thDiRZIVfvphTAmI9j/zGc3bFbHYCkNavwwKIdRKs+My1Dhy1RlhZm17dglqnZ2Z+qfuxSN9ofwVmwgU1niKU3l7TiNu/onJb+tYhDV3/+2+B8bT8D5SVVcA+qsskMlZdP27PGk5gCWW1CL5NFHQ4M/GwB+ME2UnHOKFECK5Lj+7cfLpaK5o35z8q0FJ1E2shVwBvgvlAYJky5giaHQ9R7cozLkhm+92mJmOOdrqP4XJ/BlbGhEDAdOZLWE2iMeGDupPArlgar0Iy+nQY8vt8VkdyE0O52PvYgu/TlEw4xyq+jBj6pzLltnW6+MOObzIE7Rv6ME21DgV63b+5cPJOoyIWYG1WQrk1y0p8VvM0Czpn11D5itq1se8Mnxf1NLlGArmugd9eDEUJmW37LhgaJ/Qx07xbQeF1OjZeZTGn1UwrnaKQVGik0t62M1S3D9vnpWd12o3QnjwCp1unvGos+6bjSGN90Dm09/Xa6fH1qinK4pQUJK8C6EEBDhgeg/XrqYZGoZ1IZ23C7Hjb' >> AjanMG.part1.b64
+
+      - name: Write payload 4
+        run: printf '%s' 'B8wyROQLH1qw0rC/pCaTymihZFmB0Nhi71PitQ/A3oZmMaXKt8Y8wMXgqhRgA2kuKrlqivdUdrHI4lW+XwXeNJ6QVLQmoMfZoFEPbpKeOTdotJUKFSNTDoOeeoNUigg1PV+nhFxA4YEa5uoUviV+WBpaiJxw9YoH43dzVj/vh2P/qb/Zh38SfUFbt39PHiMaIg45UDcTImsvhLIUZ8OffxI2lh9CyediwMQoobd17XPQSfUANMA2lnuS4CmNm0X8X/I7iUv4mQ3wJK5CLwh9lk98LdIF0GlaoMbSoa7uppHfHyTSDebqEo+t1w9wrCP8UoWY1L6FF/JB/es/UQ0DnVFN5xh7oiruflz/f5PR8+a0qplR6R1iUjJ9B5ZYzKJXLkIcg4IHPxXXnSf/E1kjQPOrwvySuDJr2S7RVLTDVaZqe/8J9JwwwOkuYdUJT/xUiu3mohL/PXs/NxAJvNxpGus60aLVT0F4iePTzu5I25qAnCsdnIhQFOoUwjtiugt6+8xKI5VM5+U7qkoUJevuS1dKDk1y9qqTofCLPHkwshNylF4f' >> AjanMG.part1.b64
+
+      - name: Write payload 5
+        run: printf '%s' '8yEBzLDII9d31FA5tep1Bo8xOHH2UuGCNZEdw38cl+8q5dhIlpyy3XRzGSJ0T60/Y6fo6BX0SmgnWUeLC4KpiKYEJoKKT8bfFeO7LaHq1Eh9NRIPJzSsVkoaFOO3hq74X6joHql4ql33OTgjQ6PDWexaoRwo7Wj9QV6CA4wExr6EJB1DTifKqkjsJN3Q5gte0VneurrYw+eFokw3HWvpwnqHgqiqNx+92l6ilQf+lnc4sdz8fYc6f1Zv0LUBWd4rI3V0cw78dMd/u0lfwxBfqBN0ERfxQlJUKWmwwNVf9sAqmc97MkOskC8l1l5q6zhVDsZsMPhircWsADGzuwEaeiA0gRkSt0qsuy3ciRwoEaTknK7hs84Ff+xWA2CpsEYhvHP2zt/q0Ls54xTvqk2/uXVZVF5JTRyHdgseF2U2LBhiQ06v1pSdMF7PpNF1jF4EUCRh2uPeheG/VtEkqZmAF0PtQAhcqaa8PQDcnVrUNhoQaV+H3zFknzOlG+W6JZwAPysSWOgwNmfvYK9wPQ/9Vq6qgFrCEDcQOQ28odAGZtEZ07VK' >> AjanMG.part1.b64
+
+      - name: Write payload 6
+        run: printf '%s' 'JCc+iTQ9nrl1/qgrfGG2modFu1Qj6ZuiX9A3GZLOUqm9yToOW7DDw1T3RREhAzXHyZ1XJVrkItHps6NUFLRJrlKphtwSqlaPtZKzDRcMSUwIcGhkQi0Yt3un8oGtw70e59iupnb0skGtI4xDyvZC6WmMF+u7tt97/ZvZyoW8o9XKjqBp6nbomrv3EyzpN0jOoHvYSLvi5Ai2lnYjspuRsC0OYszE0SexAPOcEpc3XqtKHo8C+ixL/J8fzOY+0vgKB158io+Ybx3rrYLnk0DKXEzSoqvektWqJXRHvWtrAc9D/c4q89184MIDDb6SsiTLkQhgke2+6kSgq1UQPXPZEL1cWlkpuUQzTQYJ1tUudhHGGinAhkybSxk8U4VV8z1Jkaz6DkDrGM2q3TP/KPDetcrz5dHZgMy1UwIPgfOkdNQrO4/E5YUKLPgkYEl9DrxL7OwU+CEBfUbfCk2zWYS4TyqHomN2vBqtoZlQ1CSzRefSOwA3+4gDMpXtWCDkkRGhtLux9+ePFEpM0P0DR1jNe3AWFwBcQL0C7zGZ5H8HO8w9Oru/' >> AjanMG.part1.b64
+
+      - name: Write payload 7
+        run: printf '%s' 'JI/0+EsjyFbiX7POBAuHgofPruEfjv/sulzkedD9eQU8oAy+oNkjhkQ/Bhko9TUaJxvLwslubmeGaJpnkwxHxIMKk3r0EQFn5UR4CG1/ASaBxg+cUiQ+5XtYdMM3pt2qXinLmho7xak2EVnGv1SD6GIQQ66Eo2aa3B/5haQemWhOX9MH9spAz3mHXcu/DVdxJUXLYkGWQxeWyEMjMrS7DVU3PdtFZ0Og69m0tPGHeRe6IMh/373fgHT3RVdYM8xOZE7YFEhQu9uXYKXgARcgMciPS45dJMG1NULR1h1z89VFLs5WdKNUrMXfXb8yr1TwdEwJYp6+HfiLZnhvc0oWQr0Sb+4kkhNT5hS8nvRORxcQ3KSqL3X/ECUjdo8G5ZWo+TLBeJgUZWiSkqlGezEjhQzkf+SjBwQGLsYa6EzvSZhGs8/z82Fv0iMGwcpg3oCrB9IynTHIuUPLpcCfyVJk52iOBkp4kC5+6aJJoOiznI2/lVmgK98Kb+1QSw3xJXO+l3KPndxcYWvaKE42PHD7fS1RNdIh3Rdrop/mdYtgDretF7kw' >> AjanMG.part1.b64
+
+      - name: Write payload 8
+        run: printf '%s' '4DmZigndczk4Hs+8n5aBDQ75U5fs4BjmJ5lP3WW4Ddid6B4B6t6UGQmVJSMklCToHSu1QYRDVwRABfiI7lsZNcSR+LvGFaQNt9tmIS4eFNDn3UZ2gXaf2i+i9SPFFFWH5d4pEAhVH63GVQqapyvIN8jJtYwRPAfJ2prb8CgCRYejOFIe4W8KUNjPjgNglLtj8d4dO1xXf8tJDi//sJqAl+3UkThEFNZ9RpXkBzJPlso6w8t/DuKLSHVe6FsRi1iw4opd+tONeFIgHmjV3yBJnN0sWrTiXr4A1WzdYUVABLxh01LL18FyCCVlMi8HHRZvSVN2cO941ZG8rwzCBWVyfiPQHrDBgjzlJT3qFn2dS4X1QsYSo1B/MOpfXMfItPGyqpOQxCy4vgMlzkVEYIAxzM92GYQKFNHoN63dQdYMjideuXKxrBK8wW0cF6GvDqBgEltGmERUPfpkOZWMIIIl7StxNH0wXrAP0HvTqJtAOKRcX5Tz/gCee/4wvYBOqS0cyvhXSy5a51XmTGUvHCKtph27SvuuXAetpQ6wD9wMhaSNh321' >> AjanMG.part1.b64
+
+      - name: Write payload 9
+        run: printf '%s' 'VjiwV79fQsrnVfMqcxmWoo7BCSDhuE2pRo7eCMpClZFf7rpcDXtxCLYHe+LoRKP8SufOpXRWeq8uxml8lIkyPXOTLhE7yB6HJTlH5GlmXKLOJUPjWucav4WPXeIABXwhDlTEjXTtHj8dSaOPnZTs1LtPcabnCWSeu45HZqd7hHGGSzNEjcu+K9Gcr1Slecf3tk/A+qLQUPuasevCMT3Pu2Sfqna/31hXC8XHIlJ5BYh6+Q91By/IUKuNgqx7c5k0uw3frtI5DtWIM+lauxe90I5pm7IxFQNe22BTooMr7lvxuphIWjIW/N2PkUN1iCTGllGaaoRoBYmeIYLDc4aRI4zYlS59chQiFPuikysXlRPlE95YBj9dB+p7ljOerV/7EIDIBCQ0wnohs+s6fmmC3gV31eqSaRJJUmIk0S7UHStgw0bvIrkLuAcppB3Atw1MUrkPfs4K0kJ8/+SWdXXRpa9515CJWHQWeCzpzoPar/uJZu+8kHKgUp7Lhb9ORCzx+rCfb+UeH0OTmn5pLQC8P02jGU0BdR6m9btudTJk0yp/nLQO' >> AjanMG.part1.b64
+
+      - name: Write payload 10
+        run: printf '%s' '84Ih8Q7hqeKIvpbiluQj4ASEpTqh4QQFGKv/tSWakyge4lZ4WJGbNq9bTjB9y6rKqxvp0/JIF+M2hSm1kfnthjDkrsDc8T3fe1aP5b39LUp/nr6fGSdjXaBciMUHDpcqzwm/uIr7KFU9NOGAvHfABTeh0BMQWIvWcKkBi/WCVBiELHYQerK7ogKCqqYV0QjmE2c5iHYWteIFRBdWunuODoqSfY0pmWBjiBvEkwdmhOsneQWLmfQN1sCtzrW4MDUVZE9L4Sl9Cq5JV/A9qQkODC6jWWlTnaYOXXtYvd1TSbjNyig+W6L++hXhx82YWjY3qudGRwtIK/jWZa1m/9zJV34TSpReELKiQ1G/RRw6PlzxMIyr0BDedzHsJ6ekWB0I6vSK0t1dr8axJFZZfERpkgiEtw/zu/oI1jIP5ndVAXMALUSw59gEn6WDsI4T1mGneHRhVbFBU/uhwysj3hIi3mI2G39pkj1yTcBlYI5bzw+3P+7HqIWRYqbKeaePQmnRa2GsN1/EHUwQO8qrgewVMzHclSPc7yWFPpgs5nK+NpmRyMTO' >> AjanMG.part1.b64
+
+      - name: Write payload 11
+        run: printf '%s' 'jR2Ex4QD75CS8Nk7kuu25HzCQzEoh8iswSew2oJplhNl0vFOGBvYbvmkWFVSnSDQMJMiQfUB3A8yXGZ0pCS6nCre9yVoiFis6a8eistr7Gdx5x2tqQhUe6LLwpRzHjQec2bvVYDjsl1mD1u2u22w2vg2PqLfDOxVtJuoloy4ijDtfdLZvWTC3/+J5kkx6OiUcXejbdj5Z8yN59ZV7NVaZJNvXytgX/gL2X47cB8PvsXJOdAM7QglZzBmQ23zqomvC1MhFbHkWZloHfHBJgoiz3rNzxwIgC9dgwSlnyAUBtmg1BYKtfPvA95STnWyEiY4Dq7go17kr84f4ge7PRlzU+YgdJxnLu7SfXLiycfd6MrlA8wUCWaYbdC//vpm+4ga/c3HFNSY798q364KyzytsTeld8NFk/oLIrE2ldwaTqzZW+HMjE3P+JiASBGVhiJ+xXKQFnM/dkijZaAFF67Ydm4sAdy3H0Pa9+FfVvW2Phpsvm3skXJlF4RCPUorTkcAjpD41EzBInSQBBrWTZakc4hjF6jtr3TgzeGMSNs7itrLo510' >> AjanMG.part1.b64
+
+      - name: Write payload 12
+        run: printf '%s' '1/lmnsiGC4I1tL5nlxVURtYApzr3V4OTvfySwkMiKJV92i86XbXD5+2ef8GuHz1yh+45P5zJCLH4Emz8oSiYCMtBEy1RK6BrD0byuXXkafss9HvuAsSvbx8UNpow2nP7juEnIdJ0YbuQlKgg8cqSVcNRJD2G/0fpWvrO4A8fZkYMbPv8UDeAM7+pzJeogOW6irO0Sj7H7jscoMQVoFSKuyjKpxrLj+ZAIKnd+r+Cnxjd5g8nmlXTy1cUrbvIPpZ2Pxfu9JUwCKJKrhwDj1aqsA8w10voO9HKsgxYmSWpVnQqnRDwwE6MLdwKOwB45rDD3MwEArPvo4MWcnYndD+tMMDs08at2v0h/ElwPcUMAZ0TFInCrcUnfS8DNvcrDmYdT8mAugh/ofEQLAKEJiR0prlnIFDa2WEwuUU9ixw/zQ14FMpMFpJJzIBSph8IW46cA1uBcDn0Hs9dCajDGfi72Uoe9zjp2D//n1VYA9/UG0OZTJXbMcZu9k+/LX+fR0xBT9nzDwUVb69yHKHEM5KDlBtsbdK8zGSgjR7SaktNK4TEoMPH' >> AjanMG.part1.b64
+
+      - name: Write payload 13
+        run: printf '%s' 'NuHJ8MvJk9Z6t9vKWN2EBq5mJMwHLiGQTBb+bqvAJjrpJuKZwxKOdp3x1ADZ9FcnNUzrHx+cdIW5fTJE7R1zGY6lv1sIV+iYxr7kkAtS4mxam2Be612qz9n/lNgXUlM/GQjbr8o31sGPLobwHN/PuNKmwAVoRyKmjOHe+NHnppWkozMda9cv4k8hGbrLfxmhPgc6IhkugXVjIpzvFgNAp0M52EgAK0Cc8OqtVbKS3QNdIzZGimNzkrgtCIGZPJPKSudRDI3BMijTNJwPtq0fNjdZk4W4/B8upVELvh6ta2E0bMZO2/IXhccCS8wiCF7jlY2bs+c1aNNHqbndxG34tz+jyNZDJWlEcHEXV0XoSkzF1u31G6On2eazlT7W0emW23tEccjVEA7zUalrya7zL+tyaHK68gL/S2H3n+izfzO+C6WVlLZNw+g/R7TcwsNPIB32B/zpferQ9ubiOn1Q9TnLpegyl1aGUfrhzqj3fS+ZiaVklFhokMx2SU+sJLxsdu6yd8kWjsG7cgoz8mztb/FG4y9VibcpwXlPqpRgY5UdauOz' >> AjanMG.part1.b64
+
+      - name: Write payload 14
+        run: printf '%s' 'S1NgLLIDr89VLwgilXDXauVoBXiNV6P/8H7LM4yR/fwoDCDwvN1PZHOPGdeXu4CCaIuWmzeSqbSBYGK6ynwfQIGHEjs8ZMF+q9WKLxb4jBOS5HfK3PACifR+MYXU4a+h0dPaYRpGGVTMLEq45xAvPC3dpFKxo4N1inn/B9PLV9WxqkZ5wy7KEIRKDw1roloP0HHWjHIj8MevjlVF/rxj3mkls1+v72dbU/+k7TJuqICY5LzLVoAy8eODJmTH9367m3YoUf53Hl6aAaJ72HL5VYkjSc6vYIUB3OUsW8vJI5I5qDWpZaP9GG5Nl58qcu48VYTz/VhXZAMPNP28z3D7ljo9eu+wRPnhZ6MjL29BMsTFpKrgIx/La4F4Qe4rxnMRbbHJeQUO+1nmcfhatyjEtWhLi3GbeiWxF1hq8HeNysTPeNbsWPebkwrXCGSmwqiwjpR/jfHtyB6ThWimlls4qimO1r5etLe3n0wF2hsr55EcbQvvxQisAsmMmGD6pSoPjTM0epgOx87EQX2HuJkHEXl8gTDtnDtjTXWAjtRQlx1gluhJ' >> AjanMG.part1.b64
+
+      - name: Write payload 15
+        run: printf '%s' '9MuixsJ/Eg+JgI9x3kv/OC7sTO0CV33JCKFg9l1zzGkPXs9ErrN9jxpClTSn7xX8/J/0w/b4VPBcEct0ACP7o/ATPttfXxcXq/h2kEQWAm59cGYLgyQOty6gAI3CU/DObQleiz7f2NV0q+1oBkTBe7U3k5+PNClf+HoAB3HMLw0hAVH9nkYTvzXQuH7VME90wP9jxD7nHe1ENMY0qgL/2pOFVeQ0GcNsCmje/4ltLyjfFXiGxXDlI9ILU1NLgz8QRfjDgClUN91Rpvuqo0w00GQ2PtssCFq3KepfTfX1V9aEVsq69tAmVyp6bxMWTNh9r/LHu24P/tJE/kvL+ygiGNXQDqL93uwth03kKqDhAPdgITi1PyJM6AidI/XhBYy6Kibs+elRjnQzkYhLL0o379qhR+GL3oFkTjWxgq1yU1sFC+EkQYsEDmbrXqZIrx9Xi26QCZ1xb9u2TsWCB5MbKZIRem5UIvBLuPeLC6xE58aAMX+zbS6eUokkXa4B/+cey9IX3kMYycUHKjKm9aQ2Mv3nbc25G5aD3NAjNYdaFgjNMrpN' >> AjanMG.part1.b64
+
+      - name: Write payload 16
+        run: printf '%s' 'SVBVO/7Dkucn+EW63ogK7zQ1qku0VvMZGxsGw1To1JR+ir3YIU8g9qwK+ckEctE9GOyGyitnMucgHZIxD9I7lzxokI7eNbY/9BGPpJ0BG6u4csaQh1297IbRtoEKA4r9XLmY7inJugx16krm9U+us63Fj+quVM/ZoWm4fPumQwHDEYUrrSXAK/7McaAE8U+HyVsqPI3VK8E3aQcVv3s4Ots2CWJMB+/6h8EtxM27d8eO2uidZTPWtsI+6W50lmf12e8/ZdLP1xfvef2CgjZcc/QRiVTxNgAnl2MrsvvaNBQnKcfbB216PROC+y/lnm8XCaPY/DgIZLQCrAh1n4WraylG3Y3LQZKlMtQ2PjOljz02PbLyDM5SN+dbF6rxXy2oSZQ4H/tolwQ2NL3rXnzMeFIWuijufVCOWa780f3XETF99mZ5vlCm+e4p/6xiwEKLRoR7VvBi0keHlKu2rtmU6S3xHHnxCmFNQSbbzaaB9foiIojrKBChs+34l4MF15suxz6IA7kbZRVdBTpVIZP0wdAUXg20YKGRCLMFreSSNo4ReKPd' >> AjanMG.part1.b64
+
+      - name: Write payload 17
+        run: printf '%s' 'YbycJR2j+rX27huYjKyC2iNsaLBqXqETSm8/f/ieH2+gxr6Bp+xPiMXhNt/Qe/+/1cDxsejND+YTwjX6ocfP3qS9Nx91R3XAY2hsSiXgBrOvTilHcv+CR//GXMqLiTUs5ndG77BWYjVGHHpfwoPYMICPVpNHNBa1kMocoCubUwAcDI85V28X6xMbhiMv' >> AjanMG.part1.b64
+
+      - name: Upload first half
+        uses: actions/upload-artifact@v4
         with:
-          repository: ggml-org/llama.cpp
-          ref: b29c606e28a01b1bc8c1351026a0fa6e616bf6c4
-          path: llama
-          fetch-depth: 1
-
-      - name: Set up Java 17
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
-      - name: Prepare app_src_main_androidmanifest_xml
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/AndroidManifest.xml')" && truncate -s 0 /tmp/app_src_main_androidmanifest_xml.b64
-
-      - name: Write app_src_main_androidmanifest_xml 1
-        run: printf '%s' 'H4sIAIKmsWoC/52UT3ObMBDF7/4UjO6WmlvHA06Iw7SeickMdc6MLNZYjZAUSTj2t4/4m7jU7bTc2H379gl+EN6eKhEcwViuZIRu8BcUgGSq4LKMUO3286/odjkLKyr5HqwLvFzaBZWFUbyI0ME5vSDEsgNU1OK+jpmqCNUvxIAlfQ0tZ7PAX2Ftwc41mIrbZmnQ9xeSVhChweFDgNfpNsnSZIsCsvxPiyxZPWUPefz8sH5qbTqf1xoMB9u5thUuHUj3UWiLlLnrW6wGYAecAVOl5I3wB5gjZzDGbT3IZ+eQjJu7e6q14Iw20+PIsI4Kod7uKXupdYScqQFNJAV1NDk50wXNagE2Qnf+VZGmk8PYyk3Tmxr0itQnOMIj39lrm/a1EF2WlWoP1O/ZtbVr9pw1cN0Vhr7RnQDCWU5/UplXZS5UqaYDgu5A+AnrjAfRo6Tz5qlPhUbVslj/q72ttVbG2cyJawd1HmhoE5y947a5w7E33XwbQB7ROHJ3vgDmEhS8oVzGvQ79VginJg4UfZhf8OvIme+5cGAue3/HsxvGnQZv' >> /tmp/app_src_main_androidmanifest_xml.b64
-
-      - name: Write app_src_main_androidmanifest_xml 2
-        run: printf '%s' '4nV6weVo4uGDUpnzn20GFX6Mn9PV9ySbmA2gT+KGZHhWwzfwCXr/hyHDL2Y5ewf+Ts7GlQQAAA==' >> /tmp/app_src_main_androidmanifest_xml.b64
-
-      - name: Decode app_src_main_androidmanifest_xml
-        run: base64 -d /tmp/app_src_main_androidmanifest_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/AndroidManifest.xml'
-
-      - name: Prepare app_src_main_res_drawable_ic_ajan_mg_logo_xml
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/drawable/ic_ajan_mg_logo.xml')" && truncate -s 0 /tmp/app_src_main_res_drawable_ic_ajan_mg_logo_xml.b64
-
-      - name: Write app_src_main_res_drawable_ic_ajan_mg_logo_xml 1
-        run: printf '%s' 'H4sIAIKmsWoC/62TTU/jQAyG7/0Vo+x1RDLfk6rlwEC1h3BeiVvUZjcRLYnSCPj5+9ophRUIgbSJ5Ce2Xye2p109NtupH8XzYf9wXNYPu7HvduusnaZhmefHbdsc6uPFKX6x7Q95PdznY3PMT7FsIXCdnOVTt5vadaaKuBv+zbRN96edPkw9ds3T0I/Tr3Pxx/mfr6/ILhcsWQ311PLT24Lf3X6f+n0/rrMfKuDeZO80VHhdT/U6u3VWWpGiglWFlTowHGLEqARSeBLQEZIOTE7NOi5CmDVW3GUi/3KDN+GqdNefNqitDFZUgAHMDBulc6Lymr1wBin9Ga6AspS+BDwD5RQ0/M5vdbpxG7sJn3YaSmk8dhkJJXah2OKz0RESwYtopLUCYtgULDtYfySLoRLgjQhO+kDLh03RshOkRzkGwngETEKCGc6IqgwvwLCpNDQlqgJqC7LJR4JXlId1aBdAB56bnif43yeoolRYgjb0Q6mMlrqczxMnqD19vYLEIKiK2dOcsyxUXDb3tMrnf+zl4i/4+LtIuwMAAA==' >> /tmp/app_src_main_res_drawable_ic_ajan_mg_logo_xml.b64
-
-      - name: Decode app_src_main_res_drawable_ic_ajan_mg_logo_xml
-        run: base64 -d /tmp/app_src_main_res_drawable_ic_ajan_mg_logo_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/drawable/ic_ajan_mg_logo.xml'
-
-      - name: Prepare app_src_main_res_layout_activity_main_xml
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/layout/activity_main.xml')" && truncate -s 0 /tmp/app_src_main_res_layout_activity_main_xml.b64
-
-      - name: Write app_src_main_res_layout_activity_main_xml 1
-        run: printf '%s' 'H4sIAIKmsWoC/+VYy27jNhTd5ysMLdpFMVLspEGQjievSZtgkmKQGA26Eq4lWmZDkQJJOXFW/ZJ21/38w8yP9Et6RclPUQ8nTVB0sglEnUvxnvs69NvDh5h1JkQqKnjf6brbTofwQISUR30n1aM3+87hu623l5QTkJcwFanuoAlXB8BDKWjYd8ZaJweep4IxiUG5xbobiNiD5M6TRHnFmrPVwb/CPEnamL6BVIvcrnh7wMwp/Hsa6nHfiUEHYz8BSbi24saERmNdBxxRrW6mSpP4lvJQ3Ku+o2VKVkFCUjQEbXhCwjQNgK1ChhDcRVKkHEk5CgQT0oPfgPvDyHm3ZZArPJqVTRyrce5eQuIHgmsrOJIwoXradwJ8TaS/evxKL8f49Ih72oAJhFmO3GiQ+PnufphUYgYCI93drUGcZYzV7nEitBYxgrYRVJBpCL2IISK/UHI/X6pm9Pve8hdq2KwGFhS/JyqQNMlpOlJa4hExYxOfQ0zslkoGCA0l3MOQEY8GvsmNOPKZiITT8Za9sqZJtWPbLf2yZ4lt38Kga0fV1EJD' >> /tmp/app_src_main_res_layout_activity_main_xml.b64
-
-      - name: Write app_src_main_res_layout_activity_main_xml 2
-        run: printf '%s' 'nvRWw2ecHZAHXYpgtbPVTjzJ82UjjSfpO8cYl87VNxAnP/xUjz3Nany11rPleqMb+kj6Tm9XJQ04PWUIHAoWrmZHO9Kyznz0HQ09hYFKlfNfYfcEvvzJQH/+xD5/mgr59+9/bcxxnGoStiG520OSM+7mtHnLlZWvr69t2fkt8RqLkDCf8pFwXq+Tx/CQnRYn1E75JWGMJsp4TnhY2UvP5229ZdO1YvJo/kokYR1DRQck8HJMN4ulJYbdIoZ5XD5KEaEsUCcgq0OTFKDFviovpsMZFLSWcxjuZYrtvGbePSOiOzb6UGgQHMUx5aDJst5YBk2ookPKzOiOBCdLPBSQB1eSYBowIieYrC4eLyLavS7WGhIYXcfhqf5VZ7dtzlZPlflcxcwdiI953vWdETBF6gXFkxMXJ7dgbAhSLc2uBbGoPd1IiIiRuRxFAoikwNwAZOheFU+n+GAl+MWKvwDHICPKV6q4V8N6DjecrWqwJDnIHDqZq1ZLeapUjiAgZatTITmR1xDSVGXTbH1n1ETijth2NC9s4NucsO6awttQC9n5fpYo' >> /tmp/app_src_main_res_layout_activity_main_xml.b64
-
-      - name: Write app_src_main_res_layout_activity_main_xml 3
-        run: printf '%s' 'apbPG0noBnlUhzNR3GsAGTXdBJqVyJ5FkJ2FVGfzr1lbpArpoDxJdVt9UZKqdTJ8rwW4QqpW3ssWSj5LSY0zS9mSZWWu8kyyh6W2tI4bU74mH7+dks4UHmtFzmKk71aDLKN7P0xeQJ0ao3PjSHlMl2VoXbccMYFVwCMIsloYpphw3P2xWDw2iydmsTnPRjBsm2Dlu9tGF73KBrrWPRuud2jHMKj+CNU7lohICPd7tvhi91uk56DEOwSBPTXRTleg8yg3y96NJ91sRC6y8MbM0tedgsvzm2ei6BnDovWFuP2wePH2v9+m/TduNf9BxXYjr8uMoo5nudG2glFnY2AwB3L7ckYXCv3I/PducyE7+8qOm3/HHQg+++aL3mh391s3BsN3YzPGuXB9/OWPwcX1hl30iXzHNPh6qb66OH0dlhmdkK+X5tPjny8vXofobEamyf+C6uKHk7P3Zx9aDGnbrEW+18H/AJ8Ajw7IGQAA' >> /tmp/app_src_main_res_layout_activity_main_xml.b64
-
-      - name: Decode app_src_main_res_layout_activity_main_xml
-        run: base64 -d /tmp/app_src_main_res_layout_activity_main_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/layout/activity_main.xml'
-
-      - name: Prepare app_src_main_res_values_themes_xml
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/values/themes.xml')" && truncate -s 0 /tmp/app_src_main_res_values_themes_xml.b64
-
-      - name: Write app_src_main_res_values_themes_xml 1
-        run: printf '%s' 'H4sIAIKmsWoC/52SQUvDUAyA7/sVpT+gPXiTZ9lU9OKGsN1HfE27yHt5kqSO/vu13QbbRae5BEK+LyTECWrqxKNWs2wIp9YHzBgiPuSbHUYsFp/Ay9c8+wJBtnN1CYZCEO6KZ+hX1O6sWKWFN0r8CJIfbZORDONJCFxLovq+SWwvECn0eaXA6sqx6WdmT1yn/ds4aW1gnU5jGgiKt+B6Zp5SSAM492MuYVhu+9HeYmD4phZOC/7ZMjW+C0WQ/poD74e7/squ0Seu/0130oDHa1aPxUvYldMDVDNXXnzGASuJiTAmAgAA' >> /tmp/app_src_main_res_values_themes_xml.b64
-
-      - name: Decode app_src_main_res_values_themes_xml
-        run: base64 -d /tmp/app_src_main_res_values_themes_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/values/themes.xml'
-
-      - name: Prepare app_src_main_res_values_strings_xml
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/values/strings.xml')" && truncate -s 0 /tmp/app_src_main_res_values_strings_xml.b64
-
-      - name: Write app_src_main_res_values_strings_xml 1
-        run: printf '%s' 'H4sIAIKmsWoC/7MpSi3OLy1KTi2241IAApvikqLMvHSFvMTcVFulxIKCeBBLyc4xKzFPwVctMbfA2t1GH6LIjstGH0k7AO3x/dZLAAAA' >> /tmp/app_src_main_res_values_strings_xml.b64
-
-      - name: Decode app_src_main_res_values_strings_xml
-        run: base64 -d /tmp/app_src_main_res_values_strings_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/values/strings.xml'
-
-      - name: Prepare app_src_main_res_values_colors_xml
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/res/values/colors.xml')" && truncate -s 0 /tmp/app_src_main_res_values_colors_xml.b64
-
-      - name: Write app_src_main_res_values_colors_xml 1
-        run: printf '%s' 'H4sIAIKmsWoC/43QXQrCMAwH8HdPMeYB1s6NItRBZ+01JNYoONdCP8DjmwmKL1Lzf8wvIUQGjD4Hi3FYVVTS+rsPlYMZdzXcwB1P13pYM800b2Xz6v6SMYcLWCTOBcWUeAp+WvSGUXRBJ3wksqY3nREFO+eEZ8JKKTF2BQzWoltWH8S47fVf+n1Ny7li+8+IbL6++QT1dGGJWgEAAA==' >> /tmp/app_src_main_res_values_colors_xml.b64
-
-      - name: Decode app_src_main_res_values_colors_xml
-        run: base64 -d /tmp/app_src_main_res_values_colors_xml.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/res/values/colors.xml'
-
-      - name: Prepare app_src_main_java_com_example_llama_agentstore_kt
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/java/com/example/llama/AgentStore.kt')" && truncate -s 0 /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_agentstore_kt 1
-        run: printf '%s' 'H4sIAIKmsWoC/8VZ227bRhB911dMiaIhEYbwpUVTI44h22yqVpZSSU4bIICxItcyI17UJelLAwH9kwB96R/0KW/pl/RLOrtcksuLJNtxWwKOJO7M7FzOnhkyC+LMyYyCEwUWvSbBwqeW75OAdDpesIhYAiR0WeS5lhOFCQ0T64h/Xif1ZZckZEpiasW/+F5CrfGPffw4lndvJz1c0PA76i8oy+UjNrPexlFofT8eDrqMkZvWleH0LXWSToebBccncQzjJGLUPaFxjOHpHcDrkvjguXu4xLxwZhb3ZGTNBS8+jSnbg8Mo8ikJFQ1GSULdLur0o3DWMTqdbNfuDA2JrXUny9MeyIQZsCf066HmgiZo5C0Jz4KZ5U41E8LU903YNuBdR+hFl5Qxz6VwnoYQhUfCBd2d7kE11VwB5OVOsajUQQG9uMcv7Whkdyc2TLqHfRvml/ocJvbPE3g56p10R6/hB/u1CZfZvcEQ/077fUMrTBh33CDIqhDrntuyj0x/dTcTk3+WYvahN5jYL+yRsiKzf0aSxuInOOmTcJZyrKCTuVnF' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_agentstore_kt 2
-        run: printf '%s' 'T+ieToa9Aaqc2IOJCXMvdOsuXzEEwxkvplgxgXmzi0S9EYsTJn/cJY5lKwhOFzNG3DYUmBD57ivKYi8K96AXIrxCeqXeMGAfTkMvyQxzezOavCJ+SvU5vckPg5F/UVCFbrtk6hd7WYxc/ZhSdlNL79ju20cTxNG3o+EJogx++s4eIdz2DzSzIkn4wR6e833LqhkWlh/egQNPnlekGU1SFoJ3DrpjBZiRSfStx+JENwxwLAwic1jfMoD6aEIrc7lUc8lDjltCNvkRT2mRASXyK+YllcjbcdUbjO3RBIYjGNkv+90jm9d3KM6ZeWnAq27/1B7rB+aBsToR0gujHQfcd7JADkGGCyLMfEY1TY85WyESsNZFdbVAqGil6SIL1TCkXNVFnVt7DNqb8O/ffgcNv/KtLdw4wALITyshc9onWJPdLbzWBBGTS5qTtMLNDU6uc/HDVUUhJ1PuakruMcsTqlbNXFM5NJL7bgqIZn4bsJ2BccuE8U2c0MByUsZQauIF9MTzfS/G9K3OU7rA3nabTN0jMacvjzkN5omAsT3Jre4fyEPr' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_agentstore_kt 3
-        run: printf '%s' 'uStPbRmuuyYAPyJ5N4513wu8RLAQAnMHAYJ91IuTZ5Wm/bwO45RLB6kIiYsPz2sKunFfjlpb+4y/ivQMR8fI1IevVf4+tsdH0O+d9CawKk0iZiuJJDsZt2C6qwsPm0XBcgM8aJzk3lWERFvA1Dzeb5t56leVIM2NMtvrZLB++g72kX3YXiPFJyR912gIVO8sO81vkukxOotR7HwxdfUGsBykA1Yg61bw146x6oj4Sl21JsG67lGEh9RJsGfqormXx0609k/vEYKCitGDDxVmOUWY5fxgZpNDGyM9cgonHwlyEsPISoYS5iVPyzCKX/eiJkxTXwYwFk7qma+r2lGMpziTULuFvv1UbRScOmPLp+EsuYBn8BSbeYaG/zHP2dKjLL9ZklenOb5LNu8Qj1YBbx5R/XDJSQvD3M/dhu7gGHlOjJi9QV1BL4iwarjV0gYG3N0yNE1b0wqkbflgpLfNmCXhZ0uHqee7+LB0b4bfWPJa3Bti3P6yVnf+uPaAjH51QUMup7J1m5wIsSQADTcUfJkNh+09QOi8CY8/fviV+kmAB/WN' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_agentstore_kt 4
-        run: printf '%s' '9vm7Kusv32hwQ/EHbSzuiMU5xktCS2vdwWj3M0v0nXyM/nqPSJh8/MDmH/+g8PFPFtK/3nt7UPVpV5LI18ghy9v6tLxLAyobdzncflPMtgq66TV/P/F9jC1jFbBZFHFkl28uVFjjmrVIE107j1hAEs0ErfuWhCcvnkyJM08XTy63tTbxfFpvGfTbxH0M4CxH+1l8EzoV1ZZlNFOJIohnsYxCvJlRgqgMe19hkiwMxibORQ3B3IRwp1Gb1tyoVxaF56LXOFapo2dTSo52maj8sdaqmNml5Wx+X2c9fxkk7ec/qzpGG7yU4skhxBQ5qWWa12FFph+aBRtj71pC7I6P/l0a5Lu3A+RWICmLxAPH5NYIdYOSSFRNa3ujlshpTWtno5bkxqra7kY1FXzltP2lca9xWyGHrOholH816oQoJAtG3GlwYPaOVnAg4nHVINikQRSujoBio2iR5yPnRAM+22+jxRqCkgsWXUHP9+mM+F02SwM8+Pa1QxdiotcOU3Cj+IYAtwQnX7zAlufy9gLiX9/S1FNb8d2douf1kU194zilMy+c' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_agentstore_kt 5
-        run: printf '%s' 'MBLGJHt+KE0l7KbmaFynbBPqkTe5vKrYyud1I+2srhpU3pWue0raJF4ASGGyWt/IfStZrWRBAw72WulOACxioHvghbAFaZh4mUX5rNBOI2Jb/vKAC+IhUSDnNU/KqvfF/82bpPqDxEoCCNTKYiNc8aTeEM274Rp5fvSEjnzbVrREQ3mRtX43wUMVerrN49D6ga1OYQ1oyUbZAq0SkHeDlmhAm6B1jXsKwQeD1gM8rkp4fQLArlXUiAa6BjIV4axxGpZ3fohBzHEE4HMBLG+pnnXQe6vLVnpn/f8CsjUwIH8rPWKcOg5yyHnqK7hcwrkXEt+v9wwOpdBt7zD5/3MsO/8A6un1/+AdAAA=' >> /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64
-
-      - name: Decode app_src_main_java_com_example_llama_agentstore_kt
-        run: base64 -d /tmp/app_src_main_java_com_example_llama_agentstore_kt.b64 | gzip -d > 'llama/examples/llama.android/app/src/main/java/com/example/llama/AgentStore.kt'
-
-      - name: Prepare app_src_main_java_com_example_llama_mainactivity_kt
-        run: mkdir -p "$(dirname 'llama/examples/llama.android/app/src/main/java/com/example/llama/MainActivity.kt')" && truncate -s 0 /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 1
-        run: printf '%s' 'H4sIAIKmsWoC/9U923LbOJbv/go2N9VD9th0qmemasc73V7ZVhzN+LaS3D19WxUsQjJavCi8OJHdrpp/2Kp92tpU7cPmdfMyT3mz8yP9JXsOAJIgCVKyHXd6XBXHIg+Ag4NzxwE0J+MZmVJjHPoOfUX8uUcdzyM+WVtj/jyMEoMEbhQy1zkkAZvQOKk+H4dBQoPEmfvOiegMIOF3VAUMaOKcRqz6OIydnTRwPap58Zzgi0jz5iAM5/UX8ZzS8bnTp+NwGrCEhcEBiwG7ZZCXNOrxWTSADfh/BXADWJLEzpC+SoahaNACdpokNCLBmJ5E4TSicdyEaJowD2Y7rT6/YPSl8xX8qr54ydwpUHonTZIwaHjZdVmCiDa87vmwfi19ZzjvkKgBAjtv6WAYkhojvXLIOGEXLFk4xHV3ieedATs1A9GAnHm0C/0NQ/zdDAmopl7CGTWCh05Hvujz57vycVzvYD4HsZiTBP9yOvP5Lv+UNa/Bj8OI5uKA3QIRRJMaqAeiNF6MUdiyvwZj4OgaYCReRny5JfUOWEBJdEAWYZroZU3f' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 2
-        run: printf '%s' 'ri+fqQuDck8i+MfG5zDRDts9L9CtvOwFExpR4NluMAUUGqCm03Ti7MOvQ5oQlyRkVbg+JW4xE4SehuEUSJQxj09AZhjxnIkXkoQFU1zhMDjjnO48kw87/GGZ/Wdh4rGArxDQDHCPnT0Ww8KMz2kUt0D9OTxreQt4vHTCANfYozhqC6xH0qDQCBqAlyw5l0yTQf1ILojDQucZK7Sj+uw4TeZpMkgiSvzq+16gf4X9OwOGGO8BPZ+FkU/KA0qNMyaVQfnz09PeXv3pJZs737J5FyRp0fi2hO3a2CNxbBwSFmTyZGwZNRmzbONqbc2An3nELgBfw4NfDHS7cUEiww9d6g0vtoxc3zSCxglJ0ng1WB90G0hV3AfoktA0tkhjtCAwvW6yZeTatRVc8OkzcrZlaFm3GTs2FiBbxjJQj13QVWFBS4JWGZ+vCo/aOZ2vCj2XJmPLUI1HMzzlKmbLqOoctUEBh6pjYXxhTIgX12FYfIh80g40ReNLkP4g81sG/NoG2CD1vLUKrJfzBwD4aYJmCK338eRPh+LFl5bd1KbjkjloMWh5' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 3
-        run: printf '%s' 'WHpgZX3WW4KgJJ04hhFIkBzGU2gLQgTsspMyDzQmDNbG9mCUQLBgeiB68HcLA4AmopGE7fMPazUyxRVPaMuo+kY52apNwe0Rwpe5R22Q7YuFfI1r2rLkwp8CKuUwNaA5DVwAAIb8kY6TI+IDoQRlm5d+HtFJbJwtgHSXC9BNhvwB+zo4JxF1TwBAcGxsmeRHEoz86WjCAuKZ68bh8V53dNLvfdUZdsVCX2u4i41PaOQzWPIwML7Ih4joFOcUgcouezBWg0MDBv9FCh570Ztlgz41wpmx8WXeLf6wiWGFMxuVZJTklJNcnP1QIKKRoOdmmYdsFoUTQI9dBswIPR8seGDENPYY2DYQCmMG5CPB7VuMJS4ds+hKN2MUzxM2nnHBaJ5n3kfThI9hSffCceoDB0vsccJpxNQZw8dtBww2vDnnAcaAesAA1OVqwmKJDUg2oDoBs/tRMBVWFcUHLX87kkI1fx2x5KFo7oKxTmiOqAmOsMfGXE1u/hiHgbkK6i8RkR2OUzveYBZQRX0U+sqxV0FzLhTGY9MX3KbVySuVGLhZgPu6' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 4
-        run: printf '%s' 'RrUZ21uG2QF9dLgvn5rZFPn86g0U5SyJEF7QKGKgdidpYIDfy5G3YnJB3V6A5mlMB+BmUXQHUK62bUVDxikE7E5Lq0JFVEM7RRHFlFMPiIUOmdUHvxrDoDzYG/ngURbg4E3Bgp6gv0HdwuVXI0wFxUwVZuYFFWI4P5CfwBflKhCUOYvPrZpG4+ghDwHlCntrJecsLmB9NgUvgx577iH1w2ihdCPsb9ZYGGCLd2gXA5yxwMWZx2pDwbrSoYjL1Ernw6T2SHhrsWWrmKN/bJnfgPFCjQw9gna8vH0bcTW+CKOf//a/ihovx60yvLGUqMrZoxMCzG5XCAwhQuWJWHL043DyPAJ1wJ5WXD9LkQ0ZJ9kN3WTOQxKltAaixFkldDEUsTWY4Q9Jk/AgJNJA1Ie9Lj25NsbYqWGBIHRfjekcUdZ1fR9UdOt0Rt6/BldOGFv39q1pa5tK293piWYprG9C4tu3W8aTK+pIB/TaXDo9HeMvZ4fe8WqcwF1eiEQC6sISHpBgmgJaB/xJ5LiEeYtMKqpNuezKpl8aT5tIeB+yq6Qf3ryL' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 5
-        run: printf '%s' 'ZjdvqHFGPY/evma+Mb15B4wKn0CLGj//7X+MJxkeC3CljJu/w9+zhmW5XpWdRkvYaXPTuP0/mBaMlRiLcBYT9MhidjmmgAayi0SYGi69IL5BIXpwGtdWY/1Q7ysaSMFBRuLobMv3O4ueC/oZ8zb4bsSCSWhX1E1DA/FSUZp5PK7vvxQ6cetYhOPaFvgeEAKAcps8Jte2mpAzVZHLKFyPEhuPRF5K1ZhZMK5tgq9rbcpBubZdBlJrqwbo2pYCoNYuC9W1bbKXiuUoVkcaY5mTROmtZyqFPcSMqleVflj28exZFPrdwK1q72vdcCQPpsvRdRPrlm2fMnpp7R0AOw52wdbMsqS8xkf4RM0q6KSRAyn2qEmzSK0s9Lmim2lw8+5SmmCQV1AznqPTzcIp0fetBFaZSiZRRBbHE8v8bPMz015uyhp6j9MznyW4WFzOKjZRayLKvPyBqCypd/OfoH6N/f3TZ2LO4KIZi5t3M4/qaBYBH0TBv9YxWGumBJqlF8BpimoRudQkFDkDy3bgf79CCZzEC4fFO+BFzXj43TSFTgRWHGx4' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 6
-        run: printf '%s' 'hGZ8TGYQRwfpIkXWJj9COA0aMQ2IsShH062LVMVVdelL7o3rngKodCCtF3WKiThZiIjF/VPxt/M1PQP4FVY/15fLF16b3alr0WxK5m7n6KBnlnMVQZyCR8zGQ5AjMYzeYVe6W4khi9BAIxOlYGG1JVLmqvVWm6Zr/Pxf/2Fq3N+2aTeujWoplpNBzS5kWqWGiQw1N74BH2O28USvnqrbEJa5gJ/DQ9fdeP7c9811Q2xDOKcD25kIkMECkPKdcRpBbJAMmQ/T9TwG+lyjyxyeoyg9t5d7ODXdphAA1YBciDtoAuQcDtKoCLK8Ghf2s/D966qQC52lsYfLhLwi3OW4qSTXIgB1+H8Czm4iUamd2IaTiWPxTJ3eS+BFQwJVp81itZXT833qMhxk40uNsMBUikS4nI/o19GHg/GckllvckSBC91mUEUUNEhhPKrHJ0oDERFKyoFz5M8T4GVsUhruLuOBSm0cDtWt7PdFSqNFa79qpyKvpe9XJ9Al+XWUVN8KY/VFPqJhEmqOr+aU1PKL64aJBNycexCc4SeN29KCSo9nTTFj' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 7
-        run: printf '%s' 'qsemSOfWUOHDfoZD6pC6Gxo8eh2m0YzF53pEPAXiKHxp3YVhZNJO37E2sSdZKIBPDptwlWRcVdODmsC0lPnMWeXJVUwmFLu26qN98ol97RSpzDsEmpLdOZ9nGzOq/ljqH+rUhYnSRTJXy8f0R3D7FgL0S5p41Kczg928YQE8aHIoffgQs2CpflYzbjtpvLDQvtu1fFsJH3D9NKk2nnMGn5Ceh7jf18PgSDu3v5BFQGYeibBHNWnXnqapkE1m4rmvDiM1ZUvq+Rz8gen0Zds8MhVLiElsP55Wt54U5XYcnLLheQRLuTwJAz3ZjTDp3AUmqtGnRMN1o7GLpQmZtZpbmE3V4Tto8ddAM8Wjx90xU+v7r4Zp1rvGwEne4n6y5rVksuc8ijSXGcjmcWTEJItYWoix2oTMqvBkhrQ+cMWy5hpBocq6Bl3wiuTYXFxK49/VH8yxE1hkumi9Mkx18/jhukoX1cb05s1DdQ9KOMlG4/SpEGx7S4+Qmv+vVCU4YzRh6o5CqaICxrj3joFIokBgEnBP9oSvglyMOquWCrIaFInYyQ2I' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 8
-        run: printf '%s' 'NxQOc20y7UG9uqp5N+DbH4VJS5xf2iNyhKDkXmyxGusFZquqpwcltds1yMqaRK9R7jyV+hNnHHq4PQ/mIwlnEEo0GJD7EqC29uDuAadZfLA725hGeC7kyiq3ArbwY2O7u1P4uj26K1dFpBHbMk4jVtrSbfVsuN4KZ2mQruiH3Hu7yJcVpCDJsvwWfJDQu8D9ZlhLpRQSp2FvY/6/gSPqBanOWGxY2w56JtBNOgZtC2SRUFgroMnKggqlURRGkg7k5k2+PeeolCjNAyktXfRsTg6GKOioW7bxW8PkZbNmc2se6jycDDKRlPVo5ZitG8umyxsZs3C+IKALW2Ys1bqX76vmE3CACzROCK+9cqjLElgMMRcUCVPsL2EbiMwqnYiNBksz/L32gbHKANV2Gd/1YrUKQf24u8TLtXompmK9RGwTUMy/tG8fC/iHbx036J7KVnvVhyptqEi/p+TX0FcYrDO06oJfsDJPxyjcRctqaCo1VVlnLovHWPTCt6I5DEpjvMci8GF5b3Flzg4EhzzfEFdU9TYKMm5WXYEEga/ABfXTT/ED' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 9
-        run: printf '%s' 'LCzIGwbk9EUKC2aZXMjXeUbYrpBw2/HJq53FcXQE+IvO0FoAudiEgcW1VfcvVwsYx2EaruJYSVptAwqANu6JfSHy0JhLyN6WmhQU0Tcq3tdrB+F1KTOpIIprKxGtO89LGLpkb4SfzL3kysrIHeo8jS74GAGZx7l+rbp1UtoR5GdiUJ+m0ZhafceNyEusUnIgQAHHnI4mPLoYoaYdff77D5McgID+9m3i3b6VqxgmoQ8e9SwTV3aPspxVDatePT9YNVfU8iNp5WwwNJz/KIq4utiqy9CgkrU8zXjNiUsDIQUfQCWX6IsacMsQZs+l8Thic5H+12ToyoX3pQ2uKur5/jevnrnCUfjqXX8fPLlSxnESMqPW558/ta9N7R4Ii7u8fLBWQqACnbOAj4oZT+Pw0/3fLCjurKIsrd1fBWCEWpL9htUvB1N8xudkcvv2khgzAgwwzhe8shpxGmNswlel6qKVKatWsxexBi95wUMVxUEcHjqI9Vw52SdMY9RiE7P6DsOfAWBsqVaMt3ERPMcU4L04BPCJyNTX6wA4P+QG56efOCQY' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 10
-        run: printf '%s' '72CanAsL9PRAvyeLpMa9vK/DaEZz/zSB4GYSBiR3VDV5VxVh9fASn7AtvGcD1h4NG6cshKrzxTC04Jl9dzGrlXFWKM4rZoHmIn/A9bKm4hOBcK+0S2qJ3fzYym/z0ycW+iIuOvXZwcV14Z5gosVurr6RhTZOECZsstgDZ3BAk12IG6fogpTNuhxV5Ee6/hxPddkNqPUvHJB0CPiH4UkY8xO8RQfo5/QCl75aIWen2fXMNVT2R4W+DImL59ucCOLf0Mc/Mf9TD721hAQq4ijSaytXBDu4LMsgtaTtJdTvBTATCMRbKXFfCgrXBCbfQslaluOXJGdNdzbTswL6KyVoQ+aIuUViuUTfKl1xuKLkDeQKHxxPnoGeTWR04aJChN/XJUkULf+EhbEVhzTr6zsO8oPSu3zCNZslVQQa1lJKT5fRzFZlheXI9AZbfQEUUA2FK2dldKmrD5uAkk7MKlkXrR+37ZylE6x2d0XOyWoCEzYHlhhzUThBlCh0iH73FH7shtywA+ZA6N01bZlitTRFZnL2wnhBMLXBAiP0SERmPJ1XpHT0' >> /tmp/app_src_main_java_com_example_llama_mainactivity_kt.b64
-
-      - name: Write app_src_main_java_com_example_llama_mainactivity_kt 11
-        run: printf '%s' 'mW2RP5XHG8zv9o4H33SMnc7tfx90Dns/gDuHw5kfKCPDI1x+JlKimzlQmUcFj+hM1GVbT674TIXXcA2gMCVgRdsx9XGFRvM1bhqW895asF8w7NDu3ggCPVrmRj3m9fgiJ/O9guXoKxT4P8dhoJEcnVSW3DlAFlzXl8CTbSlREDo+Q0vm+XYWoMSxWMQC/RWBpx87p8Nno3+229OjvKDGcHEpYBWW54U/1Oo37hvkMZAxhdjxPZ5mWFBebwwCsgBmZp7LHGOf38Vg7MGC098A4hhbJmwBIY844iAdapcYZIEVFXyGENAam9KvNdC1n9Ioq6NY0DPmgc3CUoq11TY0PrYA8bXDCpDHE6LyMcTHFyMIYT+W4WowVlVRKZucBpsjLD5XADCjDyRGuYeVbW1r61YaD9/dXyLFxBVZCVACnwuDtm7E4fkZTeD9zRsfBda4oEZ+Junm77evIxr4xekk0REIN3TyjyJp+8XcH1PaalV3K29uKvTGo10e4itJD1rtEdOyKLTjMOVeeMvhOAiGwmiclZXbv3Qus7VM4E7CgP6pmC+e' >> /tmp/app_src_main_java_com_example_llama_mainactiv
+          name: AjanMG-Final-Payload-Part1
+          path: AjanMG.part1.b64
+          if-no-files-found: error
