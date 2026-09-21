@@ -1,4 +1,4 @@
-name: Build Ajan MG Final V3
+name: Build Ajan MG Final V4 Kotlin Fix
 
 on:
   workflow_dispatch:
@@ -64,6 +64,12 @@ jobs:
           test -s source.tar.xz
           tar -xJf source.tar.xz -C llama/examples/llama.android
           test -f llama/examples/llama.android/app/src/main/java/com/example/llama/MainActivity.kt
+
+      - name: Fix Kotlin SQLite bind argument types
+        run: |
+          FILE=llama/examples/llama.android/app/src/main/java/com/example/llama/AgentStore.kt
+          sed -i '60s/arrayOf(/arrayOf<Any?>(/;96s/arrayOf(/arrayOf<Any?>(/;105s/arrayOf(/arrayOf<Any?>(/;191s/arrayOf(/arrayOf<Any?>(/;205s/arrayOf(/arrayOf<Any?>(/' "$FILE"
+          grep -n 'arrayOf<Any?>' "$FILE"
 
       - name: Set final package and version
         run: |
