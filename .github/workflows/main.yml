@@ -1,4 +1,4 @@
-name: Build Ajan MG Final Compact
+name: Build Ajan MG Final V3
 
 on:
   workflow_dispatch:
@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-24.04
     env:
       GH_TOKEN: ${{ github.token }}
+
     steps:
       - name: Get llama.cpp Android source
         uses: actions/checkout@v6
@@ -29,63 +30,46 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Download first payload half
-        run: ID=$(gh api -X GET "repos/${{ github.repository }}/actions/artifacts?name=AjanMG-Final-Payload-Part1&per_page=1" --jq '.artifacts[0].id') && test -n "$ID" && gh api "repos/${{ github.repository }}/actions/artifacts/$ID/zip" > part1.zip && unzip -o part1.zip - name: Write payload 1
-        run: printf '%s' 'B34qJqMQrF1ZQCeuJYzGvP2RPu8YCKDP2xRnqblQrMv+lbsrWzfl646Ew8TKJofO43iJyztmJGdiJ8mHayvPluaoeYMMhl79wGwdYl5l33oWMMoz8mEoVS0GRnnertdZQ39+OEaXXMMjlF1MuPQrJfm2QEE7cH1b41KFm4juc5huv/mk5LRc9KfnYSyMYKvR50g0vOiWifs9Sqeo/mcuoheN81u6FAxJ/7KEpOCQ4PZLp0j6MXEcYrxnJLi03jSP13MJzAK5BeEhmecCxO52dbZVwQQKXd79B4b9Qzb+04AQB5glViZlSgbzHGdDbHt3RHIuRWjMZx830DXD8DZQ0nUSocWRchWvrAA9k/mC8fWihoRbP3gTjIAEZQ0CeM6I//kzPTKYmGcU+8RmKF5lHOuBTSiAKVgpFtq2vKVxrkfHKFmikffgfHjyCbPubglnyKArbEtK9nU8Vf1Pt+M5fymMMPG20K5dnMZV02SyFqeDa16bc/NoCb6lt12HixylMK4Xf5WnFfoxsJhakQEBsgX9Bo7GM5EsfyBIi4UaIfUhqifq' > AjanMG.part2.b64
+      - name: Download Part 1
+        run: |
+          gh api repos/${{ github.repository }}/actions/artifacts/10667306678/zip > part1.zip
+          unzip -o part1.zip
+          test -s AjanMG.part1.b64
 
-      - name: Write payload 2
-        run: printf '%s' 'P4n3fpxOEdFnQDo2ynl9WQeDN+exlEIq6P1sFvZES2Gn4tdQBEXg9p3Q4QZSBh8AXSwWcnhHd6B/pC3uhWQq0LTfgFJlBDjShMrG07Gkgs0LOby5GkPB0e+zbwGvEfAn2/nUnmg2K1wioKKQyohkQLijdgRkW5nPy7k0pe29G8S4Z7KGLr/LSLdQq0N+9h68uU26nUiU52EUAIzIVCizeH6/F7hd1WgnZCJUYN7By8FZSVIGv4iZDtRde3UrNMHRIUxyrFwduRzpSPff6Be7mEVHZ6E6zBT4CCuqCi2h3lNLzymjxA6/9ACk4X5Sj5V5dmzB4OaVelcNwYLjFg234ntlPb7RgaGknQLsdTiwCv+1plYuSCPg2qKqt9VtViF8XpSXZyH5V++u+VyD+ZLtW8leN+kkJIViz4xDE3B5JGqN08s3J1qpfDyHwF7brV53+ZREilHEvvowUEQwPBiwxPKrddOAMZOgatFS3VoeMZkCmPh+f6LzIbMDboYFxMIERg4nGPfLDLWwLLk4PfkQLW2fYoLfqeuGKLTzfpqvnWTFyc5n' >> AjanMG.part2.b64
-
-      - name: Write payload 3
-        run: printf '%s' 'gHPbQzOrruG/TD5EkreiMoaft8qGyNtAk4Cko8dP2o8jr1pSp7sVa3L3Q8FZ+fXdZWFgWzPzaeNBs6/34BpeD1+8GzIn55BkPvYhbl6bG+e8KQPx+bF8VX09ZC3nFlL4pxw6AxmYG1eLl12xn/nlbT9S4shWxW1v8OpOKmHD6aURtHaf4eQQMDrr0bm3RjIQeGC9m6VtDe2RK7Z/u28jL/uwm5yVsqJgXitLJC1pfOOegtPQHOGEWLD3lIu6QpkDojA8jezApdxFfa7KsmrafW6c0TrgPK0WfxOLLK7ufY4lhhl6QTGQS7yOCLhYTwkqTmub6+a3v+KeJJTFSo2G+6XUEeB8cfkhTYviKacQFr7Mj6e9f91PsmYwOSiWTPD/mVbVJ9skSwyyDzOYSAytgpnO17Q77CLNjnlYmrGxIvj1h5oUAnQoGApTFEojxDJu+HIscjhtnA4x9M9QZieLcu/ZuB8OBZwtffBvW3nm8v9kzqQliCKtHfCdc0gRswSizlW1xo0KhlYEumKI3d6/tmtJndFPSPmqqKtXAkXuJtbue8Oa' >> AjanMG.part2.b64
-
-      - name: Write payload 4
-        run: printf '%s' 'TObfZt2A7q3fr616ePELSJvZrU6S23aLyK8FRifp3TxPO9+S58AriX9CsD7Bs2wJTnshFYS7+jbj+I7JO0f2aXpwrnE+vMN3jkIRtbHoDV/4Vri0ar8rTSvMX7gx8hRVd9dv36sUC/XAit10MZUMWS87s8PY6hAenovIQVF8JoELmczZnWi64derizsTN7f29LDbEXZHa03rFIAOuxrR6mYqaZTXJsDDqA3UE4nVgq7N57I6ZMpZQLpGxl/QAdnu2il/amKaZ/8/Wgv1FDlp3nV6vgGha6EhOzyPgnot5MHqNw7eb1zrHMuo2MzSZW42TMM5HRo5gM8R8YHB8Es1UDr32cLqoX9yOHZrgKIpl2M0O2VpdZ/vYt8Ka0AK6GpvK6CHNc+qtK7PBKTOZXItL7kXh7s9MG8XbasPn5cGGI8c/Dst851sO5yUJDiWaJgzbfYtoVXmc4z57RxDNCmJkKoSeo2UXblgXHI2s1AMUXcE/7QXTcKrEtjXeowzvSCv+a9ihmjoNxmjP96kpsKsPuBVx4FbSDb0A4jhQi2zPTEWSHUp' >> AjanMG.part2.b64
-
-      - name: Write payload 5
-        run: printf '%s' 'A7dG/mQpApYrv5f+RVFl5wMZopqWItYBMcZQ0r7YggCN02GzMRlqWevDSDRxWNsAuJnpfAAh3C1dOfAXDqybV/qu/HnrmZ/nWapr0oofcnFIdVRptlXxrEFFS+Jom4TuESQQYG1wfZHiFNEiEZY2IPLCxN5Mr4snUpj3/p/E2AzbEyVeioSpJKlPJZQhZ0Ytu0/c9lYalNZv2ojJxOD4/Sh5yvNHlVs0nNbVUoMgAecE7WR9NxacRgwgWcYPtkOmoOyr9XNnP6CorQ14ZuAQIoxXOFbHDHxUtwniFpYO4JoV6M5MLNq78M7tBHYGRoT5i7aaf7O4SfbZt3ks0j/zLOFucGaMYAVhAH+xuZXREZHUiltXW5cxfzvXe5Xe8zy/w+owESZ4dEP93T+0RNEQe/3jSsPbVUvGOePc7KMeg7ebxinWcOgNVz5xdpzTPFgOnWMk8NReK1UAwDoGix9kXiLEHq57pMTtE/jTvV0mnmh2GV68PZ3RLSqqBSl2iD1sAsStT30isw5H2y2KGwZvoeMbIuGxXZwpo/D6rdPWUb/vjrJz' >> AjanMG.part2.b64
-
-      - name: Write payload 6
-        run: printf '%s' 'k2gP3m2GP6HCQSH1nPRCBxR6j9jbN9/bQKiYAqUYyQwEu5aQbaB1X/8qmUI85EAlfQA5AqOjX/+KxzXED2Yy0GUy3cQRSR9M0TM5FDEUyWR/Y2Xfg0BrIWarryVMupYYmWChRZLBhswcEtUcQAmo6wkVOkSLiBiyNwfvgCRx0QbjV/omQx5TsPuhtUSkWMJOyGSf3Mmlu67sONwfmiI+LdqLiWX9creY5LV2QkTpI0XOj4H6SQQZVyzEqOb6lY5ZeaLYu4zeWlmgY9Wv3bmrfhJ86P25WI4nsmZyEM5D9dvq182hTr5n8NHA6/R4+RxTUybu8DBEImxMo3uPMJTMKhrtEch5u1Vc9N3B4WNApTWbDXdYm8rYorNQVHGWXw0a3XJkoVLOsay822U/2rqRbBg4t/pR74YpY7z9yBuF3RVQ/q8UUVKDzIUwx3YxZ8fhras0ILB7DYgUC1CdNwnF0/x6tuPm8ajVNk9l3rhwWD10LPPjjIxjVFIl5SZtd5/kDjDyzQQXbJjIn4Fn2RWO1IUZc/JTJg5tU/l9NAfjIG01xrjy' >> AjanMG.part2.b64
-
-      - name: Write payload 7
-        run: printf '%s' 'mlKTpwxKRrdjDfVvRL2wb+Aa7BEJl3kFiGg811EfTARbzL8uUonN8PP1mxPhAjkLk9U13uybNvuZur6bpo2N75kKuLoJgL9vSaShzTYLzItRcfRnQioTYwKH85VcQuzLEHk9st0gdioES5AR0jhMFMNQmo5XKaIpblomuOGnpviBB1fmIQ8Nvod9Y5TYiEUpO79voTCwnc/ipNl3haL/BR4dWwRS1wnv3BGD/p0S6CibfcWjUpsVZkAoaVZ45kPUkwjwdvjUjNkV/mIs9ORgqWXraa68rB1yftsP4sZg6lWJIqyteriI4206k8Hh1560f+XbLfE7NLzaMokSxTeJ23mbiOaVGwDznnftBOidLtWfAqGZT7vJCNSXoojQkmWnLxk7D9WPXVWys4et8Foq1hMk0hloLHO8wdAq8w/D1tOQVjY915FWpytRVK25YAoUrRL8iJ/TRCuoxH920d/nqK1BzqBAIoeWDn17o+hllJC6aMMLVqgVoMe0DXYG6rfI2EKdhRf5MFsu9p9IR2nki7inIoPYgTANCZ2RmM0Cz4R43nHJ' >> AjanMG.part2.b64
-
-      - name: Write payload 8
-        run: printf '%s' 'ntDFyoPFtVqSqeq6bi/7wOXcfqsCOw8tBuiTFEyOMd6zYyLdpNE3ht/ReeVwHSkWEmatuLwGng8E3zGPYa71ND0avVfMIiDTMP2uTK8AfmHrYKmdzerZ5r2zhjFtdTnBf0cbpqaLLUyiH4nE17VSe/m/YyYcdBWPbF8Jo/3kHut4tTNAnUj7gWPOeatsRs3lVKrBETzgfY8ToEwWuSbq7+g/r2U8YPOmwMHF1rpNXmUTLpw/kXJ2YOMxxjdZw3KRIx3oE3qB4ue8QMiYgL1Dgz4cijgiB5chRauOUzyLzdWBTYUCKgbOlh1juBTcShz1PJSc7Ky+jQYDY8Pu3tyje64gZ+/R2z8oe032zQC2F6YM47XyxHUptrhO4zVBQZv9VCcUtPzOXjUfMTzD78fRTeRAEpTp1y+jgnXGT1zQzFO65kXROX56yx4u4o3u4vHvjZFh+HwtP5SU9X83K4Z6CgjMpYcd0DqYpwa3Rs10ZfvN3vwCd9VIRmYuhAND53cub9QG9EVNMelykOfrE/0Qgiyc6FqH7hxtyx4RPiXcIJTrDjoK' >> AjanMG.part2.b64
-
-      - name: Write payload 9
-        run: printf '%s' 'hRDB+mr0+A1fuJFgoM7bVCfbGmgUVZ/k93NCdN9aZTcDLCS8JwKDzq4wc8i17lOu6VFOguS1yVDRO4ZVZw0bPzMe/Jhc0FLKrfNnsqgSsysuTxG4zFMlPsy3JHhYd7sWRROxcX1/RAprlsqNGn7FR1h8JO4QfKuI+nBayFrs4ZP3kYETbOFzaMSslmPiDlU/Vgi+xpt+wp8sfOBZClXgmM75Uv3/QGbfpiem2spK+ycjSziHrBSvtkFc4+vY/RPkin7o0trQbQzKjSFWC4xCsgDSn92Q7Sg5QaKEHg5nG/aoTrjVIXB9GmFhrWdXa17aQR4GZJmybv7gtxMzpmWsapG+3OMuGfG0Cm6S1lZ/o5LUPHsW0smhwDbv+UwzUIdvIhOJBgdc5I0mJ7vXrWXuIgChLw7tbtV9UpOgiwmwejSf9QTtPf0YaMFmEu3vzq5SIhrKvHQgzx5Q/ltK+pBCdGz4X3bC3rHsPUIaSWcpZTKKnVY7WvtzOEd2uBjxaTHP/1Qbfjtp79+3SM+3bgC8gbkc4sI+yMMQaI425bjX32YSNRI4' >> AjanMG.part2.b64
-
-      - name: Write payload 10
-        run: printf '%s' 'KNPX4r17r6v37YOU+dCYJ2XwQZ4AC0dg2ZOEpK2nV0SG8f7RtnbEIklo8AjMU3Z5lA+dYWywgwYdhmAXczt/tDRWE/TDvYVPdUK0kPumJcEUiAPoTHa6XhN3Ct9oRYip2PYUSCzp474JDgjkDq3bVqu9DQJqyHMC1agwgS2qwpbs6BfryfUChcGySmq+8xEspUysNHw2tr7mas3iE/Z1uNwjIFuX8jDViunWAam0cyYcOPsyv6LewuTOT/YmZHQc4bNvgoqnpAOSljjafeEJww6/OzW6tlBGz2Sxg1XWjSRKZ7C+IkRwvSk3dDcdm6fg8JoMaOVrkyKtO8CVJxgf1nuiNXwPUbI5GdEmbpbYQSRq6k7EerVj2FpW+R6UtVaIx7y140No+VgrWh/z7Mqna22uDpBYidXqSbVl6IIDFAGxKZOTf59hByz8M5eCh9otuFUKrqabXwrGnpGML+NYX3An/TQsntu8fSYsJoLoaMVlh6uSrG9XXXeeNUzIddRcM/G+sxJ21yUZfuUdDhoIg8CUJaTzD80OY9/iKNzsjXpCHena' >> AjanMG.part2.b64
-
-      - name: Write payload 11
-        run: printf '%s' 'y9WnH9I0etg6b1WaGDig/3oXvxJQ12LBgMiNFnjwz0tkG76ukiVjZrcijkEbcfOVBbK0NxV0GQCsg62KNr2HAoR+GfesETKUHxmquh4Gz4XmwqAmyaSVVNdtNqZyHZUxFMqT059hHlXnKfMlUYjC9ObqOGP4K/1oCrPZp7/xrwi96FpI+QQFppIu5ZR2tkOjUchP9Dja6/l0qLsb21MhqN5EyJGmApRWij2ireMeMi8kFiHETMeN4864YlzUpJQLbxruu9F80ezFv2x2onaH83Vg9UDKGwe9WB8ehpnbtACjDe3LyyH352FKrhvk9ugL7O7DvWJBwx5PX0KGiB0nnauBPbfTC/5Bp2NwwPEYEJyNoyM80mMTlksng+ZyYZC0v40E9nA1jD8BSH53626x7phzCow+kRgqgMXUeRsHSypy4BhbLhgoBXN7XD20vO26eNoyJtFyCi1vqo3782Y5nAzSUz4hdrcI+oQAPlSdZcFwpbqAeKwUjr8rar0djBHMSCy3DZytFFKUdabucH99n5wTscVCivA26S+dR8Aw03M8zU7q' >> AjanMG.part2.b64
-
-      - name: Write payload 12
-        run: printf '%s' 'yotCqT0dch7Wymi5htes1gVkKz/CkuAiUn8EQ2wmtPQUYseHSU3CQc1MGptMOFzJr7DUjHNOSOujMp2nDnebm9c4jmvGw798VcqeTlnlD5LRI+RPxkJSMust1JxV4Ezik7vIaqpvsICghDbiHVJSev3rmka4cIdjIj/tPRXGk3hV2GkbzLelDMR7d5+dyrUhOE8uCCO13661iGyz/HKU7gwfRtgD/Lbq3GZzyFGchpna24Aq4zA9ehvvmOGrRkizK/NFSFAbGTgYId58ePZ/TQa/6kFflyGKGSFzonbu5qW3ZHj7cwdoiHW8QGdSf1GxZSj7vZswnRaJkuKNzCjyOoonCA4lSfup7vY1XThGp6y7lgHZTmkVms4ngzRCw6ZLODTeYlXRGz6QdwOVp7npPZ6Fx6im8s9mKpBeYblD9yIHLUc8i9qTjPIX34aewNlde8Yz3edxYIbU7WNFTUe/e6StpWKhwEMOwI7HOCLJfP+BsER7F3VVkzdbiLE/YjyC9ynifp/mlvAG98yjANTmTwB3PKYO1A9k/XBQGCdekbo8EDDz' >> AjanMG.part2.b64
-
-      - name: Write payload 13
-        run: printf '%s' 'y6FTwKYYj/2GYR8FRp7+dmy1zvjHJUXUJpO/K4LUXh9D109XG52gWz9XOm8XDPei6GAmfm4f+rXblMI6EdqX08TvCKXPBJtZwLua9OBlPo/VICbaqrpCp1Fj60Pxvwyd3G7jVSbWkwcIKa5atcaumxkFyZYCIzmO3CY9W3Nmcd5e0OoAYmE9Mqn4JGDpvNQ6Q/0WaA61JBLUE1XlSMapmGZiL/YiIfFfdtBHLIErmGajEM4dDo0tcj4uAzPffqtPfOn+4QoO5ciZMran52xcR6/zfFfm74B4eVbpg8J+DVUqpMSI29QeaybVlweoLQs//jfYk9+YZVttwmfHEKtxDkWUiOLjs2UA1C6ij7vwcOH/h8P6y1cqHuMHJRYyIgy9P0Wjdu10cUxXEKr1u0byCYjASap3ZhqjMn9WAgPr03shs7CQVrE0mNugRh4evSQihSrNs/HYqts8yWG0F/j84slm0ZwNHtW43FMSjCxYJVypzGrAF3YAd1LDsvUu9oN5qOwrTnL+SYTHqoIWYK0V+493UA3v6txWRTJLbk9Dz/zqrq0h' >> AjanMG.part2.b64
-
-      - name: Write payload 14
-        run: printf '%s' 'ROc7WDvhcQv+iALIEuEeZXzxGzgxXWaCqEuplZKQf0esnhyJ9A7VsQR8zdopUqTvfc2ZtPD6IQgkB6vT8CurjnwIXzFABwCNv2N1U7okU10wiZtqV+c1r838t4VCu/sqwhRQJO257PqsFeQhi5QM5dDp8Zi/8UqbgsAEPKOfwulJxmBH502NOVHtgq7l9hD5FJgLoL9sRNKzX2JUrk20F+gVhFFV1Zvioh2DnNwQNZERfYFIRWm3Buez3D5c6gINn7EJgnxUbDG04BG6SkJiKWSDpSwzjiCvgIsBFhdXIk5WN7VCIolZVR5xlnWP64JijjZAtyhOcABKsvX8o9lSYPxH2jqhxi/+aspt0iP8BfWPKeiK6sNiednQZ6YGRYH8y/pTqIjRZmBV6hV+6iB1cksnCOTOALrshu44Ks0E1YgV1PdOpDdri1MwSdJi6qbdyKZ5WR4SUzU3RquoX1szAGLSbTfjyvq+6pCCw4dy5mEB/vxjrdEhLs7eAax1/MBQJDptcdaJQn1a2LjvOC58WqLlJIJXB0KjvUne0vU6ouN+mt9K' >> AjanMG.part2.b64
-
-      - name: Write payload 15
-        run: printf '%s' 'mFHt8Alak0oQ/j1zgxAvlDR6Uneve8fNHW6vrvh1i46HTkc5FAYjpzZJ7nKz/kGZUTGTqvwuToTuDUjCXYN/2EvzDZskz00bCqBSD+UTMJutXyT2kmUKO19sx3Xi3QIqoGszs+/HtOcvnu4H64CRaTrT192i37s4LhlMx13Nh5+beyjAZNr+T1swZ6fQN7NHf4qfddySNE7f8a40zlIIpBvmejDgmjmBWV5qa8f9f1CtcBUgMAMSAhZeLj6lmeChbRjTXNR2oafjKJjmtN9K15xjFtPN9YiZrW0BuDiDGKaQXurCfl04GOOHa+d3a+NbsUaNlUdrLWInotVNE4RTXJoEXLRZVi4tzdXzCihqdvRhiPsvnZTWFZMSlHFSAuivnv7n9aMHhIJX0pb0mA03Bse6me0MsZOjYaakUcAhJLgo0anZSfYQAOnqQezrxSdR59ML4PAC1moxo66HEBJdbJaW1VActkkKWTb3ZIf/o/0l/7WRyK458zO2sU5svD3NFWNRb4iaLIJMM+cDovq3PvRsHpY+/5PCEPpSxlcHrBCT2jVA' >> AjanMG.part2.b64
-
-      - name: Write payload 16
-        run: printf '%s' 'Ax6GD4U4rO4f1UI79lsrYQX/2qMzMrM8+LJ+dDR9ooXwJSqEaLCKnonQg0GIUEX2bLVKDpcCCYG+2YXpG0OjyVGyOfxyCHWz//Wk9Zi9w5qjtBrNQVbsq/lYpCGmthR+urMRnx1Xkk9ZjWBjwAKw885/8vI2kucnS6fTxWPt5fO4rr5vQ+b1E5KqNio7ojWQCginLVtRQRR5MdLO1K4UN5LryUsu71BG0+tEvDn0zEML4PH9RjGyN22JqpErmQHJKoWpPZdnzyvEf4nwTfkpkTP1wUcGE/0A1P5dgaKAF8Rgz1VGdi9cF2Exc5HeDgIiT4Czt+C98iTiFChGlVZ6UjN757IWyzunjGXzUGX1r3bmY7l3jW5pkrTvieYI5xOvJlI5FWbk/kbwwkqcT6rHPsBc0xczWjHSd8eqfrhhgDGLvEFfU2nmQRmNKhz/UzHtIvLLk7Z70gd8i5t829W9ENsBSpEUJu6tEZDoFuT5OTOxnWW4NJhm/aV8oxOhlsVjrkCam+9AtkesMachIwjHTUTLCOH8zjjxKQiI9zxgXH/MM3LF' >> AjanMG.part2.b64
-
-      - name: Write payload 17
-        run: printf '%s' '4YZIgbV4IDEk6n6ryLt2lHFmokJY6I7svRRuKU9eQkEVVYjs/BTKtvhDrVSyfVPph4vwXMHvidMSm+3zMB0dWwWIb8bq1s6GAXXWtRcvRPGEsMdhaw42rHCiWOk9q8C1+zbyx4q2AAAAAACiA6T2b7IHvgAB8WqAgAUAcygCv7HEZ/sCAAAAAARZWg==' >> AjanMG.part2.b64
+      - name: Write Part 2
+        run: |
+          truncate -s 0 AjanMG.part2.b64
+          printf '%s' 'B34qJqMQrF1ZQCeuJYzGvP2RPu8YCKDP2xRnqblQrMv+lbsrWzfl646Ew8TKJofO43iJyztmJGdiJ8mHayvPluaoeYMMhl79wGwdYl5l33oWMMoz8mEoVS0GRnnertdZQ39+OEaXXMMjlF1MuPQrJfm2QEE7cH1b41KFm4juc5huv/mk5LRc9KfnYSyMYKvR50g0vOiWifs9Sqeo/mcuoheN81u6FAxJ/7KEpOCQ4PZLp0j6MXEcYrxnJLi03jSP13MJzAK5BeEhmecCxO52dbZVwQQKXd79B4b9Qzb+04AQB5glViZlSgbzHGdDbHt3RHIuRWjMZx830DXD8DZQ0nUSocWRchWvrAA9k/mC8fWihoRbP3gTjIAEZQ0CeM6I//kzPTKYmGcU+8RmKF5lHOuBTSiAKVgpFtq2vKVxrkfHKFmikffgfHjyCbPubglnyKArbEtK9nU8Vf1Pt+M5fymMMPG20K5dnMZV02SyFqeDa16bc/NoCb6lt12HixylMK4Xf5Wn' >> AjanMG.part2.b64
+          printf '%s' 'FfoxsJhakQEBsgX9Bo7GM5EsfyBIi4UaIfUhqifqP4n3fpxOEdFnQDo2ynl9WQeDN+exlEIq6P1sFvZES2Gn4tdQBEXg9p3Q4QZSBh8AXSwWcnhHd6B/pC3uhWQq0LTfgFJlBDjShMrG07Gkgs0LOby5GkPB0e+zbwGvEfAn2/nUnmg2K1wioKKQyohkQLijdgRkW5nPy7k0pe29G8S4Z7KGLr/LSLdQq0N+9h68uU26nUiU52EUAIzIVCizeH6/F7hd1WgnZCJUYN7By8FZSVIGv4iZDtRde3UrNMHRIUxyrFwduRzpSPff6Be7mEVHZ6E6zBT4CCuqCi2h3lNLzymjxA6/9ACk4X5Sj5V5dmzB4OaVelcNwYLjFg234ntlPb7RgaGknQLsdTiwCv+1plYuSCPg2qKqt9VtViF8XpSXZyH5V++u+VyD+ZLtW8leN+kkJIViz4xDE3B5JGqN08s3J1qpfDyHwF7brV53+ZREilHEvvowUEQwPBiwxPKrddOAMZOg' >> AjanMG.part2.b64
+          printf '%s' 'atFS3VoeMZkCmPh+f6LzIbMDboYFxMIERg4nGPfLDLWwLLk4PfkQLW2fYoLfqeuGKLTzfpqvnWTFyc5ngHPbQzOrruG/TD5EkreiMoaft8qGyNtAk4Cko8dP2o8jr1pSp7sVa3L3Q8FZ+fXdZWFgWzPzaeNBs6/34BpeD1+8GzIn55BkPvYhbl6bG+e8KQPx+bF8VX09ZC3nFlL4pxw6AxmYG1eLl12xn/nlbT9S4shWxW1v8OpOKmHD6aURtHaf4eQQMDrr0bm3RjIQeGC9m6VtDe2RK7Z/u28jL/uwm5yVsqJgXitLJC1pfOOegtPQHOGEWLD3lIu6QpkDojA8jezApdxFfa7KsmrafW6c0TrgPK0WfxOLLK7ufY4lhhl6QTGQS7yOCLhYTwkqTmub6+a3v+KeJJTFSo2G+6XUEeB8cfkhTYviKacQFr7Mj6e9f91PsmYwOSiWTPD/mVbVJ9skSwyyDzOYSAytgpnO17Q77CLNjnlYmrGxIvj1h5oUAnQoGApT' >> AjanMG.part2.b64
+          printf '%s' 'FEojxDJu+HIscjhtnA4x9M9QZieLcu/ZuB8OBZwtffBvW3nm8v9kzqQliCKtHfCdc0gRswSizlW1xo0KhlYEumKI3d6/tmtJndFPSPmqqKtXAkXuJtbue8OaTObfZt2A7q3fr616ePELSJvZrU6S23aLyK8FRifp3TxPO9+S58AriX9CsD7Bs2wJTnshFYS7+jbj+I7JO0f2aXpwrnE+vMN3jkIRtbHoDV/4Vri0ar8rTSvMX7gx8hRVd9dv36sUC/XAit10MZUMWS87s8PY6hAenovIQVF8JoELmczZnWi64derizsTN7f29LDbEXZHa03rFIAOuxrR6mYqaZTXJsDDqA3UE4nVgq7N57I6ZMpZQLpGxl/QAdnu2il/amKaZ/8/Wgv1FDlp3nV6vgGha6EhOzyPgnot5MHqNw7eb1zrHMuo2MzSZW42TMM5HRo5gM8R8YHB8Es1UDr32cLqoX9yOHZrgKIpl2M0O2VpdZ/vYt8Ka0AK6GpvK6CHNc+qtK7PBKTO' >> AjanMG.part2.b64
+          printf '%s' 'ZXItL7kXh7s9MG8XbasPn5cGGI8c/Dst851sO5yUJDiWaJgzbfYtoVXmc4z57RxDNCmJkKoSeo2UXblgXHI2s1AMUXcE/7QXTcKrEtjXeowzvSCv+a9ihmjoNxmjP96kpsKsPuBVx4FbSDb0A4jhQi2zPTEWSHUpA7dG/mQpApYrv5f+RVFl5wMZopqWItYBMcZQ0r7YggCN02GzMRlqWevDSDRxWNsAuJnpfAAh3C1dOfAXDqybV/qu/HnrmZ/nWapr0oofcnFIdVRptlXxrEFFS+Jom4TuESQQYG1wfZHiFNEiEZY2IPLCxN5Mr4snUpj3/p/E2AzbEyVeioSpJKlPJZQhZ0Ytu0/c9lYalNZv2ojJxOD4/Sh5yvNHlVs0nNbVUoMgAecE7WR9NxacRgwgWcYPtkOmoOyr9XNnP6CorQ14ZuAQIoxXOFbHDHxUtwniFpYO4JoV6M5MLNq78M7tBHYGRoT5i7aaf7O4SfbZt3ks0j/zLOFucGaMYAVhAH+xuZXR' >> AjanMG.part2.b64
+          printf '%s' 'EZHUiltXW5cxfzvXe5Xe8zy/w+owESZ4dEP93T+0RNEQe/3jSsPbVUvGOePc7KMeg7ebxinWcOgNVz5xdpzTPFgOnWMk8NReK1UAwDoGix9kXiLEHq57pMTtE/jTvV0mnmh2GV68PZ3RLSqqBSl2iD1sAsStT30isw5H2y2KGwZvoeMbIuGxXZwpo/D6rdPWUb/vjrJzk2gP3m2GP6HCQSH1nPRCBxR6j9jbN9/bQKiYAqUYyQwEu5aQbaB1X/8qmUI85EAlfQA5AqOjX/+KxzXED2Yy0GUy3cQRSR9M0TM5FDEUyWR/Y2Xfg0BrIWarryVMupYYmWChRZLBhswcEtUcQAmo6wkVOkSLiBiyNwfvgCRx0QbjV/omQx5TsPuhtUSkWMJOyGSf3Mmlu67sONwfmiI+LdqLiWX9creY5LV2QkTpI0XOj4H6SQQZVyzEqOb6lY5ZeaLYu4zeWlmgY9Wv3bmrfhJ86P25WI4nsmZyEM5D9dvq182hTr5n8NHA6/R4+RxT' >> AjanMG.part2.b64
+          printf '%s' 'Uybu8DBEImxMo3uPMJTMKhrtEch5u1Vc9N3B4WNApTWbDXdYm8rYorNQVHGWXw0a3XJkoVLOsay822U/2rqRbBg4t/pR74YpY7z9yBuF3RVQ/q8UUVKDzIUwx3YxZ8fhras0ILB7DYgUC1CdNwnF0/x6tuPm8ajVNk9l3rhwWD10LPPjjIxjVFIl5SZtd5/kDjDyzQQXbJjIn4Fn2RWO1IUZc/JTJg5tU/l9NAfjIG01xrjymlKTpwxKRrdjDfVvRL2wb+Aa7BEJl3kFiGg811EfTARbzL8uUonN8PP1mxPhAjkLk9U13uybNvuZur6bpo2N75kKuLoJgL9vSaShzTYLzItRcfRnQioTYwKH85VcQuzLEHk9st0gdioES5AR0jhMFMNQmo5XKaIpblomuOGnpviBB1fmIQ8Nvod9Y5TYiEUpO79voTCwnc/ipNl3haL/BR4dWwRS1wnv3BGD/p0S6CibfcWjUpsVZkAoaVZ45kPUkwjwdvjUjNkV/mIs9ORgqWXr' >> AjanMG.part2.b64
+          printf '%s' 'aa68rB1yftsP4sZg6lWJIqyteriI4206k8Hh1560f+XbLfE7NLzaMokSxTeJ23mbiOaVGwDznnftBOidLtWfAqGZT7vJCNSXoojQkmWnLxk7D9WPXVWys4et8Foq1hMk0hloLHO8wdAq8w/D1tOQVjY915FWpytRVK25YAoUrRL8iJ/TRCuoxH920d/nqK1BzqBAIoeWDn17o+hllJC6aMMLVqgVoMe0DXYG6rfI2EKdhRf5MFsu9p9IR2nki7inIoPYgTANCZ2RmM0Cz4R43nHJntDFyoPFtVqSqeq6bi/7wOXcfqsCOw8tBuiTFEyOMd6zYyLdpNE3ht/ReeVwHSkWEmatuLwGng8E3zGPYa71ND0avVfMIiDTMP2uTK8AfmHrYKmdzerZ5r2zhjFtdTnBf0cbpqaLLUyiH4nE17VSe/m/YyYcdBWPbF8Jo/3kHut4tTNAnUj7gWPOeatsRs3lVKrBETzgfY8ToEwWuSbq7+g/r2U8YPOmwMHF1rpNXmUTLpw/' >> AjanMG.part2.b64
+          printf '%s' 'kXJ2YOMxxjdZw3KRIx3oE3qB4ue8QMiYgL1Dgz4cijgiB5chRauOUzyLzdWBTYUCKgbOlh1juBTcShz1PJSc7Ky+jQYDY8Pu3tyje64gZ+/R2z8oe032zQC2F6YM47XyxHUptrhO4zVBQZv9VCcUtPzOXjUfMTzD78fRTeRAEpTp1y+jgnXGT1zQzFO65kXROX56yx4u4o3u4vHvjZFh+HwtP5SU9X83K4Z6CgjMpYcd0DqYpwa3Rs10ZfvN3vwCd9VIRmYuhAND53cub9QG9EVNMelykOfrE/0Qgiyc6FqH7hxtyx4RPiXcIJTrDjoKhRDB+mr0+A1fuJFgoM7bVCfbGmgUVZ/k93NCdN9aZTcDLCS8JwKDzq4wc8i17lOu6VFOguS1yVDRO4ZVZw0bPzMe/Jhc0FLKrfNnsqgSsysuTxG4zFMlPsy3JHhYd7sWRROxcX1/RAprlsqNGn7FR1h8JO4QfKuI+nBayFrs4ZP3kYETbOFzaMSslmPiDlU/Vgi+xpt+' >> AjanMG.part2.b64
+          printf '%s' 'wp8sfOBZClXgmM75Uv3/QGbfpiem2spK+ycjSziHrBSvtkFc4+vY/RPkin7o0trQbQzKjSFWC4xCsgDSn92Q7Sg5QaKEHg5nG/aoTrjVIXB9GmFhrWdXa17aQR4GZJmybv7gtxMzpmWsapG+3OMuGfG0Cm6S1lZ/o5LUPHsW0smhwDbv+UwzUIdvIhOJBgdc5I0mJ7vXrWXuIgChLw7tbtV9UpOgiwmwejSf9QTtPf0YaMFmEu3vzq5SIhrKvHQgzx5Q/ltK+pBCdGz4X3bC3rHsPUIaSWcpZTKKnVY7WvtzOEd2uBjxaTHP/1Qbfjtp79+3SM+3bgC8gbkc4sI+yMMQaI425bjX32YSNRI4KNPX4r17r6v37YOU+dCYJ2XwQZ4AC0dg2ZOEpK2nV0SG8f7RtnbEIklo8AjMU3Z5lA+dYWywgwYdhmAXczt/tDRWE/TDvYVPdUK0kPumJcEUiAPoTHa6XhN3Ct9oRYip2PYUSCzp474JDgjkDq3bVqu9DQJqyHMC' >> AjanMG.part2.b64
+          printf '%s' '1agwgS2qwpbs6BfryfUChcGySmq+8xEspUysNHw2tr7mas3iE/Z1uNwjIFuX8jDViunWAam0cyYcOPsyv6LewuTOT/YmZHQc4bNvgoqnpAOSljjafeEJww6/OzW6tlBGz2Sxg1XWjSRKZ7C+IkRwvSk3dDcdm6fg8JoMaOVrkyKtO8CVJxgf1nuiNXwPUbI5GdEmbpbYQSRq6k7EerVj2FpW+R6UtVaIx7y140No+VgrWh/z7Mqna22uDpBYidXqSbVl6IIDFAGxKZOTf59hByz8M5eCh9otuFUKrqabXwrGnpGML+NYX3An/TQsntu8fSYsJoLoaMVlh6uSrG9XXXeeNUzIddRcM/G+sxJ21yUZfuUdDhoIg8CUJaTzD80OY9/iKNzsjXpCHenay9WnH9I0etg6b1WaGDig/3oXvxJQ12LBgMiNFnjwz0tkG76ukiVjZrcijkEbcfOVBbK0NxV0GQCsg62KNr2HAoR+GfesETKUHxmquh4Gz4XmwqAmyaSVVNdt' >> AjanMG.part2.b64
+          printf '%s' 'NqZyHZUxFMqT059hHlXnKfMlUYjC9ObqOGP4K/1oCrPZp7/xrwi96FpI+QQFppIu5ZR2tkOjUchP9Dja6/l0qLsb21MhqN5EyJGmApRWij2ireMeMi8kFiHETMeN4864YlzUpJQLbxruu9F80ezFv2x2onaH83Vg9UDKGwe9WB8ehpnbtACjDe3LyyH352FKrhvk9ugL7O7DvWJBwx5PX0KGiB0nnauBPbfTC/5Bp2NwwPEYEJyNoyM80mMTlksng+ZyYZC0v40E9nA1jD8BSH53626x7phzCow+kRgqgMXUeRsHSypy4BhbLhgoBXN7XD20vO26eNoyJtFyCi1vqo3782Y5nAzSUz4hdrcI+oQAPlSdZcFwpbqAeKwUjr8rar0djBHMSCy3DZytFFKUdabucH99n5wTscVCivA26S+dR8Aw03M8zU7qyotCqT0dch7Wymi5htes1gVkKz/CkuAiUn8EQ2wmtPQUYseHSU3CQc1MGptMOFzJr7DUjHNOSOujMp2n' >> AjanMG.part2.b64
+          printf '%s' 'Dnebm9c4jmvGw798VcqeTlnlD5LRI+RPxkJSMust1JxV4Ezik7vIaqpvsICghDbiHVJSev3rmka4cIdjIj/tPRXGk3hV2GkbzLelDMR7d5+dyrUhOE8uCCO13661iGyz/HKU7gwfRtgD/Lbq3GZzyFGchpna24Aq4zA9ehvvmOGrRkizK/NFSFAbGTgYId58ePZ/TQa/6kFflyGKGSFzonbu5qW3ZHj7cwdoiHW8QGdSf1GxZSj7vZswnRaJkuKNzCjyOoonCA4lSfup7vY1XThGp6y7lgHZTmkVms4ngzRCw6ZLODTeYlXRGz6QdwOVp7npPZ6Fx6im8s9mKpBeYblD9yIHLUc8i9qTjPIX34aewNlde8Yz3edxYIbU7WNFTUe/e6StpWKhwEMOwI7HOCLJfP+BsER7F3VVkzdbiLE/YjyC9ynifp/mlvAG98yjANTmTwB3PKYO1A9k/XBQGCdekbo8EDDzy6FTwKYYj/2GYR8FRp7+dmy1zvjHJUXUJpO/K4LU' >> AjanMG.part2.b64
+          printf '%s' 'Xh9D109XG52gWz9XOm8XDPei6GAmfm4f+rXblMI6EdqX08TvCKXPBJtZwLua9OBlPo/VICbaqrpCp1Fj60Pxvwyd3G7jVSbWkwcIKa5atcaumxkFyZYCIzmO3CY9W3Nmcd5e0OoAYmE9Mqn4JGDpvNQ6Q/0WaA61JBLUE1XlSMapmGZiL/YiIfFfdtBHLIErmGajEM4dDo0tcj4uAzPffqtPfOn+4QoO5ciZMran52xcR6/zfFfm74B4eVbpg8J+DVUqpMSI29QeaybVlweoLQs//jfYk9+YZVttwmfHEKtxDkWUiOLjs2UA1C6ij7vwcOH/h8P6y1cqHuMHJRYyIgy9P0Wjdu10cUxXEKr1u0byCYjASap3ZhqjMn9WAgPr03shs7CQVrE0mNugRh4evSQihSrNs/HYqts8yWG0F/j84slm0ZwNHtW43FMSjCxYJVypzGrAF3YAd1LDsvUu9oN5qOwrTnL+SYTHqoIWYK0V+493UA3v6txWRTJLbk9Dz/zqrq0h' >> AjanMG.part2.b64
+          printf '%s' 'ROc7WDvhcQv+iALIEuEeZXzxGzgxXWaCqEuplZKQf0esnhyJ9A7VsQR8zdopUqTvfc2ZtPD6IQgkB6vT8CurjnwIXzFABwCNv2N1U7okU10wiZtqV+c1r838t4VCu/sqwhRQJO257PqsFeQhi5QM5dDp8Zi/8UqbgsAEPKOfwulJxmBH502NOVHtgq7l9hD5FJgLoL9sRNKzX2JUrk20F+gVhFFV1Zvioh2DnNwQNZERfYFIRWm3Buez3D5c6gINn7EJgnxUbDG04BG6SkJiKWSDpSwzjiCvgIsBFhdXIk5WN7VCIolZVR5xlnWP64JijjZAtyhOcABKsvX8o9lSYPxH2jqhxi/+aspt0iP8BfWPKeiK6sNiednQZ6YGRYH8y/pTqIjRZmBV6hV+6iB1cksnCOTOALrshu44Ks0E1YgV1PdOpDdri1MwSdJi6qbdyKZ5WR4SUzU3RquoX1szAGLSbTfjyvq+6pCCw4dy5mEB/vxjrdEhLs7eAax1/MBQJDptcdaJ' >> AjanMG.part2.b64
+          printf '%s' 'Qn1a2LjvOC58WqLlJIJXB0KjvUne0vU6ouN+mt9KmFHt8Alak0oQ/j1zgxAvlDR6Uneve8fNHW6vrvh1i46HTkc5FAYjpzZJ7nKz/kGZUTGTqvwuToTuDUjCXYN/2EvzDZskz00bCqBSD+UTMJutXyT2kmUKO19sx3Xi3QIqoGszs+/HtOcvnu4H64CRaTrT192i37s4LhlMx13Nh5+beyjAZNr+T1swZ6fQN7NHf4qfddySNE7f8a40zlIIpBvmejDgmjmBWV5qa8f9f1CtcBUgMAMSAhZeLj6lmeChbRjTXNR2oafjKJjmtN9K15xjFtPN9YiZrW0BuDiDGKaQXurCfl04GOOHa+d3a+NbsUaNlUdrLWInotVNE4RTXJoEXLRZVi4tzdXzCihqdvRhiPsvnZTWFZMSlHFSAuivnv7n9aMHhIJX0pb0mA03Bse6me0MsZOjYaakUcAhJLgo0anZSfYQAOnqQezrxSdR59ML4PAC1moxo66HEBJdbJaW1VActkkK' >> AjanMG.part2.b64
+          printf '%s' 'WTb3ZIf/o/0l/7WRyK458zO2sU5svD3NFWNRb4iaLIJMM+cDovq3PvRsHpY+/5PCEPpSxlcHrBCT2jVAAx6GD4U4rO4f1UI79lsrYQX/2qMzMrM8+LJ+dDR9ooXwJSqEaLCKnonQg0GIUEX2bLVKDpcCCYG+2YXpG0OjyVGyOfxyCHWz//Wk9Zi9w5qjtBrNQVbsq/lYpCGmthR+urMRnx1Xkk9ZjWBjwAKw885/8vI2kucnS6fTxWPt5fO4rr5vQ+b1E5KqNio7ojWQCginLVtRQRR5MdLO1K4UN5LryUsu71BG0+tEvDn0zEML4PH9RjGyN22JqpErmQHJKoWpPZdnzyvEf4nwTfkpkTP1wUcGE/0A1P5dgaKAF8Rgz1VGdi9cF2Exc5HeDgIiT4Czt+C98iTiFChGlVZ6UjN757IWyzunjGXzUGX1r3bmY7l3jW5pkrTvieYI5xOvJlI5FWbk/kbwwkqcT6rHPsBc0xczWjHSd8eqfrhhgDGLvEFfU2nmQRmN' >> AjanMG.part2.b64
+          printf '%s' 'Khz/UzHtIvLLk7Z70gd8i5t829W9ENsBSpEUJu6tEZDoFuT5OTOxnWW4NJhm/aV8oxOhlsVjrkCam+9AtkesMachIwjHTUTLCOH8zjjxKQiI9zxgXH/MM3LF4YZIgbV4IDEk6n6ryLt2lHFmokJY6I7svRRuKU9eQkEVVYjs/BTKtvhDrVSyfVPph4vwXMHvidMSm+3zMB0dWwWIb8bq1s6GAXXWtRcvRPGEsMdhaw42rHCiWOk9q8C1+zbyx4q2AAAAAACiA6T2b7IHvgAB8WqAgAUAcygCv7HEZ/sCAAAAAARZWg==' >> AjanMG.part2.b64
 
       - name: Rebuild final source overlay
-        run: cat AjanMG.part1.b64 AjanMG.part2.b64 | base64 -d > source.tar.xz && tar -xJf source.tar.xz -C llama/examples/llama.android
+        run: |
+          cat AjanMG.part1.b64 AjanMG.part2.b64 | base64 -d > source.tar.xz
+          test -s source.tar.xz
+          tar -xJf source.tar.xz -C llama/examples/llama.android
+          test -f llama/examples/llama.android/app/src/main/java/com/example/llama/MainActivity.kt
 
       - name: Set final package and version
-        run: sed -i 's/applicationId = "com.example.llama.aichat"/applicationId = "com.mg.ajanfull"/; s/versionCode = 1/versionCode = 10/; s/versionName = "1.0"/versionName = "1.0.0"/' llama/examples/llama.android/app/build.gradle.kts
+        run: |
+          sed -i 's/applicationId = "com.example.llama.aichat"/applicationId = "com.mg.ajanfull"/' llama/examples/llama.android/app/build.gradle.kts
+          sed -i 's/versionCode = 1/versionCode = 10/' llama/examples/llama.android/app/build.gradle.kts
+          sed -i 's/versionName = "1.0"/versionName = "1.0.0"/' llama/examples/llama.android/app/build.gradle.kts
 
       - name: Accept Android licenses
         run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses >/dev/null || true
@@ -94,7 +78,10 @@ jobs:
         run: /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.13113456" "cmake;3.31.6"
 
       - name: Build Ajan MG
-        run: cd llama/examples/llama.android && chmod +x gradlew && ./gradlew :app:assembleDebug --no-daemon --stacktrace
+        run: |
+          cd llama/examples/llama.android
+          chmod +x gradlew
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace
 
       - name: Prepare APK
         run: cp llama/examples/llama.android/app/build/outputs/apk/debug/app-debug.apk Ajan-MG.apk
