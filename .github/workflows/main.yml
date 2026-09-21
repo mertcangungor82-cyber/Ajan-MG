@@ -24,10 +24,10 @@ jobs:
           java-version: '17'
 
       - name: Accept Android licenses
-        run: yes | sdkmanager --licenses >/dev/null || true
+        run: yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses >/dev/null || true
 
       - name: Install Android packages
-        run: sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.13113456" "cmake;3.31.6"
+        run: /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.13113456" "cmake;3.31.6"
 
       - name: Build Local AI APK
         run: cd llama/examples/llama.android && chmod +x gradlew && ./gradlew :app:assembleDebug --no-daemon --stacktrace
