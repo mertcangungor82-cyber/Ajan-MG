@@ -68,6 +68,7 @@ jobs:
           cat v7.patch.part1.b64 v7.patch.part2.b64 | base64 -d | xz -d > v7.patch
           cd llama/examples/llama.android
           patch -p1 < "$GITHUB_WORKSPACE/v7.patch"
+          sed -i '153s/\\s+/\\\\s+/' app/src/main/java/com/example/llama/WebResearch.kt
           grep -q selfImproveEnabled app/src/main/java/com/example/llama/AgentStore.kt
           grep -q site.api.espn.com app/src/main/java/com/example/llama/WebResearch.kt
           grep -q USAGE_ASSISTANT app/src/main/java/com/example/llama/MainActivity.kt
