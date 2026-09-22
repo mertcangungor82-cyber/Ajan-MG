@@ -1,37 +1,89 @@
-name: Ajan MG V7 Patch Part 1
+name: Build Ajan MG V7 Agent Core
 on:
   workflow_dispatch:
   push:
     branches: [main]
 permissions:
+  actions: read
   contents: read
 jobs:
-  patch:
+  build:
     runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
     steps:
-      - name: Write V7 patch part 1
+      - uses: actions/checkout@v6
+        with:
+          repository: ggml-org/llama.cpp
+          ref: b29c606e28a01b1bc8c1351026a0fa6e616bf6c4
+          path: llama
+          fetch-depth: 1
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Rebuild V4 base
         run: |
-          truncate -s 0 v7.patch.part1.b64
-          printf '%s' '/Td6WFoAAATm1rRGBMC2X7/yAiEBHAAAAAAAAHEmFWjguT4vrl0AMhpJCcL7xu8rBjCHoYKTP8u+j7MRayN+ZS+jqLcqpAhbq1RfbmRAUk/S6mh5IZxYY4F3cI4puv+YsTxXRTf2B2KXDj6pl451xF7nzQG6U2hbSDkYZhEAlePi6mCupjDAzCgEStWw4Dqphoh4uoYGTEKkAmT+tEMvjHVxoPWJTl5wl8QdmEfCy56RphYl7i4glnJHKhc27NDM51pEpIzOPDqXlxfBkfRwBMXEMSo/cqsoNomfKJBOZrGjipPXRDGCTg2xuI+G7Wf0lz2zHEvZDD9v/BS5dQAk7Y+5i8jpYhY1oPSRZlMpraBFk1ch7DI2t4x286ukbrc7ipdYDcN4tR1L59uvpYsSUXqbLjmhcmOgIenC1ONCCUdNbaERMJ72iKED9o20XJLVRt7iClrpyyIt76vIeqIBNnGsorPiylVn/RbFQNjVBxtBCyI48yd6N/JTfFtraczgGfySYy0y' >> v7.patch.part1.b64
-          printf '%s' 'Vy2dh+Uu37HmLrGvKHhU0jvv8lEP6nluziAeXdr82mrZdJSGWA2kreuIbC4HlQV40MSIjMyGKRTNviLzR+UmM+4QHmKZ8X+D84cENCOs7F1OTp4p1OCqNVq1YkYjEwRjXyhIPopIHJ1PVUZHSaGvwPaUBRNsXGcN7T4HGT0Ff0YLhAVn46x1z+BrTDHBOiZh7zyqA7By1YayYHNtOYNr2EA71zycHouWxuxrgnMYfANlCN4GLU3wPDBomieyiKmxWsLA3GJsRBZyko6mbG4x8KkL7pyEAI/1EV0vZYbktSr8aM39b611zpoQ8yLT5V2Dv+n8WRLLb3UlfxQ9JPoY09ytG79lE29mVhroQZ8r9DvCmc2IVFaEObz8W29TACINyWpBnCQf2zUKYB7j8mWzqOa0uLUUrfsQlOUqg1vaoq0ZDaf2ifU0UaOZdiYu8fRRe5YTxV/whabTueMhPjHJtMA4Z+NW++bsE05sgAqSilo92Lodz32y51u6oyD5hj4q9F5kFoHI' >> v7.patch.part1.b64
-          printf '%s' 'H7jR1w6pD8vxtn76smgWOL3Iy6p7GMoNJpaENjMqQBMbHQrkhk81SGsmFiYEEg81X6oqUsZHarIMkGRiV7D5ytibmthgotfYCX6qZMlj9RudEV5JCvknLNULEyhXBTR9NV6EBcY35bfqqrNobAU/jc7/9kXcWww2gYxTwugpjntvuaKl+Y588y4OvCtLyxps2LN6vaCLnLB7ZWO5zOphMIxT1jilGXcNsqCFUoDyOAS6Bev9XA86ZhKzgGcGGCz+Ml6osroiJQ3cCUAUKvDeC0IYONF/V6N5K8IsU0kdf+LX1PdK8a79YpjNGdpSE7RS7fxdS9Ki/ygvY5CLCBj+ubUbuDKW19hpFrgi/y7FkCxjVWsV9nKYfPlW+kVssG+Stw28BNqMHzqZfhTdOoVLZW8IkgpMWvf+hxELL5Znlxm26urzp6S2JO8xJDA/UYmuKVDq4k4Y7xxJYh8dzMHQKGx4hQJUWrHALkvPmrr9sZl/UONtdKrY9lW+vM20EAxrHgguhqFY' >> v7.patch.part1.b64
-          printf '%s' 'L7T1IdAUfdsV3z1sr2XIOpweAUXTnez1h7qKSl7+pqR31fSrThq+iHo748r2O4Akl1aNYVpj3+7lkA4W559YUYgjY0v0uZFt3ZW72hNfj4M9eEBnUekK7m59tFsBU9WEAwtn9j6pm2osCHWh1pMyeepTZSF6TSKAKjXhkwqSqQwg9CAm3sCu+p+1RfGjFAS2BD8uHnWpaVySMtG2OFebERVIJE1PJCDe4/ywtzP74m/b/SqYoGvKs/mR2DXjUOvTLSaxkaFthpgceR43/PUMqPuk67rxGgcD72V4NmbXIcyJ4p6kTdyrsQZAkkvsh3tX1IFLAZfJzS6obuCnuB6gzGC23XvSCAYyAY32EH60ekeNq1vxsTqthJd+ooslFy0IKuJolmjZh67SNFWYHAhPtWYU7wl+Kfb7Xn5PcburbVh4XlwKIclj20ZkqkOXDsoJZ2BVEeNmuisMVKgjrWCkWM0H8JBD8B/vgNLv/Fd/hAmhcn77p+1rqysKD99EqgKCbE8Qlm+Z' >> v7.patch.part1.b64
-          printf '%s' 'vF0J4b04uyD/Zj9OGZOK4VSJsQJg0HlmLoFuUjtBqR1a2RfBcMnUQMexTfNSB5vFYPYCgVw1L8kMY4HD3ij9Nmh99E7mVdbXMfld8/uNpIlJ8vSVedmjpbtx2GN+XY+JzbFgocSbjPY1DoL2vW+06y0hQ+IwA5KUsvo6tQtYjpdyD/o04PKRBeDkG16WttN11qGjxrCAOgfsWUVfX4R40kHLRUe6SgQ4IqfNmFxuZlj+edi4YFGmaP+gHSn5zmv0W4BcnFmBRCDpMra5wtKHvHt9sdqJzoce3cPcXGUrEvtxXFwCr+ePUtKjuvbNg1zKwjCmX5VRFuh/ceXet8wnv1ed1626Ey/qQQoVbECQl+UhvDd1c+gWPkmTWprjqCSTMMi0HDQrehtTFzJPAy/vT6rX+d0JKmy5LbtWiotYUzTus+bvKN79XE1flG1pGjgl1HJkSKBOiDuIVBxz5TEjIDpaJiO0l9qbmbPKCkuYJoBGENVaawXrlnhBe7Dwc/Sp62AKCaI6' >> v7.patch.part1.b64
-          printf '%s' 'p4Zx4IN9eVm4Qwk/wJ/iGrHOxYvkG2EX2zZSQM4Hpva9aZiRTWbvqmx9vU8tJJS7MR/nO155NhFRJspy3Xs76WZH+YonP4cJhMY8k9ipKrJUOcawqEZMvYQfO0FM2gcf1/HO5VSZUTAKmwm1eK1cu1mHWEB+6bz/PNvTUdT5YZOi9pqzMQFD2ZC8t9BD0mJoBVVYow1G//buFv/M4Ol+xelVm/YOdp+xQpaerZ4fP/+WaiK0Acbd3EDrWPHHIjNVjtruVKfOY5sc+RKshj/fcw4KU9ilgfuqdY04/GXNhzkamuxA5k9uN4EZirRW8rm6ECEKBBKXiI1eDXY5liYB4/20S9oFvvl+NVxCvkyK1M92jVnx/jePWz4mYy7MKMdZ/+FtjccTqhdj2RSGtzasQbY1lurI30Egnj72k8HBp6s7/zn1i2ApapfMRtbhFOwrgTvHz8vbReD2PcVy/rkhTMoy2Yh3HpKx6mQieSN26coDTcRZosn2jl5CnHNhS4HNyvmf+QeP' >> v7.patch.part1.b64
-          printf '%s' 'au9Ogdm8i0elMq/aKERZOXjFCIU9nOey2PJpfdE9ssF+lN39/uix/rIWwM+chm71Kpihb75lhsXLt9Nrz11RVH69sW2XHx/MgE23bz0Mb6rB10PemjoG/YpXR2Ib10QW+twedSA1r/2Vh06NXr5Xi/wFcVAg5BMmIHrPebVXmP8JtAbriippUTSmFIwTcHvg56lvT3MfWvpTIJq5QWbHt1ioZCGaG2B+DzdIHnxbv05QsotLNbMPQ/09cP/Q9FYRSLnfwJWMSNKbePoows5K5gVU73GYlqaSS0OMGe1icCXvADCqNnYwez7fIaDrHNTd1qOn3gNLlzDboAwEPAij5aBuemPlSIOdGPLoc0uKVHVZ9ut2Gpo2NWcwlxtvBjZvjrd++2bDxT5XY3fpuEnaKqd45QTnKDn0NMBW+hUAukEK5jUDZzCIWaAZm8CaEhK5p+Mdc4H2hoVZiMp2/EFZi0YYksGELPh1flOwP4gkWatKQsHbSIDKQDSZnEK7I0u8vXsgp+qw' >> v7.patch.part1.b64
-          printf '%s' 'trpWhU9X0KH6gGmgFLSdgg3SsvYhiLwX6BGZr8XA+Mv2B9AMzGM4nO/tV/+BY4VBJgmCiAz7wtZmLop2P2Z4ds1m6cBFhzo2fKsvWTP+OeQB+BZ8ZU6zKxP31DGIhGWFgDXGwGOQUDsKZE77h9kR5vif8PAzDze4yqLIpgmNrr97a+nlab/BQmajT5FMfkVQzV0q+yToQYnKKziD1SwdcPx6lZoiBRIuNKquckQm3MUWSfi5CnvulkwWR6Sw1TSOohLh/5iRd0NayC6UFrv0H7Si7DEA+y8HYU6PSNRxZ/HD3oYSfwYoq+sbnSQrlVppC6IqYbNmWY1kia9WDAl24/iPn5KdtB3AsN7HetIogy6Wn6etiVFYNNBsz4AMXQwPr1zM9gu7MQmEldIRD2ZuhiedQRAeJM7mmN76vlkL3hZLTsBCOHym4wnjFU7xC+i2zrzYEZtlHTk/kNbb4jlBU6JNraQB903uQsXsOoeDKBk/BcuNwn+cI5LNrCCBquor0+PjUXxt' >> v7.patch.part1.b64
-          printf '%s' 'nP5RjBWEOhkPI8xTBnfotD/XAKKEFMaUpVMeC6LW0GEgBcJ/6MSDuGvNhQ1NyZrWHOjTF9x5LTzQlvviAqJUcpCk/M62GoZs3A5lq6CIJZWpsu4WZ01+K9u720dQqh7Euyk/a12hr1+RoDTRGM5XVC21dATmHr7oLPjYDh5yP9zNKq5bnAarcCE9ZOnAlvBMRqI0Ep0+xQT8T6s4CNpjHV6d/ejHclsqdcOt/uIcz3/0Gxz8WN09kr7SxxxKQ4DPku/KldFy1n/HWkHqmVANOCxlpfj6l4RaHqWq2XdJDFY3RzyFEFDmLAa6qdHdmWW6oOnf/3IeohYdEmB//goyWS9CSNCsYZ3t2errjRTLSy7ICluPmTrhCLpU7P9e8KFREuHNnTtP4/FDJxIRcCkEK+PKlavZh3Rv1QP1wK6K662sVjSNg0AuhOjuQFAga344TPzoB2sbtgUXqXocFQzmpLyVJ8aBGMwzyoynQaqWfyagdBTZ+StxZz2iUDNSVT82n5HYQ/Mg' >> v7.patch.part1.b64
-          printf '%s' 'MFC3lXnhsrzee+uXQKFQ1dKl8xS5S1GOBRrQ407TQEfuaG3aK9OjBdLjj5RkIjMnFOSxHF1FY4q9F3CH72KoMDz9eWsGBVlkczfH8RNy/Yi4VONreJ6fNBieinGsxsso5XSVl/KMhP5XWQIOmQp5jUGC0pOhF1jcSGrDVpYcdG2siVOS8CdxvHBDfxXK1M1MSlfrVs4Y/jmeRnkP6psJGGGe1XtRkPKxRxeLctbZGjG3v4EawQls4wQwujrCfRLJq/zaw2GjxKfgFnnfsEWeyq0AKCcQyBZptYCZe/dSFVckhyr5hroPoRDAxm4eHVZs7bDNki0PQTQn0sILe8Jx5HSdAjGadP4YsNUAMsFTcMgrrhBsqkeZ8AzOlg8pBldIHAyKFraq0KYSwZRze/lc1WxMZvt43v7wzXmSMtEMLe/exGsneYn4dmfXIKP2rTyGOwp9WkTTKE2FuZLEqS6EqbXyn80OPoZUH9WZAFzZR7hidvOikiODrji5hbYZYPIvkUgXwP08' >> v7.patch.part1.b64
-          printf '%s' '3CeuR2eNJrIJKb9iut7vwDUwJFesRoNUqOaQnhIAi3ws8inWRSZTXA2pZveZ/dta0QS0RgsyxfVe2O2JYgtun6GJPdjnVTxixYOPMn8mIFt+wwhlOGmJiwSZnC8Gkeh4u7Nh+H8gl7BdK5CTSHs1FNapMhHh46JwhXFMU6m6oA0ZO3S71N5VMG3NqElYp4b9k3n73tUsia+PffIT9jfUKTmQ92F9Y8hCx73QT0R4Z3v/gEwaRZRc/b+HSjAMTuQgF00LMLP/E25+ivAT5xscSisajUKCrXPlzk60G0EZX9rlUBmQ7iXqR+Rc5igCPe+/u2R1eZJ6edxVp+I/lRG4cIN4+RN8LNznYci2NnRGFW3uHtfDP+0OB/Qzf7fWP/ix0O35/x+vucFe21DfGpXEBGvrofMQRH+ntwa3C37+TJn4EnWJC2DkMmzl6+d245joCTApZQRqaDGs8ISB5tqkvm4Jt265xyw2KDOTgSApR0VHk1m788uNrb6nzMqRuRPK+t4suB0K' >> v7.patch.part1.b64
-          printf '%s' 'apPE4Y8acZ9f1dOjad3Zybf1POQiU11dzsWaHOKtx/Qx6/35u3xYqel4BqyO3g/m0vcR1Z33mMHptM9aRIU0p5ec0nHmSOuzZn+1KfRDtxwJ0Sy/x6V/Z3Ew2FIAZYuqERSyX60Gf2YX18xwF+dD+5S/TdsbX+J/ITxtBH+4xBhYpDeNbpKEfr3/DbmsqMCCEZR0rWvZ27zPkRrlynBD1lcu9xsoZBkmuvvGFaP3W16+pAbV05vxy99GUO1/oxIe6i1SKGRiyihVE4ykvi8IY/CCZl0LWFEcKH3E9nQ1K9rUGc5zt3WoAmbcv2F+g5hWj+6TVBt/cP8+HL7lyfzOYO9+GIc8ZCirE+4QODTV90DiV7W/Wxw9+hI50DnEvckdkWZ8JDAGgQdLw14KxeAWbUKHgtwpfauuZzK4rIteGDHQjntcxg69sbZrL+QbGdj2Xcr7p7JvuMye7KRJSoQoww7MzbUMkLsgSxmQ1WC2zAeooCuwCwXbEc3ebbXyPKu5LZohc1T3' >> v7.patch.part1.b64
-          printf '%s' 'd/vw2aK6WXUC3Y6mIBibGfBTkOdJKD6NhSoxAt2cRQTjQEEzBXZd53XbKsdCSozwDX5X5Em1a1UyyQj0I/3yiQ8Ew+nk/+uZvi+ARswrwL4uBqrSdHJcuYX+l9c+vyMzOD0jyUq1LWpNxnFURK1Jrg3pVoK2V9qOeEDKf99UL0ks8LSMqRXCcc9fj242lHQPoKzfxVXjdbnl1hlNfeoq6GIV55spvQOyboMCBjivuuoIiPQMD9pdcKI740xDIGm4TwWm2RujrhGiqpCdJ8gEjhEnOxFiLo9BLI/0/sPd/OIJmyycZisdtAEpiVu+3whV6oCi6W3klBP/PRQZQDxVMYvLCTUOVdfMboSMuTZjXolKIYg8Qu+biDgAdKusbkv5ihs3H/EgrCpOPqyIVlPSPnSYMpcTh/sWZwcVlcv3+PF9VnMroB+TF6zB55lMcgeaWvm6lHSFhescs8gkyIleTe7dxZfayrX3w2+FVRsYAsREl9TMHCvAWQQiSVy8apD46kzbm2RL' >> v7.patch.part1.b64
-          printf '%s' 'ljIcSIkZ1DCIp+4D8U1/tJu0o9wXQvNlulaj1JKEMvRhwEtJgL9EeoDfx2HlgH4afghaXkviyFJLurVtrhkr/OEVQfJ/jfph/YS7xuaY9i9i7ByJ7gTenfAcuFJYv1ZtkCwggat82RmH3TEjtjkRVy0tDTE6XQWVkxkEiw1qnG4SQbklkPl7HUq/kZ3vkMu6OZO2//vEJIcUKGsU39dVXiiNgDR/LxqKBDD1L5HAWPaPTNqzU+s/4/YLTP0QeRXdDXpltstkyNxi/Gu3Vhggdj456nAQ4/eoRoOEIL7HpT+jCf8FlHOvKoPGUOh3t53o76gRJ1ttVJ7Rc5h+fyeDYSJTN8rVpUSMx2vu85H7dYyD370pU9I++Y07XBcBLiCiPiDzPiqBsIswm9s6G7YcA+DQDUuJ++doPhnPrF7u7VF8bhcgI7Ff1gBbynvcBxL6y3XQkuUjc022cyUBEkLTpWqnkj79pvq25KiUeCCPYk9Du+DqXYbidJvHRdUUWlKuAzYh9eqF' >> v7.patch.part1.b64
-          printf '%s' 'z2599vkGv/PIBL5yHREckr/cKfShu6V+Al64NJ3iH5VnxxWnvz3BCe/nNjXPkmK5ehGcnZmnp3Rh5WWdYZ0T0apT2K2K1YlocdnefVmCXO8dpPfyQzb0uFwBwCKmbsHMR2vX0Tj3Bnt3GX1iTYqCMjK9ob+CDTsOfLjuf8hcM9ZBkRXKQ3Wp1dtq3C7vw4VMIuivcrAnDkRM9yKw8nyCR6Ngv8w3gLZU068wQRbmlZRVv716i3Ph9ABIQWDnExYv2R5BfwxgLeeedCChn3Zz0AKZJ1tQKlIfZBmo6KGRnp93+8ychtQJ44m/mnc/kQ0G89ATPMvHw8izfVKUC76chPL0bvNsHc243ZNmGH38iGKabFFRLd0vGQLDLQTUltNOYUQ46u+rWI7/Z2w3jz/zqywa8X84ETV5EnMisrbT28t4W2MDwAULvd1ZNPfViHmo03/CYGW3dUg+E1OM2osF0ODrrZ2O8w9pK2vKKfwl8HQp/tGVyAoFmfo1QihKuavtQMR+pWht' >> v7.patch.part1.b64
-          printf '%s' 'Qx0xx4mhRv9ldVcYCstOTz+z6mxyHR1mxHtvbpbS7dzJePTiAY3W8wzh/F6X1Rw45kmmhO3I5A4TIpxtCmgeHPCnCplh1yDSwGceQ9jIARFCy7au12/FC25xaig7tIogM1skGlalXH7ps9VdHKm5RgqNkU+pQ0Yt4oacpPNGpeq4La4vuEDXJdSaPPH1Po5q8DaVxeiQD5N6pi0Qn8vK+tob2Lmp+Jzsc8G2sqJJt4+5oCA5HIL5NN8PgG1AFEYW+BkK2kmH5ZZfPaAYuTJmxpCmubzUJVGjCuVwzSB38AnbzKGypMqylzyOsQ8zrNlcnX0KllwFbqdroVu3+j7SlbJcG4iNlVGDAvM+8tFoc9SS8u1yLaMjyT//s5O7UaRkzOojXl40FBCc3JqC5I7FULxeimNzDhRx/EqDdyOnJSQh0+nuvHOpkBN8A53pc0vNNvu7P4ZPiaRX4PVe3XEdVYLgOATcQ4Afub8ozyOUmf7uxC+CLcXRfsWoZAfNrBa3Fm6hXbaN' >> v7.patch.part1.b64
-          printf '%s' 'w/6uwbEpVcWRmARUgn1nut/mE2sakaX/uR/Xpx+x+wnGp4UGWGPbeznjCoMK7c+qW88wf1RQQSfmcRSD4KurWfF5h281CY2gIwfIYNI2X4ShZarM/cgdMHDfRiAJ1PY//iWHL9dyW822jf1FUpgL50AetseCmXHn38Z+oo7w3DZuNeMrKU219bVv8ro2GhnLFrDt+fgYlpsRt8SRoUKEzbu4oEl9q3620CdVJ4neVAKMB7EUWT/oOOWRkw/pOitn2NjBq25oLixTOVhGVEsZqZn5' >> v7.patch.part1.b64
-          test $(wc -c < v7.patch.part1.b64) -eq 8600
+          gh api repos/${{ github.repository }}/actions/artifacts/10667306678/zip > old1.zip
+          unzip -o old1.zip
+          gh api "repos/${{ github.repository }}/contents/.github/workflows/main.yml?ref=501acc8e0ec0cf98e4c66f7079de3cefb1e68ee9" --jq .content | tr -d '\\n' | base64 -d > v4.yml
+          sed -n "s/.*printf '%s' '\\([^']*\\)' >> AjanMG.part2.b64/\\1/p" v4.yml | tr -d '\\n' > AjanMG.part2.b64
+          cat AjanMG.part1.b64 AjanMG.part2.b64 | base64 -d > source.tar.xz
+          tar -xJf source.tar.xz -C llama/examples/llama.android
+      - name: Rebuild V5 base
+        run: |
+          gh api repos/${{ github.repository }}/actions/artifacts/10677419918/zip > v5p1.zip
+          unzip -o v5p1.zip
+          gh api "repos/${{ github.repository }}/contents/.github/workflows/main.yml?ref=23979ac22a393d01ddacf6aa6952d43e3efc8dab" --jq .content | tr -d '\\n' | base64 -d > v5.yml
+          sed -n "s/.*printf '%s' '\\([^']*\\)' >> v5.patch.part2.b64/\\1/p" v5.yml | tr -d '\\n' > v5.patch.part2.b64
+          cat v5.patch.part1.b64 v5.patch.part2.b64 | base64 -d | xz -d > v5.patch
+          cd llama/examples/llama.android && patch -p1 < "$GITHUB_WORKSPACE/v5.patch"
+      - name: Download V7 part 1
+        run: |
+          ID=$(gh api "repos/${{ github.repository }}/actions/artifacts?name=AjanMG-V7-Patch-Part1&per_page=100" --jq '.artifacts | sort_by(.created_at) | last | .id')
+          test -n "$ID" && test "$ID" != null
+          gh api "repos/${{ github.repository }}/actions/artifacts/$ID/zip" > v7p1.zip
+          unzip -o v7p1.zip
+      - name: Write V7 part 2
+        run: |
+          truncate -s 0 v7.patch.part2.b64
+          printf '%s' 'n7yIFG+8VT3Wc7atqhGQMJsrxhlN3eG0JmVRdls5ja34leSNPNKvzRpqqVrAcgiHd80kTKNQTv9qUU29muAujncvieLrQhxxq2e43fGmYt23UpefI03P/vBFzKWb92FoqGxDVo+UzbVCC6UHGnbMG+/o01e6Zreh82dc5L41ggAoLZgFholKCsB/aYpCHoL2ObNEVES9Ikz086tVS2Dof59nxzSrAo4yftjT9eBFZrBZzd1kuB1MAOUF8GIYAzJT0lIpeXoUgYgSU7O9Z8jNawKDiL4+EG2QqIRbgAcPkfVNOsIieWUb8r4CoWQGoWoEet6qjx6s8is+f8SyVA9CNEN3RVyBvH5DIaYWzqqyqg17mJhPXeSYKyatI8ZUsPiCj9reWpPViC5VnHRlyf/L5zBxmNW9EBdeSG/tvje7OEER3yAKQiQWpHCi8VCgZqCvCd6e3pfb6e7hd7u0sP+6KesTohm1I+uoHyDcqjcnCARj3UVDj1xXrqDiFzyMAOS4nZfrMEba' >> v7.patch.part2.b64
+          printf '%s' 'kJAqoLLiXe/zm9Z+uQ531KI5hi1RG6O8O7XCPRSG4JVk0W/Z9nlioF96RIwo8vueqm7oVVDwfTvTbrMhTKkOx5/Vk9rNQJKqxy5gS4i6hp3V+qtfMPGBgYoeYaHA16rRElCGhhN9Jl+D0d4ILFwjKj5GkQmZNEQYWZzcWZmsjhCrDT+efTpIQgtVK4ZE2qu24D39qeeEQWKK8uWTMbNn3YJcnEaPExYglqXl1rFYeAiz+1JjoD/PMwaGavdgzF9KIzxNLirYMdM5cgtrNBdemjg1Kjj+Ji/5UVVi7ruVdR1y6NBhFKPuUAgIFDLjGt9U+BVwYcq0vkiJhaDa6MJ6l2WlTm+O5L1KDS5Bk5xzDmW8mp9Uhns7rPXgWkkAO2ekvcm5pO7stNrHzZnS1zdLUytNXEjF5ZEontM2pCJgmSOIsFjTLIWjLywM/mpO74tqmmEwjjDSGGqgYyolQ8n4dTjiLE2n1hNhy7cNlWqmlmPxBzvid/faNokvVSy+fP1mbx46BKRP' >> v7.patch.part2.b64
+          printf '%s' 'r35JTDwgU3PmoFW9uyTPacW9SSEnHJLtOZoe/JrGpFbsBC74fjQOv3LO6zOBrvqtDPbu37W8iDPvdlJyH6cc94AgpGE4ULNlzoRPPzcg8Lqj7i535YhKlxrUR1ILzePCSDn0JLDmTqh1SHULW2tA96uBLhdIZsYCcm5fZXomO8lrfgoSQG9i9PGL6pT3MCoRv6vDAS6zZIp6B9szymXqLygG75/qwNLQkIK+6Uczozx+kTKWqqu0oINMXiO8r0TBhuM9qIdUJlrjDxCPMUHwJJQMKwF+BImd3ilY0+VzFUtTmiv6DYrk8DyYHbzfmaMSPGT1+I0hV9RAhvjQKAeiyfSI3CdinQBqCxEHfHMs4TMbpdCY+TAPk4f5jJzwGH01vP3ejhjjuinDjPPdc4Qub+ppNTwVoK6CeMMvQzbl1sHElKlhFLlmz90jyXI95y5DpHt9TUgL7JP55mTCShZ/v4tS7+hbNcS3/G/mkQ8KAHoYatXq960LxZhLhsSbcSuV/HE5YjTv' >> v7.patch.part2.b64
+          printf '%s' 'hmyO79iPeJLobU4NqYf0f9gE8on2XM111+BxxVrc+/hwKVNECTzf0WoGrU0nidPE9tat0Jwf8UB1HLKLJJ3LxahEF9g686z+g8ACJut0QUSWJQWAASOKCguLogXll5FndyL3GVFhHfxQ0VnAVDosaaqUPWjfqZBOK2EWsweFylBbXzHhUwCgpZtm9waApKqBUlYQU4njntdoFMfcyVhCtGerhap0QmA4Yf+pvsSyhTd/otVI4C0RLoBjksEQX56n9k9LXMVxLqa6Q/1ytUT5OzewQR3/5p+dztH3hR1lXrbRd4BALt57u35/k+bGWL1m7++JlsoJRyBn2vaWbWox5LwKeVmLo4b6rDn8xtrsb1tj99V5Z3MVyIZHOi/0IdjiTW373VUVWecuYoJPgiMeCFt7xpG5+E7j2tZ061JhLAUl9PBDRcHZzuQ7tld+lAmmfdNlHxh5+bGtFWnRS0CFzdTIzg0Mj3wFhHaBCmpK/IIHuN4E5VUHS7SzilMVhpqgs9wE9c+Q' >> v7.patch.part2.b64
+          printf '%s' 'vWdlZKtBsU2ozQZo98LvsnuBeqVstBpzVgE6+f5MN3xZdWQP8dzX8Y8Ov3EQTYMCfDQ+NXHAy6qSxOgbUI/meJfOwmbryyDiGgTo/xPitRjlUcx9FB+nyfIkVFJUvTcQYh2UiV2kRJN7XpUDKUPV2gIIrNvmk71Y1JGSljiVzeumwOWnPDh0Is9hwpch3O/79+cA60CH0/Ub6fSsNXpjiTKMn9Q1zJYRyx63uRXpWCPA0h/mTv4NnmlSAKpXSTrgjP4Co0/TYPk75jttpdCod+CQ2u+EODJC0SmgU0DGETOp/UYD1qblUBIeJ6HzaSi1plXAGiOEevooMeh6O4k11eTpig7HTox8HxyCBktPYdXndF2SNT3RHllHQvvoOoapBxSM92mLEB+zT1Jn4NyDnmzCkETV9UiWRTrPglyE1NboynKMfOOH673TtYUBrgOEdMO49XSc/40GUtXmKIFSRzYS1Z+ndIlBa1gVSl4MPWTGrXJ3B3g1Rh7pZ7QsZOcX6gfsbnI7' >> v7.patch.part2.b64
+          printf '%s' 'P6PSDdWrQ+dJqBZeG5YSEJ6XOfwhMq/AgD8bqICtsfcZyfit4LW03lURm0uKeLgzLIF7bxlhSswTSIkdET1UUr4OdP0hCyhf3dLmgSQ93LXTReq2cRMwSwztofGN7w7GOmTaIqtQC4RgkUs6J5tFojlNTSX1aheDge0qHSdeyEDwVQL5DUWoPvqRNTpAum3XpV2UaoPffv2zNzusHjEhu5rYq6NwAaRt7Xz8V6gKxQSMOlHqV9pwUmisfR0fnGVnM+vZbGzOQqOpuFlAlc4sggph26m7O0Chj9MXgJKPp6Rg2zDkvQQbHd+Sd6p3yHaTejnlIzzcJKifYUtq893DXGNnERORgR8kxcr49l7lGw7Zc+RAH+Um8MJ7E1u5/NWUyCi0N5GtEhc9DFJuGFcb0Nx0MBIlAaIBaYs7wBGvKQoA4kwD33knDsAxw3JM9p7/Pbuw0QVATtyaOpOfOi++U3RLHJstCDGYRpVcbn+szaqRDWJzz0op/6/oukrSEOGbm13PXqXv' >> v7.patch.part2.b64
+          printf '%s' 'G0ixdlZ+rmnVVGQ0a7HHSNL2UANpYg8QRSTejtdaRBSbf+jolbzQ+zZzaUiSvtdH2sR3ddUhM52U0uZppQRg379ZbHOkj0sc2ep9mcMQ71flS8gHzPd6iL9DM6OH3JZF0VgXTJcE8ri/ENdiFrvXrMDnBY8n6QeGuI2I0/bj/mCt69HYjEs2h1DwpE/LC3AcwpgIGfBuo6ddNPDuFCBhuAZuhFrqnQtzStSoVJctdy6CFiCzCie6vsqJSdVwMPKQuzW+drj3oU8Cp399OTZTtCMNBKGm0+PFGVX5HKF4dlDqL4jjlCTAzMY/0wn11zM+rs6hPmUjE1O+6n1FbWS+tljnRCANGxYBHnEt9SskYaw1269wwNLoMXnEt/ur9d9ftqW8qGpC/KkcdtZdrwI/RVVMB9VEhCyzMtccs78y07l8ckGM7DaG8ggRHCRXatRJvFiiloiFjXzQqaughRcJwmt//52YVtWcsNeKTFvzY8iE+fWoNazvHETSQ55iic6Sq7nF2aJp' >> v7.patch.part2.b64
+          printf '%s' 'Iqr4WVqGjoDrOvOYY2KJCiUJh4pZ5NjW/84F0nY44wzTCtkC2fdI8WTBX+CySiZpVk0Gs6/YctSMDyDN+UVJJuwpwpiAjtLC/kATTcOrqpcXA7v/xQQLCETa4qGmKxA8LCE4CuaFHSQDNv7VyxX9vQtUdTVFnACCFngo8XDfDZ5erFzOSvO0gdlPh9B4NvSTiQQkaylLGWILlnXUvd7e7b1arZ0mQ5v6eoIv5VvT7S1JNhszpIhH1eMbnfcmmrjcpc4x1scKvxItWolGbkG74KkNT8wX1HGoV3OwnLHMzCI+7JUkOgxhEYI8beH90uHEYPr6DN8wHgFr8clwfVXwOtLSHe38RdPTldWJRC2Jp6hM5b+6or0rcJdsYvTLmN09ivj39Ymk+Ae7+XghG6YARdzFQHmVbOQepYpyC64LmSiMu1GZEVnWYLPmF8iUz5nHW0M1CaMeQUl8/hto4yygPW3cJylvHLmIFPKcruSIMHSiZuw9nC8UkGAvaNhi+Xt0qF0ZUyjU' >> v7.patch.part2.b64
+          printf '%s' 'GqVhUNiDIiKb10lwbAQoJO4uIgFzi6SfiZdPnzP5/TxQTagtkvcBt5cVblZoYQBLuNSA0QPa90VszeQLfgF4lHL2nHY7qMXYPxyoj2WYJODcqucLUuelEemMbvqrzau8LeTBCsDoZGc3h5CRmkUlAXZHuh9hje3Tl1SDFcmKz07f2P9SVA5/Z69Nv/0SCqD8KG5x2yYikAHWUF68uj1rFLeFgtMxfYPIlMVcKyN8kSVR2YvkDmx4qYUNBUHgejsz1mfalC90g5T/uvePA0MDi+f+QMbGHGks2xVoCvpt5dA4L1vhdN/GbPZQ/6jf6XxFjCNGywoS+bJYdKw9zG/+O34dzvmNHOuL4uHXMufwmMwGHhiTloBTFJBBI57M0OTbSn1S5fUQNNfCayo+/fBhXt8eDHWdTyQ8R8jUFel1c1vve+W9GLXqxy1/OeBjaiYh5aH3CBBFHA+qjcWu4OTM2v/c6ZQUVRFzPsy6HmRejRPKnFCtEWO7YmDoeHYX9UjznVql3Mxi' >> v7.patch.part2.b64
+          printf '%s' 'cJ2eEvHyFOugtp3yYIFblw4rwFPcMXTcmE78zlX8p2QwDm+jLaLnIBIhRGDXDl27GwkzeSsEBsG9XAuofWTPrESU/xbtG5MjFDGJky+DSYncIDUSBHIgFXLY0oAqfSXXAn3ViI9Nh+uHArjRTVMJESD6Nwubhr2/QfwTkrw+4DC/G3aAbTu0XikXWRLeIknxpXINKfp2x4hf0FY85RFtDfqdrzxT9SHxdON0kvkLxLUzRdTh2gMFcAsI5Ul8khEP+DYMAQGJETMth1cZcjencrw/F2A55qQ14v6zAa/aTQU/3nRmJYyu8fGAY3AxwOZw5mWvrzcc+B+GRfg2LA+ZMdsURBi13IFH05+FY5TzPQgyk5/Rlg4QPHowizve7v+7p/wsz1+er9AXaNKwmk/UWHmhdvm5bX+mYR6Xhx8E5+tpcnIxFrX7UWSg6aAmWtvJSmzxBg/ysQvWWMLeoA0DXOBcVyRzqxEjDaiC6eCg5BRV93ND/+49cWlcjEC3PUuJeMbqZpX1' >> v7.patch.part2.b64
+          printf '%s' 'EWImd1NPE9XGVXiW4Iku/BofSnnkmuhBs7Ah1U9rqUyNLKDnewT8cAug8OPoWYJKVPX/iVFFVWJu+sNkaADQVc7QmOMiyz8T+Og52Hg5HNWvog4pV66AmF1K9wWe2FLWYbfBNZX+cqwd4SYDF36njiED69gfScBb4nMo56ekc5G6vI2ErXk5WZt2Y2HETlICLjUzwcmBYwYfSstV9UrKG/n6mvTFwiFK+sCqC9FS2x4Ha0ATsxMmRAFQbqcl+edqyeJrala4O81DuzPwR3x88VzcK+h86+HBsYZ6Lv2fdmOHEA4QnTe+UrUJisbG+oytpG89sxWie46fetG7IHqrawrVl/l6u+e0BYHD8gf8kSzVtWQdMSRLgZEl+YD7PrtHlc0PvgY0noHQPAg6pa1JQFMJgbaEDpEpdzK+szscfzT8psuwHkagxRr+NQcDe/3P5/sFWgmNvVvxUMMEtS/Etz/JIKr+agDy/8IFyucTopAz2RusLoXuc5yzp7sT2wdT02yTJAjh' >> v7.patch.part2.b64
+          printf '%s' 'Hi4olL999/Vlq0sjC64vCuJNdVWRza+thnVnAV58K6A+gn8gIpThED12E0TO7Zvp9VdBvIsl6Bz9venEA+FUuAlb2OsZK8VBfkXxId3JgQqWomSSRIwGoGihQYLsH2v3cNeUiXQ24xe87GTzNzBNJTmhpcPKzmW6vjCIb0pSUCs9pQ0VT0aV+ctI4vY0lUnX6XEeSlv9vCdER/GYhbtRjK5hHr55sNLVGAADpf6Be0B2ognWZkw1NaAfeW6YxGXj380HucHM7bGqydVjkGPiZrhN1OSLvMu5rnhSMvbuWEAkk0pzgog6X/pdYvwB/4Q+8D+FDU1HqMohO0Tkq0tulRqjyi3s6TLCKbueJetf1optmSZ2vI7Gg24rFdDmFO6yOJnthS7AVld6VfYzbmepsZu/lFq4IiLOmFCLqB+wxs/esqgy4U9HArbH0MqhTBYleEqeCLBmEkTzYrMDu2EIoQmvhcOBrDyxFHFPOS0nN8K6YXXVAWcdAzv75CHe32i79gjpHd1f' >> v7.patch.part2.b64
+          printf '%s' 'FuHYNQQwmdsIngr8KRMUvoxaXb6pV5iuektzNtAzjN+hTxq+kIl7MdE88ubWbRGlMWzfcSNLKd88vbMIdgeKHey9rKSXCEuVl7Zv+rWDtgI1+hFYpdkRB80ygFqSjSsbZ/f+yf2+RypJKjCP2G8P4rperNrGjFbNmbl0F2FUnUWl6wgz1wDUIKMNEe+OsMIlqDIOyR6gEd3VnEXmuMgklkYi/nSYnxyOWee+UzkmpGkpuIla3MB6gMGHq9vO9/aTses165GNv9WTHG2LVPBLtJ+s8N5qB1qx+2WkiVt+cQAX+J1E9KWP4Po1hbArwp31psjZAxHDm+/I2eiJ4JUWzF8ZrS64WgC78BFuB/Y+ZyfQMSoMj/8bqPo35p8lig3RzUYLwLljavSfVi+7eze+UkD2p85MnfgPNq6dI5QCtrSkBRk6CMkvIdDE9zmPeJo4lulLS/KXYjOOVguTd9CJr2wZVe52leSivlR923eoT2vZD1d3+U4uleXLciouHpXJwlGP6+qg' >> v7.patch.part2.b64
+          printf '%s' 'fHoR9/XfG1vrNb4MQ6dnM5As3Obsf6eYEeRGsGBr0hg2nYyuhV64vxTJOzGQ9tuf/Q+6tqZPyc+CsgMFnUIiQ+tlcyNdhHrgqx18W2jR9z97Xuq0olwa0m6/IzXFp8DRnPyDWHvBNOVS5mAhLO+iG64vy824gIWq1QZZVV5L8cZIOJr4NTXUFimcuFStuqnbpIjtlyzjHtWKqfnbJQzUC/tO3TtJVzREmsgTQ6dTj8DhMWDJO7xp5Vg8gBAA+TaiD2Pkzx6FWiNRwk+ZwsVjKGlUKvsTu7e5PvCFAm6IDVRpkC3NuJWIt5OPu2HFTVuL0mC4VzEo/6sgd99qQdYZq6YdRYExzzdKnGaYA2advrIQ5LBzqe+7GNXnQ9Hq6n6pu0DHYZAEsdKu8IZkw5ej2SJAxVJWT2W85BUCYk+P1DgpGNk78jNlEpGUgI43G9oSRzZDHztb7k6raqQe/gQxI3lGry1f4TiGo/NbTQr5LE8SZk9KqGZZT1RIZ8vz3rEnh/dtD3vb' >> v7.patch.part2.b64
+          printf '%s' 'sPSIDwQ6RBWfufAN62IDjuyusX41qT/Nx7fHDQBJmqqPApmNtdCZBezvoh9xFltCmV55nR0dKA1XQO6i5y+lW15VAAoZS+jftw6Vsp9cAMUDgiPTdkLrkmmpn+LT0WEoziq4zLAB+ddSkL9Q7WCLqjx0SJW/n7pxqzSkqdEguP9XWHB2hy916GTgHYTNsKHY8HzSUHf4TXWkqhA+3ZDj50q3kf50jO7NB4gEehIGh0PH1wFNURoAPvBmkaj4bG+yTGhC19JsLReI82dIy/rwdXf1B+BbnAP1PyKbKP2t9BUMJNsuolWQWI3RNxt/T29MMh5oiYsYILFlYdSi0WmCTBmQGTxC6HRB/cuXecFcC8McQvnd6XVR0EukuKu1deRZOcLLb+rrJbiWZv7pniHC3h3/jfjJiBb901FH/FbAguXw+oFy+bTU6ov+f4jN2dYAAADLqzPyP4+pPQAB0l+/8gIAE6qH57HEZ/sCAAAAAARZWg==' >> v7.patch.part2.b64
+          test $(wc -c < v7.patch.part2.b64) -eq 7776
+      - name: Apply V7
+        run: |
+          cat v7.patch.part1.b64 v7.patch.part2.b64 | base64 -d | xz -d > v7.patch
+          cd llama/examples/llama.android
+          patch -p1 < "$GITHUB_WORKSPACE/v7.patch"
+          grep -q selfImproveEnabled app/src/main/java/com/example/llama/AgentStore.kt
+          grep -q site.api.espn.com app/src/main/java/com/example/llama/WebResearch.kt
+          grep -q USAGE_ASSISTANT app/src/main/java/com/example/llama/MainActivity.kt
+      - name: Android SDK
+        run: |
+          sed -i 's/applicationId = "com.example.llama.aichat"/applicationId = "com.mg.ajanfull"/;s/versionCode = 1/versionCode = 13/;s/versionName = "1.0"/versionName = "1.3.0"/' llama/examples/llama.android/app/build.gradle.kts
+          yes | /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --licenses >/dev/null || true
+          /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;29.0.13113456" "cmake;3.31.6"
+      - name: Build APK
+        run: |
+          cd llama/examples/llama.android
+          chmod +x gradlew
+          ./gradlew :app:assembleDebug --no-daemon --stacktrace
+          cp app/build/outputs/apk/debug/app-debug.apk "$GITHUB_WORKSPACE/Ajan-MG-V7.apk"
       - uses: actions/upload-artifact@v4
         with:
-          name: AjanMG-V7-Patch-Part1
-          path: v7.patch.part1.b64
+          name: Ajan-MG-V7
+          path: Ajan-MG-V7.apk
           if-no-files-found: error
